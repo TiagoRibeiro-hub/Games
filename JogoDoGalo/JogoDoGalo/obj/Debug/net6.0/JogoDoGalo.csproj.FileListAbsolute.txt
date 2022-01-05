@@ -1,0 +1,15 @@
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\JogoDoGalo.exe
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\JogoDoGalo.deps.json
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\JogoDoGalo.runtimeconfig.json
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\JogoDoGalo.dll
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\ref\JogoDoGalo.dll
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\bin\Debug\net6.0\JogoDoGalo.pdb
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.csproj.AssemblyReference.cache
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.AssemblyInfoInputs.cache
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.AssemblyInfo.cs
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.csproj.CoreCompileInputs.cache
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.dll
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\ref\JogoDoGalo.dll
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.pdb
+D:\Projectos\Projectos\Jogos\JogoDoGalo\JogoDoGalo\obj\Debug\net6.0\JogoDoGalo.genruntimeconfig.cache
