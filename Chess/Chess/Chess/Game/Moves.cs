@@ -27,14 +27,10 @@ public class Moves : Player
     {
         Console.Write("From: ");
         string fromMove = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(fromMove))
-        {
-            return FromMove();
-        }
-        if (fromMove.Length != 2)
+        if (string.IsNullOrWhiteSpace(fromMove) || fromMove.Length != 2)
         {
             showConsole.MoveNotAllowed();
-            return FromMove();
+            fromMove = string.Empty;
         }
         return fromMove;
     }
@@ -42,20 +38,27 @@ public class Moves : Player
     {
         Console.Write("To: ");
         string toMove = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(toMove))
-        {
-            return ToMove();
-        }
-        if (toMove.Length != 2)
+        if (string.IsNullOrWhiteSpace(toMove) || toMove.Length != 2)
         {
             showConsole.MoveNotAllowed();
-            return FromMove();
+            toMove = string.Empty;
         }
         return toMove;
     }
-    public Moves EnterMove(Player player, string pieceColor)
+    public (Moves, bool) EnterMove(Player player, string pieceColor)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
+        string valueFrom;
+        valueFrom = FromMove();
+        if (string.IsNullOrWhiteSpace(valueFrom))
+        {
+            return (new Moves(), false);
+        }
+        string valueTo = ToMove();
+        if (string.IsNullOrWhiteSpace(valueTo))
+        {
+            return (new Moves(), false);
+        }
         if (pieceColor.Contains(PiecesColor.White.ToString()))
         {
             this.PieceColor = PiecesColor.White;
@@ -64,13 +67,13 @@ public class Moves : Player
         {
             this.PieceColor = PiecesColor.Black;
         }
-        return new Moves()
+        return (new Moves()
         {
-            MoveFrom = FromMove(),
-            MoveTo = ToMove(),
             Name = player.Name,
+            MoveFrom = valueFrom,
+            MoveTo = valueTo,
             PieceColor = this.PieceColor
-        };
+        }, true);
     }
     public bool ConfirmMove(Moves move)
     {

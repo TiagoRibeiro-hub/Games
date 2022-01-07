@@ -44,7 +44,6 @@ public class Pawn : Pieces
         return res;
     }
 
-
     private static void PawnMovement(string[,] board, Game game, Board moveTo, int i, int j, PiecesColor color)
     {
         board[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
@@ -93,11 +92,8 @@ public class Pawn : Pieces
                 else
                 {
                     // Move To is not the Same Color 
-                    game = CheckMate(board, game, moveTo);
-                    if (game.ResultPlayedBoard == false)
-                    {
-                        PawnMovement(board, game, moveTo, i, j, color);
-                    }
+                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
+                    PawnMovement(board, game, moveTo, i, j, color);
                 }
             }
             else

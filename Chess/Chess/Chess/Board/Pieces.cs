@@ -31,44 +31,45 @@ public partial class Pieces
             Pawn pawn = new();
             pawn.PawnPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
-        if (board[i, j].Contains(PiecesForm.Tower + color))
+        else if (board[i, j].Contains(PiecesForm.Tower + color))
         {
             // Move From is Tower 
             Tower tower = new();
             tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
-        if (board[i, j].Contains(PiecesForm.Horse + color))
+        else if (board[i, j].Contains(PiecesForm.Horse + color))
         {
             // Move From is Horse 
             HorsePossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
-        if (board[i, j].Contains(PiecesForm.Bishop + color))
+        else if (board[i, j].Contains(PiecesForm.Bishop + color))
         {
             // Move From is Bishop 
             BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
-        if (board[i, j].Contains(PiecesForm.Queen + color))
+        else if (board[i, j].Contains(PiecesForm.Queen + color))
         {
             // Move From is Queen 
             QueenPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
-        if (board[i, j].Contains(PiecesForm.King + color))
+        else if (board[i, j].Contains(PiecesForm.King + color))
         {
             // Move From is King 
             KingPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
+        else
+        {
+            game.ResultPlayedBoard = false;
+        }
         return game;
     }
-    public static string ShowWinner(Game game)
+
+    public static Game CheckMate(string[,] board, Game game, int moveToLetter, int moveToNumber)
     {
-        return $"\n**** {game.WhoPlays} is the winner ****\n";
-    }
-    public static Game CheckMate(string[,] board, Game game, Board moveTo)
-    {
-        if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.King))
+        if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
         {
             // Move To is the King
-            game.Messages = ShowWinner(game);
+            game.Messages = $"\n**** {game.WhoPlays} is the winner ****\n"; 
             game.ResultPlayedBoard = true;
         }
         else
@@ -77,7 +78,7 @@ public partial class Pieces
         }
         return game;
     }
-    
+
 
     #region Bishop
     private static void HorsePossibleMoves(string[,] board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
@@ -98,7 +99,7 @@ public partial class Pieces
                 if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.King))
                 {
                     // Move To is the King
-                    ShowWinner(game);
+                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
                 }
                 else
                 {
@@ -136,7 +137,7 @@ public partial class Pieces
                 if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.King))
                 {
                     // Move To is the King
-                    ShowWinner(game);
+                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
                 }
                 else
                 {
@@ -170,7 +171,7 @@ public partial class Pieces
                 if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.King))
                 {
                     // Move To is the King
-                    ShowWinner(game);
+                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
                 }
                 else
                 {
@@ -204,7 +205,7 @@ public partial class Pieces
                 if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.King))
                 {
                     // Move To is the King
-                    ShowWinner(game);
+                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
                 }
                 else
                 {

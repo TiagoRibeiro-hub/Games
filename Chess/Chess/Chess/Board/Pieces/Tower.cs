@@ -7,6 +7,13 @@ public class Tower : Pieces
         return (moveFrom.Letter == moveTo.Letter && (moveFrom.Number > moveTo.Number || moveFrom.Number < moveTo.Number)) ||
                (moveFrom.Number == moveTo.Number && (moveFrom.Letter > moveTo.Letter || moveFrom.Letter < moveTo.Letter));
     }
+    private static void TowerMovement(string[,] board, Game game, int moveToLetter, int moveToNumber, int i, int j, PiecesColor color)
+    {
+        board[moveToLetter, moveToNumber] = PiecesForm.Tower + color.ToString();
+        board[i, j] = PiecesForm.Empty;
+        game.ResultPlayedBoard = true;
+    }
+
     private static bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
     {
         if (board[moveToLetter, moveToNumber].Contains(color.ToString()))
@@ -16,28 +23,62 @@ public class Tower : Pieces
         }
         return false;
     }
-    private static void TowerMovement(string[,] board, Game game, int moveToLetter, int moveToNumber, int i, int j, PiecesColor color)
-    {
-        board[moveToLetter, moveToNumber] = PiecesForm.Tower + color.ToString();
-        board[i, j] = PiecesForm.Empty;
-        game.ResultPlayedBoard = true;
-    }
     private static void SetMovement(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color, Game game, int i, int j)
     {
+
         if (MoveNotAllowed(board, moveToLetter, moveToNumber, color))
         {
-            // Move To has piece on the line
+            // Move To has piece the same color on the line
             game.ResultPlayedBoard = false;
         }
-        if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
+        else if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
         {
-            // Move To is the King
-            ShowWinner(game);
+            // Move To is the King           
+            game = CheckMate(board, game, moveToLetter, moveToNumber);
+            if (game.ResultPlayedBoard)
+            {
+                TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
+            }
         }
         else
         {
             TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
         }
+    }
+    private static bool HorizontalMovement(string[,] board, Board moveTo, int moveToNumber, PiecesColor color, Game game, int i, int j)
+    {
+        bool res = true;
+        if (board[moveTo.Letter, moveToNumber] != PiecesForm.Empty)
+        {
+            SetMovement(board, moveTo.Letter, moveToNumber, color, game, i, j);
+        }
+        else if (moveToNumber == moveTo.Number)
+        {
+            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
+        }
+        else
+        {
+            res = false;
+        }
+        return res;
+    }
+
+    private static bool VerticalMovement(string[,] board, Board moveTo, int moveToLetter, PiecesColor color, Game game, int i, int j)
+    {
+        bool res = true;
+        if (board[moveToLetter, moveTo.Number] != PiecesForm.Empty)
+        {
+            SetMovement(board, moveToLetter, moveTo.Number, color, game, i, j);
+        }
+        else if (moveToLetter == moveTo.Letter)
+        {
+            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
+        }
+        else
+        {
+            res = false;
+        }
+        return res;
     }
 
     public void TowerPossibleMoves(string[,] board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
@@ -57,38 +98,35 @@ public class Tower : Pieces
                         {
                             moveToNumber -= 1;
                         }
-                        if (board[moveTo.Letter, moveToNumber] != PiecesForm.Empty)
+                        bool res = HorizontalMovement(board, moveTo, moveToNumber, color, game, i, j);
+                        if (res)
                         {
-                            SetMovement(board, moveTo.Letter, moveToNumber, color, game, i, j);
                             break;
                         }
-                        else if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                        else
                         {
-                            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
-                            break;
+                            continue;
                         }
                     }
                 }
                 else
                 {
-                    // TEST
                     // Left Direction
-                    for (int t = moveFrom.Number; t <= moveTo.Number; t++)
+                    for (int t = moveFrom.Number; t >= moveTo.Number; t--)
                     {
                         int moveToNumber = t - 1;
                         if (moveToNumber == 0)
                         {
                             moveToNumber += 1;
                         }
-                        if (board[moveTo.Letter, moveToNumber] != PiecesForm.Empty)
+                        bool res = HorizontalMovement(board, moveTo, moveToNumber, color, game, i, j);
+                        if (res)
                         {
-                            SetMovement(board, moveTo.Letter, moveToNumber, color, game, i, j);
                             break;
                         }
-                        else if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                        else
                         {
-                            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
-                            break;
+                            continue;
                         }
                     }
                 }
@@ -106,37 +144,35 @@ public class Tower : Pieces
                         {
                             moveToLetter -= 1;
                         }
-                        if (board[moveToLetter, moveTo.Number] != PiecesForm.Empty)
+                        bool res = VerticalMovement(board, moveTo, moveToLetter, color, game, i, j);
+                        if (res)
                         {
-                            SetMovement(board, moveToLetter, moveTo.Number, color, game, i, j);
                             break;
                         }
-                        else if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                        else
                         {
-                            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
-                            break;
+                            continue;
                         }
                     }
                 }
                 else
                 {
                     // Up Direction
-                    for (int t = moveFrom.Letter; t <= moveFrom.Letter; t++)
+                    for (int t = moveFrom.Letter; t >= moveTo.Letter; t--)
                     {
                         int moveToLetter = t - 1;
                         if (moveToLetter == 0)
                         {
                             moveToLetter += 1;
                         }
-                        if (board[moveToLetter, moveTo.Number] != PiecesForm.Empty)
+                        bool res = VerticalMovement(board, moveTo, moveToLetter, color, game, i, j);
+                        if (res)
                         {
-                            SetMovement(board, moveToLetter, moveTo.Number, color, game, i, j);
                             break;
                         }
-                        else if (board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                        else
                         {
-                            TowerMovement(board, game, moveTo.Letter, moveTo.Number, i, j, color);
-                            break;
+                            continue;
                         }
                     }
                 }
