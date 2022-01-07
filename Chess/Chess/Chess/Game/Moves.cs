@@ -1,10 +1,10 @@
 ﻿namespace Chess;
-#nullable disable
-public class Moves : Player
+public class Moves : SpecialMoves
 {
     public string MoveFrom { get; set; }
     public string MoveTo { get; set; }
     public List<string> MovesList { get; set; } = GetMovesList();
+
 
     private ShowConsole showConsole = new();
     private static List<string> GetMovesList()
@@ -48,6 +48,7 @@ public class Moves : Player
     public (Moves, bool) EnterMove(Player player, string pieceColor)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
+
         string valueFrom;
         valueFrom = FromMove();
         if (string.IsNullOrWhiteSpace(valueFrom))
@@ -67,12 +68,22 @@ public class Moves : Player
         {
             this.PieceColor = PiecesColor.Black;
         }
+        // see if has special move
+        SpecialMoves hasSpecialMoves = new();
+        hasSpecialMoves.HasSpecialMoves(valueFrom);
+        string specialMovesName = string.Empty;
+        if (hasSpecialMoves.IsPossible)
+        {
+
+        }
         return (new Moves()
         {
             Name = player.Name,
             MoveFrom = valueFrom,
             MoveTo = valueTo,
-            PieceColor = this.PieceColor
+            PieceColor = this.PieceColor,
+            IsPossible = hasSpecialMoves.IsPossible,
+            SpecialMovesName = specialMovesName,
         }, true);
     }
     public bool ConfirmMove(Moves move)

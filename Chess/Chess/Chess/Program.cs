@@ -49,29 +49,51 @@ Moves moves = new();
 bool finishedGame = false;
 do
 {
+    moves.IsPossible = false;
+    moves.NormalMove = true;
     do
     {
         // ENTER THE MOVE
-        if (game.ResultPlayedBoard == false)
+        if (moves.IsPossible)
         {
-            console.MoveNotAllowed();
+            game.ResultPlayedBoard = true;
+            //Show Special move
+            // y/n
+            // if yes make the move and
+            break;
+            //if no continue normal move
+            moves.IsPossible = false;
+            moves.NormalMove = false;
         }
-        if (game.WhoPlays.Contains(player1.Name))
+        if (moves.NormalMove)
         {
-            (moves, game.ResultPlayedBoard) = moves.EnterMove(player1, game.Shift.ToString());
+            if (game.ResultPlayedBoard == false)
+            {
+                console.MoveNotAllowed();
+            }
+            if (game.WhoPlays.Contains(player1.Name))
+            {
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(player1, game.Shift.ToString());
+            }
+            else
+            {
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(player2, game.Shift.ToString());
+            }
         }
-        else
+        if (moves.IsPossible)
         {
-            (moves, game.ResultPlayedBoard) = moves.EnterMove(player2, game.Shift.ToString());
+            // Temporarily
+            game.ResultPlayedBoard = false;
         }
-        
-        if (game.ResultPlayedBoard)
+        else if (game.ResultPlayedBoard)
         {
             // MAKING THE MOVE
             game = board.PlayedBoard(board.Matrix, moves, game);
         }
 
+
     } while (game.ResultPlayedBoard == false);
+
     Console.Clear();
     board.ShowBoard(board.Matrix);
 
