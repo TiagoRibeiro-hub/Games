@@ -45,16 +45,16 @@ board.Display();
 board.ShowBoard(board.Matrix);
 
 // START GAME
-Moves moves = new();
+Move moves = new();
 bool finishedGame = false;
 do
 {
-    moves.IsPossible = false;
+    moves.SpecialMoveIsPossible = false;
     moves.NormalMove = true;
     do
     {
         // ENTER THE MOVE
-        if (moves.IsPossible)
+        if (moves.SpecialMoveIsPossible)
         {
             game.ResultPlayedBoard = true;
             //Show Special move
@@ -62,7 +62,7 @@ do
             // if yes make the move and
             break;
             //if no continue normal move
-            moves.IsPossible = false;
+            moves.SpecialMoveIsPossible = false;
             moves.NormalMove = false;
         }
         if (moves.NormalMove)
@@ -73,14 +73,14 @@ do
             }
             if (game.WhoPlays.Contains(player1.Name))
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(player1, game.Shift.ToString());
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player1, game.Shift.ToString());
             }
             else
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(player2, game.Shift.ToString());
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player2, game.Shift.ToString());
             }
         }
-        if (moves.IsPossible)
+        if (moves.SpecialMoveIsPossible)
         {
             // Temporarily
             game.ResultPlayedBoard = false;

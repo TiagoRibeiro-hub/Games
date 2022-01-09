@@ -1,5 +1,5 @@
 ﻿namespace Chess;
-public class Moves : SpecialMoves
+public class Move : SpecialMove
 {
     public string MoveFrom { get; set; }
     public string MoveTo { get; set; }
@@ -45,7 +45,7 @@ public class Moves : SpecialMoves
         }
         return toMove;
     }
-    public (Moves, bool) EnterMove(Player player, string pieceColor)
+    public (Move, bool) EnterMove(string[,] board, Player player, string pieceColor)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
 
@@ -53,12 +53,12 @@ public class Moves : SpecialMoves
         valueFrom = FromMove();
         if (string.IsNullOrWhiteSpace(valueFrom))
         {
-            return (new Moves(), false);
+            return (new Move(), false);
         }
         string valueTo = ToMove();
         if (string.IsNullOrWhiteSpace(valueTo))
         {
-            return (new Moves(), false);
+            return (new Move(), false);
         }
         if (pieceColor.Contains(PiecesColor.White.ToString()))
         {
@@ -69,24 +69,33 @@ public class Moves : SpecialMoves
             this.PieceColor = PiecesColor.Black;
         }
         // see if has special move
-        SpecialMoves hasSpecialMoves = new();
-        hasSpecialMoves.HasSpecialMoves(valueFrom);
-        string specialMovesName = string.Empty;
-        if (hasSpecialMoves.IsPossible)
+        SpecialMove hasSpecialMoves = new();
+        hasSpecialMoves.HasSpecialMoves(board, valueFrom, pieceColor);
+        if (hasSpecialMoves.SpecialMoveIsPossible)
         {
-
+            return (new Move()
+            {
+                Name = player.Name,
+                MoveFrom = valueFrom,
+                MoveTo = valueTo,
+                PieceColor = this.PieceColor,
+                SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible,
+                SpecialMoveName = hasSpecialMoves.SpecialMoveName,
+                CastlingTowerMovesTo = hasSpecialMoves.CastlingTowerMovesTo,
+                CastlingKingMovesTo = hasSpecialMoves.CastlingKingMovesTo
+            },true);
         }
-        return (new Moves()
+        return (new Move()
         {
             Name = player.Name,
             MoveFrom = valueFrom,
             MoveTo = valueTo,
             PieceColor = this.PieceColor,
-            IsPossible = hasSpecialMoves.IsPossible,
-            SpecialMovesName = specialMovesName,
+            SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible,
+            SpecialMoveName = hasSpecialMoves.SpecialMoveName,
         }, true);
     }
-    public bool ConfirmMove(Moves move)
+    public bool ConfirmMove(Move move)
     {
         int res = 0;
         foreach (var item in MovesList)

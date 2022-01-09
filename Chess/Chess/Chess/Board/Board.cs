@@ -6,14 +6,14 @@
 
     private const string space = "  ";
     private readonly Player player = new();
-    private static (int, int) GetIntegerMove(string move)
+    public (int, int) GetIntegerMove(string move)
     {
         char[] x = move.ToCharArray();
         char x1 = x[0];// letter
         char x2 = x[1];// nr
         return (ChangeLetterToInt(x1), int.Parse(x2.ToString()));
     }
-    private static int ChangeLetterToInt(char x1)
+    public int ChangeLetterToInt(char x1)
     {
         string value = x1.ToString();
         if (value.Contains("a"))
@@ -167,7 +167,7 @@
         }
         Console.WriteLine();
     }
-    public Game PlayedBoard(string[,] board, Moves move, Game game)
+    public Game PlayedBoard(string[,] board, Move move, Game game)
     {
         Pieces pieces = new();
         if (move.ConfirmMove(move))
