@@ -177,7 +177,7 @@
             Board moveTo = new();
             (moveTo.Letter, moveTo.Number) = GetIntegerMove(move.MoveTo);
 
-            if(moveFrom.Letter != 0 && moveTo.Letter != 0)
+            if (moveFrom.Letter != 0 && moveTo.Letter != 0)
             {
                 if (move.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
                 {
@@ -199,6 +199,50 @@
         }
         return game;
     }
+
+    public void PlaySpecialMove(string[,] board, Move move)
+    {
+        Board moveTower = new();
+        (moveTower.Letter, moveTower.Number) = GetIntegerMove(move.CastlingTowerMovesTo);
+        Board moveKing = new();
+        (moveKing.Letter, moveKing.Number) = GetIntegerMove(move.CastlingKingMovesTo);
+
+        string pieceColor;
+        // King
+        int moveKingEmptyNumber = 5;
+        // Tower
+        int moveTowerEmptyNumber;
+        if (move.CastlingType.ToString() == CastlingType.threeZeros.ToString())
+        {
+            moveTowerEmptyNumber = 1;
+        }
+        else
+        {
+            moveTowerEmptyNumber = 8;
+        }
+        // letter W or B
+        int moveEmptyLetter;
+        if (move.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
+        {
+            pieceColor = PiecesColor.W.ToString();
+            moveEmptyLetter = 8;
+        }
+        else
+        {
+            pieceColor = PiecesColor.B.ToString();
+            moveEmptyLetter = 1;
+        }
+
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                move.CastlingMovement(board, moveTower, moveKing, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
+            }
+        }
+    }
+
+
 }
 
 

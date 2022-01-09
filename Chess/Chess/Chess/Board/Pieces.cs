@@ -175,7 +175,7 @@ public partial class Pieces
                 }
                 else
                 {
-                    board[moveTo.Letter, moveTo.Number] = PiecesForm.Bishop + color.ToString();
+                    board[moveTo.Letter, moveTo.Number] = PiecesForm.Queen + color.ToString();
                 }
                 board[i, j] = PiecesForm.Empty;
                 game.ResultPlayedBoard = true;

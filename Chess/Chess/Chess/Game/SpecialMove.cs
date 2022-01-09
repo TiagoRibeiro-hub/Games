@@ -38,29 +38,10 @@ public class SpecialMove : Castling
         }
         return sp;
     }
-    private SpecialMove EnPassant(string[,] board, int moveFromLetter, int moveFromNumber, string pieceColor)
-    {
-        bool isPossible = false;
-        if (pieceColor.Contains(PiecesColor.White.ToString()))
-        {
-            for (int i = 1; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-
-                }
-            }
-        }
-        else
-        {
-
-        }
-        return new SpecialMove()
-        {
-            SpecialMoveName = SpecialMovesName.EnPassant,
-            SpecialMoveIsPossible = isPossible,
-        };
-    }
+    //private SpecialMove EnPassant(string[,] board, int moveFromLetter, int moveFromNumber, string pieceColor)
+    //{
+ 
+    //}
 
     private SpecialMove Castling(string[,] board, SpecialMove sp, int moveFromLetter, int moveFromNumber, string pieceColor)
     {
@@ -81,40 +62,7 @@ public class SpecialMove : Castling
         }
         return sp;
     }
-    private SpecialMove IsPossibleCastlingMove(string[,] board, SpecialMove sp, int moveFromLetter, int moveFromNumber, int l, string color)
-    {
-        if (moveFromLetter == l && moveFromNumber == 1)
-        {
-            if((board[moveFromLetter, moveFromNumber + 1] == PiecesForm.Empty) && 
-                (board[moveFromLetter, moveFromNumber + 2] == PiecesForm.Empty) &&
-                (board[moveFromLetter, moveFromNumber + 3] == PiecesForm.Empty) &&
-                (board[moveFromLetter, moveFromNumber + 4] == PiecesForm.King + color))
-            {
-                int moveToTower = moveFromNumber + 4;
-                // possible 0-0-0
-                sp.SpecialMoveIsPossible = true;
-                // tower change with king
-                sp.CastlingTowerMovesTo = l + moveToTower.ToString();
-                sp.CastlingKingMovesTo = l + moveFromNumber.ToString();
 
-            }
-        }
-        else if(moveFromLetter == l && moveFromNumber == 8)
-        {
-            if ((board[moveFromLetter, moveFromNumber - 1] == PiecesForm.Empty) &&
-                (board[moveFromLetter, moveFromNumber - 2] == PiecesForm.Empty) &&
-                (board[moveFromLetter, moveFromNumber - 3] == PiecesForm.King + color))
-            {
-                int moveToTower = moveFromNumber - 3;
-                // possible 0-0
-                sp.SpecialMoveIsPossible = true;
-                // tower change with king
-                sp.CastlingTowerMovesTo = l + moveToTower.ToString();
-                sp.CastlingKingMovesTo = l + moveFromNumber.ToString();
-            }
-        }
-        return sp;
-    }
 }
 
 

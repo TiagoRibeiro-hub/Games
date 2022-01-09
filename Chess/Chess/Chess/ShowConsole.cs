@@ -56,4 +56,41 @@ public class ShowConsole
     {
         Console.WriteLine("\n*** Move Not Allowed ***\n");
     }
+
+    public bool ShowSpecialMove(Move move)
+    {
+        Console.Write($"\n*********************\n*** SPECIAL MOVE ***\n*********************" +
+            $"\n\nIs possible to {move.SpecialMoveName.ToUpper()}:" +
+            $"\nTOWER moves to => {move.CastlingTowerMovesTo}" +
+            $"\nand KING moves to => {move.CastlingKingMovesTo}");
+        bool res = false;
+        bool isOk = false;
+        do
+        {
+            (res, isOk) = Answer(res, isOk);
+        } while (res == false);
+
+        return isOk;
+    }
+    public (bool, bool) Answer(bool res, bool isOk)
+    {
+        Console.Write("\n\nDo you want to do? y/n: ");
+        string result = Console.ReadLine();
+        if (string.IsNullOrEmpty(result) || result.Length != 1)
+        {
+            Console.WriteLine("\n** Answer (Y) or (N) **");
+            return (res, isOk);
+        }
+        if (result.ToLower().Contains("y"))
+        {
+            isOk = true;
+            res = true;
+        }
+        else if(result.ToLower().Contains("n"))
+        {
+            isOk = false;
+            res = true;
+        }
+        return (res, isOk);
+    }
 }

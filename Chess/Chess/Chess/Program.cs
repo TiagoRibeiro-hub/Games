@@ -50,20 +50,23 @@ bool finishedGame = false;
 do
 {
     moves.SpecialMoveIsPossible = false;
-    moves.NormalMove = true;
     do
     {
+        moves.NormalMove = true;
         // ENTER THE MOVE
         if (moves.SpecialMoveIsPossible)
         {
+            moves.NormalMove = false;
+            moves.SpecialMoveIsPossible = false;
             game.ResultPlayedBoard = true;
             //Show Special move
-            // y/n
-            // if yes make the move and
-            break;
-            //if no continue normal move
-            moves.SpecialMoveIsPossible = false;
-            moves.NormalMove = false;
+            bool isOk = console.ShowSpecialMove(moves);
+            if (isOk)
+            {
+                // SpecialMove
+                board.PlaySpecialMove(board.Matrix, moves);
+                break;
+            }           
         }
         if (moves.NormalMove)
         {
@@ -73,11 +76,11 @@ do
             }
             if (game.WhoPlays.Contains(player1.Name))
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player1, game.Shift.ToString());
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player1);
             }
             else
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player2, game.Shift.ToString());
+                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player2);
             }
         }
         if (moves.SpecialMoveIsPossible)

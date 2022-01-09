@@ -45,7 +45,7 @@ public class Move : SpecialMove
         }
         return toMove;
     }
-    public (Move, bool) EnterMove(string[,] board, Player player, string pieceColor)
+    public (Move, bool) EnterMove(string[,] board, Player player)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
 
@@ -60,7 +60,7 @@ public class Move : SpecialMove
         {
             return (new Move(), false);
         }
-        if (pieceColor.Contains(PiecesColor.White.ToString()))
+        if (player.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
         {
             this.PieceColor = PiecesColor.White;
         }
@@ -70,7 +70,7 @@ public class Move : SpecialMove
         }
         // see if has special move
         SpecialMove hasSpecialMoves = new();
-        hasSpecialMoves.HasSpecialMoves(board, valueFrom, pieceColor);
+        hasSpecialMoves = hasSpecialMoves.HasSpecialMoves(board, valueFrom, player.PieceColor.ToString());
         if (hasSpecialMoves.SpecialMoveIsPossible)
         {
             return (new Move()
@@ -82,7 +82,8 @@ public class Move : SpecialMove
                 SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible,
                 SpecialMoveName = hasSpecialMoves.SpecialMoveName,
                 CastlingTowerMovesTo = hasSpecialMoves.CastlingTowerMovesTo,
-                CastlingKingMovesTo = hasSpecialMoves.CastlingKingMovesTo
+                CastlingKingMovesTo = hasSpecialMoves.CastlingKingMovesTo,
+                CastlingType = hasSpecialMoves.CastlingType,
             },true);
         }
         return (new Move()
