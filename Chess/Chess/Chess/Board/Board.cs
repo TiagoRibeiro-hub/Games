@@ -4,6 +4,8 @@
     public int Letter { get; set; }
     public int Number { get; set; }
 
+    public List<string> AllowedEnPassantListPawn { get; set; }
+
     private const string space = "  ";
     private readonly Player player = new();
     public (int, int) GetIntegerMove(string move)
@@ -181,11 +183,11 @@
             {
                 if (move.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
                 {
-                    game = player.WhitePlayer(board, game, moveFrom, moveTo, pieces);
+                    game = player.WhitePlayer(board, move, game, moveFrom, moveTo, pieces);
                 }
                 else
                 {
-                    game = player.BlackPlayer(board, game, moveFrom, moveTo, pieces);
+                    game = player.BlackPlayer(board, move, game, moveFrom, moveTo, pieces);
                 }
             }
             else
@@ -202,16 +204,61 @@
 
     public void PlaySpecialMove(string[,] board, Move move)
     {
-        Board moveTower = new();
-        (moveTower.Letter, moveTower.Number) = GetIntegerMove(move.CastlingTowerMovesTo);
-        Board moveKing = new();
-        (moveKing.Letter, moveKing.Number) = GetIntegerMove(move.CastlingKingMovesTo);
+        Board moveFirstPiece = new();
+        (moveFirstPiece.Letter, moveFirstPiece.Number) = GetIntegerMove(move.SpecialMovementFirstPieceTo);
+        Board moveSecondPiece = new();
+        (moveSecondPiece.Letter, moveSecondPiece.Number) = GetIntegerMove(move.SpecialMovementSecondPieceTo);
+        string pieceColor = string.Empty;
 
-        string pieceColor;
+        // Castling
+        Castling castling = new();
+        int moveKingEmptyNumber = 0, moveTowerEmptyNumber = 0, moveEmptyLetter = 0;
+        // EnPassant
+        EnPassant enPassant = new();
+        int movePlayerPawn = 0; int moveOpponentPlayer = 0; int moveEmpty = 0;
+        if (move.SpecialMoveName == SpecialMovesName.Castling)
+        {
+            // Castling
+            pieceColor = CastlingPrep(move, pieceColor, out moveKingEmptyNumber, out moveTowerEmptyNumber, out moveEmptyLetter);
+        }
+        else if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+        {
+            // EnPassant
+            //pieceColor = EnPassantPrep(move, pieceColor, out movePlayerPawn, out moveOpponentPlayer, out moveEmpty);
+        }
+
+
+
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                if (move.SpecialMoveName == SpecialMovesName.Castling)
+                {
+                    castling.CastlingMovement(board, moveFirstPiece, moveSecondPiece, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
+                }
+                if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+                {
+
+                }
+            }
+        }
+    }
+
+    //private static string EnPassantPrep(Move move, string pieceColor, out int movePlayerPawn, out int moveOpponentPlayer, out int moveEmpty)
+    //{
+    //    return pieceColor;
+    //}
+    private static string CastlingPrep(Move move, string pieceColor, out int moveKingEmptyNumber, out int moveTowerEmptyNumber, out int moveEmptyLetter)
+    {
         // King
-        int moveKingEmptyNumber = 5;
+        moveKingEmptyNumber = 5;
         // Tower
-        int moveTowerEmptyNumber;
+        moveTowerEmptyNumber = 0;
+        // letter W or B
+        moveEmptyLetter = 0;
+
+        // Tower
         if (move.CastlingType.ToString() == CastlingType.threeZeros.ToString())
         {
             moveTowerEmptyNumber = 1;
@@ -221,7 +268,6 @@
             moveTowerEmptyNumber = 8;
         }
         // letter W or B
-        int moveEmptyLetter;
         if (move.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
         {
             pieceColor = PiecesColor.W.ToString();
@@ -232,17 +278,8 @@
             pieceColor = PiecesColor.B.ToString();
             moveEmptyLetter = 1;
         }
-
-        for (int i = 0; i < board.GetLength(0); i++)
-        {
-            for (int j = 0; j < board.GetLength(1); j++)
-            {
-                move.CastlingMovement(board, moveTower, moveKing, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
-            }
-        }
+        return pieceColor;
     }
-
-
 }
 
 

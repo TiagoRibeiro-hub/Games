@@ -7,7 +7,7 @@ public class Player
     public string CoinSide { get; set; }
 
 #nullable enable
-    public Game WhitePlayer(string[,] board, Game game, Board moveFrom, Board moveTo, Pieces pieces)
+    public Game WhitePlayer(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
     {
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -22,7 +22,7 @@ public class Player
                     }
                     else
                     {
-                        game = pieces.PossibleMoves(board, game, moveFrom, moveTo, i, j, PiecesColor.White.ToString());
+                        game = pieces.PossibleMoves(board, move, game, moveFrom, moveTo, i, j, PiecesColor.White.ToString());
                         break;
                     }                  
                 }
@@ -31,7 +31,7 @@ public class Player
 
         return game;
     }
-    public Game BlackPlayer(string[,] board, Game game, Board moveFrom, Board moveTo, Pieces pieces)
+    public Game BlackPlayer(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
     {
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -46,7 +46,7 @@ public class Player
                     }
                     else
                     {
-                        game = pieces.PossibleMoves(board, game, moveFrom, moveTo, i, j);
+                        game = pieces.PossibleMoves(board, move, game, moveFrom, moveTo, i, j);
                         break;
                     }                
                 }

@@ -21,7 +21,7 @@ public partial class Pieces
 
         return color;
     }
-    public Game PossibleMoves(string[,] board, Game game, Board moveFrom, Board moveTo, int i, int j, string colorOpt = "Black")
+    public Game PossibleMoves(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, string colorOpt = "Black")
     {
         PiecesColor color = ColorOption(colorOpt);
 
@@ -29,7 +29,7 @@ public partial class Pieces
         {
             // Move From is Pawn 
             Pawn pawn = new();
-            pawn.PawnPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            pawn.PawnPossibleMoves(board, move, game, moveFrom, moveTo, i, j, color);
         }
         else if (board[i, j].Contains(PiecesForm.Tower + color))
         {

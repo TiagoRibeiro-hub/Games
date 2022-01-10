@@ -60,9 +60,19 @@ public class ShowConsole
     public bool ShowSpecialMove(Move move)
     {
         Console.Write($"\n*********************\n*** SPECIAL MOVE ***\n*********************" +
-            $"\n\nIs possible to {move.SpecialMoveName.ToUpper()}:" +
-            $"\nTOWER moves to => {move.CastlingTowerMovesTo}" +
-            $"\nand KING moves to => {move.CastlingKingMovesTo}");
+                $"\n\nIs possible to {move.SpecialMoveName.ToUpper()}:");
+
+        if (move.SpecialMoveName == SpecialMovesName.Castling)
+        {
+            Console.Write($"\nTower moves to => {move.SpecialMovementFirstPieceTo}" +
+            $"\nand King moves to => {move.SpecialMovementSecondPieceTo}");
+        }
+        if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+        {
+            Console.Write($"\nYour Pawn moves to => {move.SpecialMovementFirstPieceTo}" +
+            $"\nand capture Pawn from => {move.SpecialMovementSecondPieceTo}");
+        }
+        
         bool res = false;
         bool isOk = false;
         do

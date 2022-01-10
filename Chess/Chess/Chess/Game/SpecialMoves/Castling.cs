@@ -1,6 +1,6 @@
 ﻿namespace Chess;
 #nullable disable
-public class Castling : Player
+public class Castling
 {
     public string CastlingTowerMovesTo { get; set; }
     public string CastlingKingMovesTo { get; set; }
@@ -32,9 +32,9 @@ public class Castling : Player
                 // possible 0-0-0
                 sp.SpecialMoveIsPossible = true;
                 // tower change with king
-                sp.CastlingTowerMovesTo = moveToLetter + moveToNumberTower.ToString();
-                sp.CastlingKingMovesTo = moveToLetter + moveToNumberKing.ToString();
-                sp.CastlingType = CastlingType.threeZeros;
+                this.CastlingTowerMovesTo = moveToLetter + moveToNumberTower.ToString();
+                this.CastlingKingMovesTo = moveToLetter + moveToNumberKing.ToString();
+                this.CastlingType = CastlingType.threeZeros;
 
             }
         }
@@ -49,14 +49,20 @@ public class Castling : Player
                 // possible 0-0
                 sp.SpecialMoveIsPossible = true;
                 // tower change with king
-                sp.CastlingTowerMovesTo = moveToLetter + moveToNumberTower.ToString();
-                sp.CastlingKingMovesTo = moveToLetter + moveToNumberKing.ToString();
-                sp.CastlingType = CastlingType.twoZeros;
+                this.CastlingTowerMovesTo = moveToLetter + moveToNumberTower.ToString();
+                this.CastlingKingMovesTo = moveToLetter + moveToNumberKing.ToString();
+                this.CastlingType = CastlingType.twoZeros;
             }
         }
         else
         {
             sp.SpecialMoveIsPossible = false;
+        }
+        if (sp.SpecialMoveIsPossible)
+        {
+            sp.SpecialMovementFirstPieceTo = this.CastlingTowerMovesTo;
+            sp.SpecialMovementSecondPieceTo = this.CastlingKingMovesTo;
+            sp.CastlingType = this.CastlingType;
         }
         return sp;
     }

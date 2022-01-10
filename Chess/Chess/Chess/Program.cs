@@ -43,9 +43,11 @@ game.ResultPlayedBoard = true;
 Board board = new();
 board.Display();
 board.ShowBoard(board.Matrix);
+board.AllowedEnPassantListPawn = new();
 
 // START GAME
 Move moves = new();
+
 bool finishedGame = false;
 do
 {
@@ -92,6 +94,7 @@ do
         {
             // MAKING THE MOVE
             game = board.PlayedBoard(board.Matrix, moves, game);
+            board.AllowedEnPassantListPawn.Add(moves.AllowedEnPassantPawn);
         }
 
 

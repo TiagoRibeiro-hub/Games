@@ -44,28 +44,31 @@ public class Pawn : Pieces
         return res;
     }
 
-    private static void PawnMovement(string[,] board, Game game, Board moveTo, int i, int j, PiecesColor color)
+    private static void PawnMovement(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
+        if((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
+        {
+            // the house where the pawn is will be inserted in "board.AllowedEnPassantListPawn"
+            move.AllowedEnPassantPawn = move.MoveTo;
+        }
         board[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
     }
-    public void PawnPossibleMoves(string[,] board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    public void PawnPossibleMoves(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         int letterFromOptOne;
         int letterFromOptTwo = 0;
-        int letterTo = 1;
         bool flag = false;
         if (IsPawnFirstMove(color, moveFrom))
         {
-            letterTo += 1;
             flag = true;
         }
         if (color.ToString().Contains(PiecesColor.W.ToString()))
         {
             if (flag)
             {
-                letterFromOptTwo = moveFrom.Letter - letterTo;
+                letterFromOptTwo = moveFrom.Letter - 2;
             }
             letterFromOptOne = moveFrom.Letter - 1;
         }
@@ -73,7 +76,7 @@ public class Pawn : Pieces
         {
             if (flag)
             {
-                letterFromOptTwo = moveFrom.Letter + letterTo;
+                letterFromOptTwo = moveFrom.Letter + 2;
             }
             letterFromOptOne = moveFrom.Letter + 1;
         }
@@ -93,7 +96,7 @@ public class Pawn : Pieces
                 {
                     // Move To is not the Same Color 
                     game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
-                    PawnMovement(board, game, moveTo, i, j, color);
+                    PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
                 }
             }
             else
@@ -106,7 +109,7 @@ public class Pawn : Pieces
                 }
                 else
                 {
-                    PawnMovement(board, game, moveTo, i, j, color);
+                    PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
                 }
             }
         }
