@@ -3,8 +3,9 @@
     public string[,] Matrix { get; set; } = new string[9, 9];
     public int Letter { get; set; }
     public int Number { get; set; }
+    public List<SpecialMove> SpecialMovesList { get; set; } = new();
+    public List<string> AllowedEnPassantListPawn { get; set; } = new();
 
-    public List<string> AllowedEnPassantListPawn { get; set; }
 
     private const string space = "  ";
     private readonly Player player = new();
@@ -213,6 +214,7 @@
         // Castling
         Castling castling = new();
         int moveKingEmptyNumber = 0, moveTowerEmptyNumber = 0, moveEmptyLetter = 0;
+
         // EnPassant
         EnPassant enPassant = new();
         int movePlayerPawn = 0; int moveOpponentPlayer = 0; int moveEmpty = 0;
@@ -224,7 +226,7 @@
         else if (move.SpecialMoveName == SpecialMovesName.EnPassant)
         {
             // EnPassant
-            //pieceColor = EnPassantPrep(move, pieceColor, out movePlayerPawn, out moveOpponentPlayer, out moveEmpty);
+            // pieceColor = EnPassantPrep(move, pieceColor, out movePlayerPawn, out moveOpponentPlayer, out moveEmpty);
         }
 
 

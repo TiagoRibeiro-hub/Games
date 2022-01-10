@@ -31,6 +31,7 @@ player2.CoinSide = console.AskHeadsOrTailsSecondPlayer(player1.CoinSide);
 //CHOOSE WHITE OR BLACK WHO STARTS 
 Console.Clear();
 Game game = new();
+game.FinishedGame = false;
 string resFlipCoin = game.FlipCoin();
 game.WhoPlays = game.ChooseWhoStarts(resFlipCoin, console, player1, player2);
 game.Shift = PiecesColor.White;
@@ -43,49 +44,52 @@ game.ResultPlayedBoard = true;
 Board board = new();
 board.Display();
 board.ShowBoard(board.Matrix);
-board.AllowedEnPassantListPawn = new();
 
 // START GAME
-Move moves = new();
+Move move = new();
 
-bool finishedGame = false;
 do
 {
-    moves.SpecialMoveIsPossible = false;
+    move.SpecialMoveIsPossible = false;
     do
     {
-        moves.NormalMove = true;
+        move.NormalMove = true;
         // ENTER THE MOVE
-        if (moves.SpecialMoveIsPossible)
+        if (move.SpecialMoveIsPossible)
         {
-            moves.NormalMove = false;
-            moves.SpecialMoveIsPossible = false;
+            move.NormalMove = false;
+            move.SpecialMoveIsPossible = false;
             game.ResultPlayedBoard = true;
             //Show Special move
-            bool isOk = console.ShowSpecialMove(moves);
+            bool isOk = console.ShowSpecialMove(board, move);
             if (isOk)
             {
                 // SpecialMove
-                board.PlaySpecialMove(board.Matrix, moves);
+                board.PlaySpecialMove(board.Matrix, move);
                 break;
-            }           
+            }
         }
-        if (moves.NormalMove)
+        if (move.NormalMove)
         {
             if (game.ResultPlayedBoard == false)
             {
                 console.MoveNotAllowed();
             }
+            if (board.AllowedEnPassantListPawn.Any())
+            {
+                // show possible enPassant moves
+                
+            }
             if (game.WhoPlays.Contains(player1.Name))
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player1);
+                (move, game.ResultPlayedBoard) = move.EnterMove(board, player1);
             }
             else
             {
-                (moves, game.ResultPlayedBoard) = moves.EnterMove(board.Matrix, player2);
+                (move, game.ResultPlayedBoard) = move.EnterMove(board, player2);
             }
         }
-        if (moves.SpecialMoveIsPossible)
+        if (move.SpecialMoveIsPossible)
         {
             // Temporarily
             game.ResultPlayedBoard = false;
@@ -93,8 +97,11 @@ do
         else if (game.ResultPlayedBoard)
         {
             // MAKING THE MOVE
-            game = board.PlayedBoard(board.Matrix, moves, game);
-            board.AllowedEnPassantListPawn.Add(moves.AllowedEnPassantPawn);
+            game = board.PlayedBoard(board.Matrix, move, game);
+            if (!string.IsNullOrWhiteSpace(move.AllowedEnPassantPawn))
+            {
+                board.AllowedEnPassantListPawn.Add(move.AllowedEnPassantPawn);
+            }
         }
 
 
@@ -107,7 +114,7 @@ do
     game.ChangePlayers(game, player1, player2);
     game.ShiftDistribution(game, player1, player2);
 
-} while (finishedGame == false);
+} while (game.FinishedGame == false);
 
 
 

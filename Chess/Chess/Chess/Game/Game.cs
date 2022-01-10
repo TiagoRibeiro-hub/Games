@@ -6,6 +6,7 @@ public class Game
     public string WhoPlays { get; set; }
     public bool ResultPlayedBoard { get; set; }
     public string Messages { get; set; }
+    public bool FinishedGame { get; set; }
 
 #nullable enable
     public string FlipCoin()

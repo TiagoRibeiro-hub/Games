@@ -51,6 +51,10 @@ public class Pawn : Pieces
             // the house where the pawn is will be inserted in "board.AllowedEnPassantListPawn"
             move.AllowedEnPassantPawn = move.MoveTo;
         }
+        else
+        {
+            move.AllowedEnPassantPawn = string.Empty;
+        }
         board[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;

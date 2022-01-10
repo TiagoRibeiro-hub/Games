@@ -57,8 +57,10 @@ public class ShowConsole
         Console.WriteLine("\n*** Move Not Allowed ***\n");
     }
 
-    public bool ShowSpecialMove(Move move)
+    public bool ShowSpecialMove(Board board, Move move)
     {
+        /// ALTERAR
+        ///  VER LISTA DE POSSIVEIS JOGADAS PERGUNTAR SE QUER JOGAR ALGUMA \\\\
         Console.Write($"\n*********************\n*** SPECIAL MOVE ***\n*********************" +
                 $"\n\nIs possible to {move.SpecialMoveName.ToUpper()}:");
 

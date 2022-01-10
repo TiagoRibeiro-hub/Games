@@ -23,13 +23,14 @@ public class Move : SpecialMove
         }
         return moves;
     }
+
+    // METHODS
     private string FromMove()
     {
         Console.Write("From: ");
         string fromMove = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(fromMove) || fromMove.Length != 2)
         {
-            showConsole.MoveNotAllowed();
             fromMove = string.Empty;
         }
         return fromMove;
@@ -40,12 +41,11 @@ public class Move : SpecialMove
         string toMove = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(toMove) || toMove.Length != 2)
         {
-            showConsole.MoveNotAllowed();
             toMove = string.Empty;
         }
         return toMove;
     }
-    public (Move, bool) EnterMove(string[,] board, Player player)
+    public (Move, bool) EnterMove(Board board, Player player)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
 
@@ -69,8 +69,7 @@ public class Move : SpecialMove
             this.PieceColor = PiecesColor.Black;
         }
         // see if has special move
-        SpecialMove hasSpecialMoves = new();
-        hasSpecialMoves = hasSpecialMoves.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString());
+        bool specialMoveIsPossible = HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString());
         Move move = new Move()
         {
             Name = player.Name,
@@ -78,40 +77,16 @@ public class Move : SpecialMove
             MoveTo = valueTo,
             PieceColor = this.PieceColor,
         };
-        // Special Move is possible
-        if (hasSpecialMoves.SpecialMoveIsPossible)
+        if (specialMoveIsPossible)
         {
-            if (hasSpecialMoves.SpecialMovePieceType == PiecesForm.Tower)
-            {
-                // Castling
-                // Special Move
-                move.SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible;
-                move.SpecialMoveName = hasSpecialMoves.SpecialMoveName;
-                // Tower
-                move.SpecialMovementFirstPieceTo = hasSpecialMoves.SpecialMovementFirstPieceTo;
-                // King
-                move.SpecialMovementSecondPieceTo = hasSpecialMoves.SpecialMovementSecondPieceTo;
-                move.CastlingType = hasSpecialMoves.CastlingType;
-
-                return (move, true);
-            }
-            if (hasSpecialMoves.SpecialMovePieceType == PiecesForm.Pawn)
-            {
-                // EnPassant
-                // Special Move
-                move.SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible;
-                move.SpecialMoveName = hasSpecialMoves.SpecialMoveName;
-                // Player Pawn 
-                move.SpecialMovementFirstPieceTo = hasSpecialMoves.SpecialMovementFirstPieceTo;
-                // Opponent Pawn
-                move.SpecialMovementSecondPieceTo = hasSpecialMoves.SpecialMovementSecondPieceTo;
-
-                return (move, true);
-            }
-
+            // Special Move is possible
+            move.SpecialMoveIsPossible = specialMoveIsPossible;
         }
-        // Special Move is not possible
-        move.SpecialMoveIsPossible = hasSpecialMoves.SpecialMoveIsPossible;
+        else
+        {
+            // Special Move is not possible
+            move.SpecialMoveIsPossible = specialMoveIsPossible;
+        }   
         return (move, true);
     }
     public bool ConfirmMove(Move move)
