@@ -3,56 +3,13 @@
     public string[,] Matrix { get; set; } = new string[9, 9];
     public int Letter { get; set; }
     public int Number { get; set; }
-    public List<SpecialMove> SpecialMovesList { get; set; } = new();
+
     public List<string> AllowedEnPassantListPawn { get; set; } = new();
 
 
     private const string space = "  ";
     private readonly Player player = new();
-    public (int, int) GetIntegerMove(string move)
-    {
-        char[] x = move.ToCharArray();
-        char x1 = x[0];// letter
-        char x2 = x[1];// nr
-        return (ChangeLetterToInt(x1), int.Parse(x2.ToString()));
-    }
-    public int ChangeLetterToInt(char x1)
-    {
-        string value = x1.ToString();
-        if (value.Contains("a"))
-        {
-            return 1;
-        }
-        if (value.Contains("b"))
-        {
-            return 2;
-        }
-        if (value.Contains("c"))
-        {
-            return 3;
-        }
-        if (value.Contains("d"))
-        {
-            return 4;
-        }
-        if (value.Contains("e"))
-        {
-            return 5;
-        }
-        if (value.Contains("f"))
-        {
-            return 6;
-        }
-        if (value.Contains("g"))
-        {
-            return 7;
-        }
-        if (value.Contains("h"))
-        {
-            return 8;
-        }
-        return 0;
-    }
+    
 
     public void Display()
     {
@@ -170,15 +127,15 @@
         }
         Console.WriteLine();
     }
-    public Game PlayedBoard(string[,] board, Move move, Game game)
+    public Game PlayedBoard(Board board, Move move, Game game)
     {
         Pieces pieces = new();
         if (move.ConfirmMove(move))
         {
             Board moveFrom = new();
-            (moveFrom.Letter, moveFrom.Number) = GetIntegerMove(move.MoveFrom);
+            (moveFrom.Letter, moveFrom.Number) = Funcs.GetIntegerMove(move.MoveFrom);
             Board moveTo = new();
-            (moveTo.Letter, moveTo.Number) = GetIntegerMove(move.MoveTo);
+            (moveTo.Letter, moveTo.Number) = Funcs.GetIntegerMove(move.MoveTo);
 
             if (moveFrom.Letter != 0 && moveTo.Letter != 0)
             {
@@ -206,9 +163,9 @@
     public void PlaySpecialMove(string[,] board, Move move)
     {
         Board moveFirstPiece = new();
-        (moveFirstPiece.Letter, moveFirstPiece.Number) = GetIntegerMove(move.SpecialMovementFirstPieceTo);
+        (moveFirstPiece.Letter, moveFirstPiece.Number) = Funcs.GetIntegerMove(move.GetSpecialMove.SpecialMovementFirstPieceTo);
         Board moveSecondPiece = new();
-        (moveSecondPiece.Letter, moveSecondPiece.Number) = GetIntegerMove(move.SpecialMovementSecondPieceTo);
+        (moveSecondPiece.Letter, moveSecondPiece.Number) = Funcs.GetIntegerMove(move.GetSpecialMove.SpecialMovementSecondPieceTo);
         string pieceColor = string.Empty;
 
         // Castling
@@ -217,16 +174,16 @@
 
         // EnPassant
         EnPassant enPassant = new();
-        int movePlayerPawn = 0; int moveOpponentPlayer = 0; int moveEmpty = 0;
-        if (move.SpecialMoveName == SpecialMovesName.Castling)
+        Board movePlayerPawn = new(), emptyOpponentPawn = new(), moveFromOriginal = new();
+        if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.Castling)
         {
             // Castling
             pieceColor = CastlingPrep(move, pieceColor, out moveKingEmptyNumber, out moveTowerEmptyNumber, out moveEmptyLetter);
         }
-        else if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+        else if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
         {
             // EnPassant
-            // pieceColor = EnPassantPrep(move, pieceColor, out movePlayerPawn, out moveOpponentPlayer, out moveEmpty);
+            pieceColor = EnPassantPrep(move, pieceColor, out moveFromOriginal, out movePlayerPawn, out emptyOpponentPawn);
         }
 
 
@@ -235,22 +192,37 @@
         {
             for (int j = 0; j < board.GetLength(1); j++)
             {
-                if (move.SpecialMoveName == SpecialMovesName.Castling)
+                if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.Castling)
                 {
                     castling.CastlingMovement(board, moveFirstPiece, moveSecondPiece, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
                 }
-                if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+                if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
                 {
-
+                    enPassant.EnPassantMovement(board, moveFromOriginal, movePlayerPawn, emptyOpponentPawn, pieceColor, i, j);
                 }
             }
         }
     }
 
-    //private static string EnPassantPrep(Move move, string pieceColor, out int movePlayerPawn, out int moveOpponentPlayer, out int moveEmpty)
-    //{
-    //    return pieceColor;
-    //}
+    private static string EnPassantPrep(Move move, string pieceColor, out Board moveFromOriginal, out Board movePlayerPawn, out Board emptyOpponentPawn)
+    {
+        moveFromOriginal = new();
+        (moveFromOriginal.Letter, moveFromOriginal.Number) = Funcs.GetIntegerMove(move.MoveFrom);
+        movePlayerPawn = new();
+        (movePlayerPawn.Letter, movePlayerPawn.Number) = Funcs.GetIntegerMove(move.GetSpecialMove.SpecialMovementFirstPieceTo);
+        emptyOpponentPawn = new();
+        (emptyOpponentPawn.Letter, emptyOpponentPawn.Number) = Funcs.GetIntegerMove(move.GetSpecialMove.SpecialMovementSecondPieceTo);
+        // letter W or B
+        if (move.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
+        {
+            pieceColor = PiecesColor.W.ToString();
+        }
+        else
+        {
+            pieceColor = PiecesColor.B.ToString();         
+        }
+        return pieceColor;
+    }
     private static string CastlingPrep(Move move, string pieceColor, out int moveKingEmptyNumber, out int moveTowerEmptyNumber, out int moveEmptyLetter)
     {
         // King
@@ -261,7 +233,7 @@
         moveEmptyLetter = 0;
 
         // Tower
-        if (move.CastlingType.ToString() == CastlingType.threeZeros.ToString())
+        if (move.GetSpecialMove.CastlingType.ToString() == CastlingType.threeZeros.ToString())
         {
             moveTowerEmptyNumber = 1;
         }

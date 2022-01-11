@@ -47,18 +47,18 @@ board.ShowBoard(board.Matrix);
 
 // START GAME
 Move move = new();
-
+move.GetSpecialMove = new();
 do
 {
-    move.SpecialMoveIsPossible = false;
+    move.GetSpecialMove.SpecialMoveIsPossible = false;
     do
     {
-        move.NormalMove = true;
+        move.GetSpecialMove.NormalMove = true;
         // ENTER THE MOVE
-        if (move.SpecialMoveIsPossible)
+        if (move.GetSpecialMove.SpecialMoveIsPossible)
         {
-            move.NormalMove = false;
-            move.SpecialMoveIsPossible = false;
+            move.GetSpecialMove.NormalMove = false;
+            move.GetSpecialMove.SpecialMoveIsPossible = false;
             game.ResultPlayedBoard = true;
             //Show Special move
             bool isOk = console.ShowSpecialMove(board, move);
@@ -69,7 +69,7 @@ do
                 break;
             }
         }
-        if (move.NormalMove)
+        if (move.GetSpecialMove.NormalMove)
         {
             if (game.ResultPlayedBoard == false)
             {
@@ -89,7 +89,7 @@ do
                 (move, game.ResultPlayedBoard) = move.EnterMove(board, player2);
             }
         }
-        if (move.SpecialMoveIsPossible)
+        if (move.GetSpecialMove.SpecialMoveIsPossible)
         {
             // Temporarily
             game.ResultPlayedBoard = false;
@@ -97,10 +97,10 @@ do
         else if (game.ResultPlayedBoard)
         {
             // MAKING THE MOVE
-            game = board.PlayedBoard(board.Matrix, move, game);
-            if (!string.IsNullOrWhiteSpace(move.AllowedEnPassantPawn))
+            game = board.PlayedBoard(board, move, game);
+            if (!string.IsNullOrWhiteSpace(move.GetSpecialMove.AllowedEnPassantPawn))
             {
-                board.AllowedEnPassantListPawn.Add(move.AllowedEnPassantPawn);
+                board.AllowedEnPassantListPawn.Add(move.GetSpecialMove.AllowedEnPassantPawn);
             }
         }
 

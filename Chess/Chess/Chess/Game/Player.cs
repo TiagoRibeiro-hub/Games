@@ -7,15 +7,15 @@ public class Player
     public string CoinSide { get; set; }
 
 #nullable enable
-    public Game WhitePlayer(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
+    public Game WhitePlayer(Board board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
     {
-        for (int i = 0; i < board.GetLength(0); i++)
+        for (int i = 0; i < board.Matrix.GetLength(0); i++)
         {
-            for (int j = 0; j < board.GetLength(1); j++)
+            for (int j = 0; j < board.Matrix.GetLength(1); j++)
             {
                 if (i == moveFrom.Letter && j == moveFrom.Number)
                 {
-                    if(board[i, j].Contains(PiecesForm.Empty))
+                    if(board.Matrix[i, j].Contains(PiecesForm.Empty))
                     {
                         game.ResultPlayedBoard = false;
                         break;
@@ -31,15 +31,15 @@ public class Player
 
         return game;
     }
-    public Game BlackPlayer(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
+    public Game BlackPlayer(Board board, Move move, Game game, Board moveFrom, Board moveTo, Pieces pieces)
     {
-        for (int i = 0; i < board.GetLength(0); i++)
+        for (int i = 0; i < board.Matrix.GetLength(0); i++)
         {
-            for (int j = 0; j < board.GetLength(1); j++)
+            for (int j = 0; j < board.Matrix.GetLength(1); j++)
             {
                 if (i == moveFrom.Letter && j == moveFrom.Number)
                 {
-                    if (board[i, j].Contains(PiecesForm.Empty))
+                    if (board.Matrix[i, j].Contains(PiecesForm.Empty))
                     {
                         game.ResultPlayedBoard = false;
                         break;

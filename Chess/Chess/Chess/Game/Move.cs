@@ -1,12 +1,14 @@
 ﻿namespace Chess;
-public class Move : SpecialMove
+public class Move : Player
 {
     public string MoveFrom { get; set; }
     public string MoveTo { get; set; }
     public List<string> MovesList { get; set; } = GetMovesList();
+    public SpecialMove GetSpecialMove { get; set; }
 
 
     private ShowConsole showConsole = new();
+    private SpecialMove specialMove = new();
     private static List<string> GetMovesList()
     {
         List<string> moves = new();
@@ -69,7 +71,6 @@ public class Move : SpecialMove
             this.PieceColor = PiecesColor.Black;
         }
         // see if has special move
-        bool specialMoveIsPossible = HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString());
         Move move = new Move()
         {
             Name = player.Name,
@@ -77,16 +78,7 @@ public class Move : SpecialMove
             MoveTo = valueTo,
             PieceColor = this.PieceColor,
         };
-        if (specialMoveIsPossible)
-        {
-            // Special Move is possible
-            move.SpecialMoveIsPossible = specialMoveIsPossible;
-        }
-        else
-        {
-            // Special Move is not possible
-            move.SpecialMoveIsPossible = specialMoveIsPossible;
-        }   
+        move.GetSpecialMove = specialMove.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString());  
         return (move, true);
     }
     public bool ConfirmMove(Move move)

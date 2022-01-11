@@ -44,22 +44,38 @@ public class Pawn : Pieces
         return res;
     }
 
-    private static void PawnMovement(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    private static void PawnMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         if((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
         {
+            // the pawn moves 2 houses
             // the house where the pawn is will be inserted in "board.AllowedEnPassantListPawn"
-            move.AllowedEnPassantPawn = move.MoveTo;
+            move.GetSpecialMove.AllowedEnPassantPawn = move.MoveTo;
         }
         else
         {
-            move.AllowedEnPassantPawn = string.Empty;
+            move.GetSpecialMove.AllowedEnPassantPawn = string.Empty;
         }
-        board[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
-        board[i, j] = PiecesForm.Empty;
+        // if pawn after first move(2houses), moves is no long possible to do enPassant 
+        int l, n;
+        if (board.AllowedEnPassantListPawn.Any())
+        {
+            foreach (var item in board.AllowedEnPassantListPawn)
+            {
+                (l, n) = Funcs.GetIntegerMove(item);
+                if (moveFrom.Letter == l)
+                {
+                    board.AllowedEnPassantListPawn.Remove(item);
+                    break;
+                }
+            }
+        }
+        // Pawn Movement
+        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
+        board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
     }
-    public void PawnPossibleMoves(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    public void PawnPossibleMoves(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         int letterFromOptOne;
         int letterFromOptTwo = 0;
@@ -90,8 +106,8 @@ public class Pawn : Pieces
             if (moveFrom.Number + 1 == moveTo.Number || moveFrom.Number - 1 == moveTo.Number)
             {
                 // DIAGONAL MOVEMENT TO CAPTURE
-                if (board[moveTo.Letter, moveTo.Number].Contains(color.ToString()) ||
-                    board[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()) ||
+                    board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
                 {
                     // Move To is the Same Color 
                     game.ResultPlayedBoard = false;
@@ -99,14 +115,14 @@ public class Pawn : Pieces
                 else
                 {
                     // Move To is not the Same Color 
-                    game = CheckMate(board, game, moveTo.Letter, moveTo.Number);
+                    game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
                     PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
                 }
             }
             else
             {
                 // FRONT MOVEMENT
-                if (board[moveTo.Letter, moveTo.Number] != PiecesForm.Empty)
+                if (board.Matrix[moveTo.Letter, moveTo.Number] != PiecesForm.Empty)
                 {
                     // Move To has a Piece in front 
                     game.ResultPlayedBoard = false;

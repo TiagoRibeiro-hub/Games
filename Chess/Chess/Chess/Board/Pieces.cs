@@ -21,41 +21,41 @@ public partial class Pieces
 
         return color;
     }
-    public Game PossibleMoves(string[,] board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, string colorOpt = "Black")
+    public Game PossibleMoves(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, string colorOpt = "Black")
     {
         PiecesColor color = ColorOption(colorOpt);
 
-        if (board[i, j].Contains(PiecesForm.Pawn + color))
+        if (board.Matrix[i, j].Contains(PiecesForm.Pawn + color))
         {
             // Move From is Pawn 
             Pawn pawn = new();
             pawn.PawnPossibleMoves(board, move, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board[i, j].Contains(PiecesForm.Tower + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Tower + color))
         {
             // Move From is Tower 
             Tower tower = new();
-            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            tower.TowerPossibleMoves(board.Matrix, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board[i, j].Contains(PiecesForm.Horse + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Horse + color))
         {
             // Move From is Horse 
-            HorsePossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            HorsePossibleMoves(board.Matrix, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board[i, j].Contains(PiecesForm.Bishop + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Bishop + color))
         {
             // Move From is Bishop 
-            BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            BishopPossibleMoves(board.Matrix, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board[i, j].Contains(PiecesForm.Queen + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Queen + color))
         {
             // Move From is Queen 
-            QueenPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            QueenPossibleMoves(board.Matrix, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board[i, j].Contains(PiecesForm.King + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.King + color))
         {
             // Move From is King 
-            KingPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            KingPossibleMoves(board.Matrix, game, moveFrom, moveTo, i, j, color);
         }
         else
         {

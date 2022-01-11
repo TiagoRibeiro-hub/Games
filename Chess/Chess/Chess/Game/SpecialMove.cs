@@ -1,15 +1,17 @@
 ﻿namespace Chess;
 #nullable disable
-public class SpecialMove : Player
+public class SpecialMove 
 {
     public string SpecialMoveName { get; set; } = string.Empty;
     public bool NormalMove { get; set; }
     public bool SpecialMoveIsPossible { get; set; } = false;
     public string SpecialMovePieceType { get; set; }
-    
+
 
     //the piece the player chooses to move
     public string SpecialMovementFirstPieceTo { get; set; }
+
+    //the other player piece
     public string SpecialMovementSecondPieceTo { get; set; }
 
     // Castling
@@ -17,16 +19,18 @@ public class SpecialMove : Player
 
     // EnPassant
     public string AllowedEnPassantPawn { get; set; }
+    public List<string> PossibleMovesEnPassant { get; set; }
+
 
 
 #nullable enable
     private static void BoardMovePrep(string moveFrom, string moveTo, out Board moveFromInt, out Board moveToInt)
     {
         moveFromInt = new();
-        (moveFromInt.Letter, moveFromInt.Number) = moveFromInt.GetIntegerMove(moveFrom);
+        (moveFromInt.Letter, moveFromInt.Number) = Funcs.GetIntegerMove(moveFrom);
 
         moveToInt = new();
-        (moveToInt.Letter, moveToInt.Number) = moveFromInt.GetIntegerMove(moveTo);
+        (moveToInt.Letter, moveToInt.Number) = Funcs.GetIntegerMove(moveTo);
     }
     private SpecialMove Castling(string[,] board, SpecialMove sp, int moveFromLetter, int moveFromNumber, string pieceColor)
     {
@@ -50,42 +54,37 @@ public class SpecialMove : Player
         return sp;
     }
 
-    public bool HasSpecialMoves(Board board, string moveFrom, string moveTo, string pieceColor)
+    public SpecialMove HasSpecialMoves(Board board, string moveFrom, string moveTo, string pieceColor)
     {
         SpecialMove sp = new();
         Board moveFromInt;
         Board moveToInt;
         BoardMovePrep(moveFrom, moveTo, out moveFromInt, out moveToInt);
 
-        bool specialMoveIsPossible = false;
+        bool flag = false;
         for (int i = 0; i < board.Matrix.GetLength(0); i++)
         {
+            if (flag)
+            {
+                break;
+            }
             for (int j = 0; j < board.Matrix.GetLength(1); j++)
             {
                 if (board.Matrix[moveFromInt.Letter, moveFromInt.Number] != PiecesForm.Empty)
                 {
-                    if (board.Matrix[moveFromInt.Letter, moveFromInt.Number].Contains(PiecesForm.Pawn))
-                    {
-                        sp = EnPassant(board, sp, moveFromInt, moveToInt, pieceColor);
-                        if (sp.SpecialMoveIsPossible)
-                        {
-                            board.SpecialMovesList.Add(sp);
-                            specialMoveIsPossible = sp.SpecialMoveIsPossible;
-                        }                        
-                    }
-                    if (board.Matrix[moveFromInt.Letter, moveFromInt.Number].Contains(PiecesForm.Tower))
-                    {
-                        sp = Castling(board.Matrix, sp, moveFromInt.Letter, moveFromInt.Number, pieceColor);
-                        if (sp.SpecialMoveIsPossible)
-                        {
-                            board.SpecialMovesList.Add(sp);
-                            specialMoveIsPossible = sp.SpecialMoveIsPossible;
-                        }
-                    }
+                    sp = EnPassant(board, sp, moveFromInt, moveToInt, pieceColor);
+                    flag = true;
+                    break;
+                }
+                if (board.Matrix[moveFromInt.Letter, moveFromInt.Number].Contains(PiecesForm.Tower))
+                {
+                    sp = Castling(board.Matrix, sp, moveFromInt.Letter, moveFromInt.Number, pieceColor);
+                    flag = true;
+                    break;
                 }
             }
         }
-        return specialMoveIsPossible;
+        return sp;
     }
 
 

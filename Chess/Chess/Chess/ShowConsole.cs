@@ -59,22 +59,39 @@ public class ShowConsole
 
     public bool ShowSpecialMove(Board board, Move move)
     {
-        /// ALTERAR
-        ///  VER LISTA DE POSSIVEIS JOGADAS PERGUNTAR SE QUER JOGAR ALGUMA \\\\
         Console.Write($"\n*********************\n*** SPECIAL MOVE ***\n*********************" +
-                $"\n\nIs possible to {move.SpecialMoveName.ToUpper()}:");
+                $"\n\nIs possible to {move.GetSpecialMove.SpecialMoveName.ToUpper()}:");
 
-        if (move.SpecialMoveName == SpecialMovesName.Castling)
+        if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.Castling)
         {
-            Console.Write($"\nTower moves to => {move.SpecialMovementFirstPieceTo}" +
-            $"\nand King moves to => {move.SpecialMovementSecondPieceTo}");
+            Console.Write($"\nTower moves to => {move.GetSpecialMove.SpecialMovementFirstPieceTo.ToUpper()}" +
+            $"\nand King moves to => {move.GetSpecialMove.SpecialMovementSecondPieceTo.ToUpper()}");
         }
-        if (move.SpecialMoveName == SpecialMovesName.EnPassant)
+        if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
         {
-            Console.Write($"\nYour Pawn moves to => {move.SpecialMovementFirstPieceTo}" +
-            $"\nand capture Pawn from => {move.SpecialMovementSecondPieceTo}");
+            ShowPossiblesMovesEnPassant(move);
+            Console.Write("\n\nChoose a option (1 or 2):");
+            string option = Console.ReadLine();
+            bool resOpt = false;
+            do
+            {
+                if (string.IsNullOrEmpty(option) || option.Length != 1)
+                {
+                    Console.WriteLine("\n** Answer (1) or (2) **");
+                }
+                if (option.Contains("1"))
+                {
+                    ShowPossiblesMovesEnPassant(move, 1);
+                    resOpt = true;
+                }
+                else if (option.Contains("2"))
+                {
+                    ShowPossiblesMovesEnPassant(move, 2);
+                    resOpt = true;
+                }
+            } while (resOpt == false);
         }
-        
+
         bool res = false;
         bool isOk = false;
         do
@@ -84,6 +101,66 @@ public class ShowConsole
 
         return isOk;
     }
+
+    private static void ShowPossiblesMovesEnPassant(Move move, int option = 0)
+    {
+        int count = 0;
+        foreach (var item in move.GetSpecialMove.PossibleMovesEnPassant)
+        {
+            count += 1;
+            bool flag = false;
+            string opt = string.Empty;
+            string[] moves = item.Split(';');
+            string goesTo = string.Empty, empty = string.Empty;
+            for (int i = 0; i < moves.Length; i++)
+            {
+                if (i == 0)
+                {
+                    goesTo = moves[i];
+                }
+                else
+                {
+                    empty = moves[i];
+                }
+            }
+            if (count == 1)
+            {
+                opt = "First";
+            }
+            if (count == 2)
+            {
+                opt = "Second";
+            }
+            if (option == 0)
+            {
+                ShowOptions(opt, goesTo, empty);
+            }
+            if (option == 1 && count == 1)
+            {
+                ShowOptions(opt, goesTo, empty);
+                flag = true;
+            }
+            if (option == 2 && count == 2)
+            {
+                ShowOptions(opt, goesTo, empty);
+                flag = true;
+            }
+            if(flag)
+            {
+                move.GetSpecialMove.SpecialMovementFirstPieceTo = goesTo;
+                move.GetSpecialMove.SpecialMovementSecondPieceTo = empty;
+                break;
+            }
+        }
+    }
+
+    private static void ShowOptions(string opt, string goesTo, string empty)
+    {
+        Console.Write($"\n\n{opt} option" +
+                        $"\nYour Pawn moves to => {goesTo.ToUpper()}" +
+                        $"\nand capture the Pawn from => {empty.ToUpper()}");
+    }
+
     public (bool, bool) Answer(bool res, bool isOk)
     {
         Console.Write("\n\nDo you want to do? y/n: ");
