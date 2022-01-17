@@ -53,6 +53,24 @@ public class SpecialMove
         }
         return sp;
     }
+    private SpecialMove EnPassant(Board board, SpecialMove sp, Board moveFromInt, Board moveToInt, string pieceColor)
+    {
+        EnPassant enPassant = new();
+        if (pieceColor.Contains(PiecesColor.White.ToString()))
+        {
+            sp = enPassant.IsPossibleEnPassantMove(board, sp, moveFromInt, moveToInt, PiecesColor.W.ToString());
+        }
+        else
+        {
+            sp = enPassant.IsPossibleEnPassantMove(board, sp, moveFromInt, moveToInt, PiecesColor.B.ToString());
+        }
+        if (sp.SpecialMoveIsPossible)
+        {
+            sp.SpecialMoveName = SpecialMovesName.EnPassant;
+            sp.SpecialMovePieceType = PiecesForm.Pawn;
+        }
+        return sp;
+    }
 
     public SpecialMove HasSpecialMoves(Board board, string moveFrom, string moveTo, string pieceColor)
     {
@@ -88,24 +106,6 @@ public class SpecialMove
     }
 
 
-    private SpecialMove EnPassant(Board board, SpecialMove sp, Board moveFromInt, Board moveToInt, string pieceColor)
-    {
-        EnPassant enPassant = new();
-        if (pieceColor.Contains(PiecesColor.White.ToString()))
-        {
-            sp = enPassant.IsPossibleEnPassantMove(board, sp, moveFromInt, moveToInt, PiecesColor.W.ToString());
-        }
-        else
-        {
-            sp = enPassant.IsPossibleEnPassantMove(board, sp, moveFromInt, moveToInt, PiecesColor.B.ToString());
-        }
-        if (sp.SpecialMoveIsPossible)
-        {
-            sp.SpecialMoveName = SpecialMovesName.EnPassant;
-            sp.SpecialMovePieceType = PiecesForm.Pawn;
-        }
-        return sp;
-    }
 
 
 }

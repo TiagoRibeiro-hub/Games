@@ -7,10 +7,12 @@ public class Tower : Pieces
         return (moveFrom.Letter == moveTo.Letter && (moveFrom.Number > moveTo.Number || moveFrom.Number < moveTo.Number)) ||
                (moveFrom.Number == moveTo.Number && (moveFrom.Letter > moveTo.Letter || moveFrom.Letter < moveTo.Letter));
     }
-    private static void TowerMovement(string[,] board, Game game, int moveToLetter, int moveToNumber, int i, int j, PiecesColor color)
+    private static void TowerMovement(Board board, Game game, int moveToLetter, int moveToNumber, int i, int j, PiecesColor color)
     {
-        board[moveToLetter, moveToNumber] = PiecesForm.Tower + color.ToString();
-        board[i, j] = PiecesForm.Empty;
+        Board moveTo = new() { Letter = moveToLetter, Number = moveToNumber };
+        Funcs.CapuredList(board, color, moveTo);
+        board.Matrix[moveToLetter, moveToNumber] = PiecesForm.Tower + color.ToString();
+        board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
     }
 
@@ -23,18 +25,18 @@ public class Tower : Pieces
         }
         return false;
     }
-    private static void SetMovement(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color, Game game, int i, int j)
+    private static void SetMovement(Board board, int moveToLetter, int moveToNumber, PiecesColor color, Game game, int i, int j)
     {
 
-        if (MoveNotAllowed(board, moveToLetter, moveToNumber, color))
+        if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color))
         {
             // Move To has piece the same color on the line
             game.ResultPlayedBoard = false;
         }
-        else if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
+        else if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
         {
             // Move To is the King           
-            game = CheckMate(board, game, moveToLetter, moveToNumber);
+            game = CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
             if (game.ResultPlayedBoard)
             {
                 TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
@@ -45,10 +47,10 @@ public class Tower : Pieces
             TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
         }
     }
-    private static bool HorizontalMovement(string[,] board, Board moveTo, int moveToNumber, PiecesColor color, Game game, int i, int j)
+    private static bool HorizontalMovement(Board board, Board moveTo, int moveToNumber, PiecesColor color, Game game, int i, int j)
     {
         bool res = true;
-        if (board[moveTo.Letter, moveToNumber] != PiecesForm.Empty)
+        if (board.Matrix[moveTo.Letter, moveToNumber] != PiecesForm.Empty)
         {
             SetMovement(board, moveTo.Letter, moveToNumber, color, game, i, j);
         }
@@ -62,11 +64,10 @@ public class Tower : Pieces
         }
         return res;
     }
-
-    private static bool VerticalMovement(string[,] board, Board moveTo, int moveToLetter, PiecesColor color, Game game, int i, int j)
+    private static bool VerticalMovement(Board board, Board moveTo, int moveToLetter, PiecesColor color, Game game, int i, int j)
     {
         bool res = true;
-        if (board[moveToLetter, moveTo.Number] != PiecesForm.Empty)
+        if (board.Matrix[moveToLetter, moveTo.Number] != PiecesForm.Empty)
         {
             SetMovement(board, moveToLetter, moveTo.Number, color, game, i, j);
         }
@@ -81,7 +82,7 @@ public class Tower : Pieces
         return res;
     }
 
-    public void TowerPossibleMoves(string[,] board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    public void TowerPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         if (AcceptedTowerMovements(moveFrom, moveTo))
         {

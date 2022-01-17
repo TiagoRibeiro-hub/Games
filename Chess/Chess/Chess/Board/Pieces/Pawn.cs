@@ -43,7 +43,6 @@ public class Pawn : Pieces
         }
         return res;
     }
-
     private static void PawnMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         if((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
@@ -56,7 +55,7 @@ public class Pawn : Pieces
         {
             move.GetSpecialMove.AllowedEnPassantPawn = string.Empty;
         }
-        // if pawn after first move(2houses), moves is no long possible to do enPassant 
+        // if pawn after first move(2houses), made a moves is no longer possible to do enPassant 
         int l, n;
         if (board.AllowedEnPassantListPawn.Any())
         {
@@ -71,6 +70,7 @@ public class Pawn : Pieces
             }
         }
         // Pawn Movement
+        Funcs.CapuredList(board, color, moveTo);
         board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
@@ -139,4 +139,6 @@ public class Pawn : Pieces
         }
 
     }
+
+
 }

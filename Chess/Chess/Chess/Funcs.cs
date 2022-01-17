@@ -46,7 +46,6 @@ public static class Funcs
         }
         return 0;
     }
-
     public static string ChangeIntToLetter(int moveInt)
     {
         switch (moveInt)
@@ -61,6 +60,61 @@ public static class Funcs
             case 8: return "h";
             default: return string.Empty;
         }
+    }
+    public static string WhichPieceIs(string[,] board, Board moveTo, string colorToBeCaptured)
+    {
+        bool flag = false;
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            if (flag)
+            {
+                break;
+            }
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                if (moveTo.Letter == i && moveTo.Number == j)
+                {
+                    if (board[i, j] == PiecesForm.Pawn + colorToBeCaptured)
+                    {
+                        return PiecesForm.Pawn + colorToBeCaptured;
+                    }
+                    else if (board[i, j] == PiecesForm.Tower + colorToBeCaptured)
+                    {
+                        return PiecesForm.Tower + colorToBeCaptured;
+                    }
+                    else if (board[i, j] == PiecesForm.Horse + colorToBeCaptured)
+                    {
+                        return PiecesForm.Horse + colorToBeCaptured;
+                    }
+                    else if (board[i, j] == PiecesForm.Bishop + colorToBeCaptured)
+                    {
+                        return PiecesForm.Bishop + colorToBeCaptured;
+                    }
+                    else if (board[i, j] == PiecesForm.Queen + colorToBeCaptured)
+                    {
+                        return PiecesForm.Queen + colorToBeCaptured;
+                    }
+                    else
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return string.Empty;
+    }
+    public static void CapuredList(Board board, PiecesColor color, Board moveTo)
+    {
+        string colorToBeCaptured = color.ToString() == PiecesColor.W.ToString() ? PiecesColor.B.ToString() : PiecesColor.W.ToString();
+
+        string capturedPiece = WhichPieceIs(board.Matrix, moveTo, colorToBeCaptured);
+
+        if (!string.IsNullOrEmpty(capturedPiece))
+        {
+            _ = colorToBeCaptured == PiecesColor.W.ToString() ? board.CapturedBlackPieces.Add(capturedPiece) : board.CapturedWhitePieces.Add(capturedPiece);
+        }
+
     }
 }
 

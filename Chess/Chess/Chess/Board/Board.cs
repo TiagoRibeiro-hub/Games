@@ -5,6 +5,9 @@
     public int Number { get; set; }
 
     public List<string> AllowedEnPassantListPawn { get; set; } = new();
+    public HashSet<string> CapturedWhitePieces { get; set; } = new();
+    public HashSet<string> CapturedBlackPieces { get; set; } = new();
+
 
 
     private const string space = "  ";
