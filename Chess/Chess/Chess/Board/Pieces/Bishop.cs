@@ -5,7 +5,7 @@ public class Bishop : Pieces
     private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color)
     {
         Funcs.CapuredList(board, color, moveTo);
-        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Horse + color.ToString();
+        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Bishop + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
     }

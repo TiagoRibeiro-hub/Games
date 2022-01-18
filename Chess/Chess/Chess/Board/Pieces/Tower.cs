@@ -18,7 +18,7 @@ public class Tower : Pieces
 
     private static bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
     {
-        if (board[moveToLetter, moveToNumber].Contains(color.ToString()))
+        if (board[moveToLetter, moveToNumber].Contains("."+color.ToString()))
         {
             // Move To is the Same Color 
             return true;

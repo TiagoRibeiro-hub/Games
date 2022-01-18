@@ -74,11 +74,7 @@ public static class Funcs
             {
                 if (moveTo.Letter == i && moveTo.Number == j)
                 {
-                    if (board[i, j] == PiecesForm.Pawn + colorToBeCaptured)
-                    {
-                        return PiecesForm.Pawn + colorToBeCaptured;
-                    }
-                    else if (board[i, j] == PiecesForm.Tower + colorToBeCaptured)
+                    if (board[i, j] == PiecesForm.Tower + colorToBeCaptured)
                     {
                         return PiecesForm.Tower + colorToBeCaptured;
                     }
@@ -112,9 +108,94 @@ public static class Funcs
 
         if (!string.IsNullOrEmpty(capturedPiece))
         {
-            _ = colorToBeCaptured == PiecesColor.W.ToString() ? board.CapturedBlackPieces.Add(capturedPiece) : board.CapturedWhitePieces.Add(capturedPiece);
+            if (colorToBeCaptured == PiecesColor.W.ToString())
+            {
+                board.CapturedWhitePieces.Add(capturedPiece);
+            }
+            else
+            {
+                board.CapturedBlackPieces.Add(capturedPiece);
+            }
+        }
+    }
+
+    public static string ChooseFromCapturedList(Board board, PiecesColor color)
+    {
+        string recoverPiece = string.Empty;
+        Console.WriteLine("\n * ********************\n *** Captured List ***\n * ********************\n");
+        if (color.ToString() == PiecesColor.W.ToString())
+        {
+            if (board.CapturedWhitePieces.Count > 0)
+            {
+                recoverPiece = RecoverPiece(board, color.ToString());
+            }
+        }
+        else
+        {
+            if (board.CapturedBlackPieces.Count > 0)
+            {
+                recoverPiece = RecoverPiece(board, color.ToString());
+            }
         }
 
+        return recoverPiece;
+    }
+
+    private static string RecoverPiece(Board board, string color)
+    {
+        Dictionary<int, string> possibleAnswers = new();
+        int count = 0;
+
+        if (color == PiecesColor.W.ToString())
+        {
+            foreach (var item in board.CapturedWhitePieces)
+            {
+                count += 1;
+                possibleAnswers.Add(count, item);
+                Console.WriteLine(count.ToString() + " => " + item.ToString());
+            }
+        }
+        else
+        {
+            foreach (var item in board.CapturedBlackPieces)
+            {
+                count += 1;
+                possibleAnswers.Add(count, item);
+                Console.WriteLine(count.ToString() + " => " + item.ToString());
+            }
+        }
+        return AnswerChooseCapturedList(possibleAnswers);
+    }
+
+    private static string AnswerChooseCapturedList(Dictionary<int, string> possibleAnswers)
+    {
+        string res = string.Empty;
+        bool ok = false;
+        do
+        {
+            Console.Write("\nChoose a option: ");
+            res = Console.ReadLine();
+            if (!string.IsNullOrEmpty(res) && res.Length == 1)
+            {
+                int number;
+                bool success = int.TryParse(res, out number);
+                if (success)
+                {
+                    if (possibleAnswers.ContainsKey(number))
+                    {
+                        ok = true;
+                        res = possibleAnswers.GetValueOrDefault(number);
+                    }
+                }         
+            }
+            if (ok == false)
+            {
+                Console.WriteLine("\n ** Choose a number from the list **\n");
+            }
+
+        } while (ok == false);
+
+        return res;
     }
 }
 

@@ -45,7 +45,7 @@ public class Pawn : Pieces
     }
     private static void PawnMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        if((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
+        if ((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
         {
             // the pawn moves 2 houses
             // the house where the pawn is will be inserted in "board.AllowedEnPassantListPawn"
@@ -69,11 +69,24 @@ public class Pawn : Pieces
                 }
             }
         }
+
         // Pawn Movement
         Funcs.CapuredList(board, color, moveTo);
         board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
+
+        // pawn promotion -> pawn that reaches the 8 rank can be replaced by the
+        // player's choice of a bishop, knight, rook, or queen of the same color
+        string recoverPiece = string.Empty;
+        if (moveTo.Letter == 1 || moveTo.Letter == 8)
+        {
+            recoverPiece = Funcs.ChooseFromCapturedList(board, color);
+            if (!string.IsNullOrEmpty(recoverPiece))
+            {
+                board.Matrix[moveTo.Letter, moveTo.Number] = recoverPiece;
+            }
+        }
     }
     public void PawnPossibleMoves(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
@@ -106,17 +119,23 @@ public class Pawn : Pieces
             if (moveFrom.Number + 1 == moveTo.Number || moveFrom.Number - 1 == moveTo.Number)
             {
                 // DIAGONAL MOVEMENT TO CAPTURE
-                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()) ||
-                    board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
                 {
-                    // Move To is the Same Color 
+                    // Move To is not allowed 
                     game.ResultPlayedBoard = false;
                 }
                 else
                 {
-                    // Move To is not the Same Color 
-                    game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
-                    PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
+                    if (!board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()))
+                    {
+                        // Move To is not the Same Color 
+                        game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
+                        PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
+                    }
+                    else
+                    {
+                        game.ResultPlayedBoard = false;
+                    }
                 }
             }
             else
