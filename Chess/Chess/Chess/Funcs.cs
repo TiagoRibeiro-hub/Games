@@ -122,7 +122,7 @@ public static class Funcs
     public static string ChooseFromCapturedList(Board board, PiecesColor color)
     {
         string recoverPiece = string.Empty;
-        Console.WriteLine("\n * ********************\n *** Captured List ***\n * ********************\n");
+        Console.WriteLine("\n * ********************\n *** CAPTURED LIST ***\n * ********************\n");
         if (color.ToString() == PiecesColor.W.ToString())
         {
             if (board.CapturedWhitePieces.Count > 0)
@@ -136,6 +136,10 @@ public static class Funcs
             {
                 recoverPiece = RecoverPiece(board, color.ToString());
             }
+        }
+        if (string.IsNullOrEmpty(recoverPiece))
+        {
+            Console.WriteLine("Captured List is Empty");
         }
 
         return recoverPiece;

@@ -18,7 +18,7 @@ public class Tower : Pieces
 
     private static bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
     {
-        if (board[moveToLetter, moveToNumber].Contains("."+color.ToString()))
+        if (board[moveToLetter, moveToNumber].Contains("." + color.ToString()))
         {
             // Move To is the Same Color 
             return true;
@@ -28,23 +28,22 @@ public class Tower : Pieces
     private static void SetMovement(Board board, int moveToLetter, int moveToNumber, PiecesColor color, Game game, int i, int j)
     {
 
-        if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color))
+        if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color) == false)
         {
-            // Move To has piece the same color on the line
-            game.ResultPlayedBoard = false;
-        }
-        else if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
-        {
-            // Move To is the King           
-            game = CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
-            if (game.ResultPlayedBoard)
+            // Move To is not the Same Color
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
             {
-                TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
+                // Move To is the King           
+                game = CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
             }
+            TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
+            game.ResultPlayedBoard = true;
+
         }
         else
         {
-            TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color);
+            // Move To has piece the same color on the line
+            game.ResultPlayedBoard = false;
         }
     }
     private static bool HorizontalMovement(Board board, Board moveTo, int moveToNumber, PiecesColor color, Game game, int i, int j)

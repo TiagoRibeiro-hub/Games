@@ -19,7 +19,6 @@ D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.runtime
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.dll
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\ref\Chess.dll
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.pdb
-D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.csproj.AssemblyReference.cache
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfoInputs.cache
 D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfo.cs

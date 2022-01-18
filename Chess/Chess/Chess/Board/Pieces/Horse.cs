@@ -16,7 +16,7 @@ public class Horse : Pieces
             ((moveFrom.Letter - 1 == moveTo.Letter || moveFrom.Letter + 1 == moveTo.Letter) &&
             (moveFrom.Number + 2 == moveTo.Number || moveFrom.Number - 2 == moveTo.Number)))
         {
-            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()))
+            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains("."+color.ToString()))
             {
                 // Move To is the Same Color 
                 game.ResultPlayedBoard = false;

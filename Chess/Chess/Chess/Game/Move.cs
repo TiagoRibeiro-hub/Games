@@ -27,26 +27,32 @@ public class Move : Player
     }
 
     // METHODS
+    private static string MoveAnswer(string fromOrTo)
+    {
+        bool ok = false;
+        string move = string.Empty;
+        do
+        {
+            Console.Write(fromOrTo + ": ");
+            move = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(move) && move.Length == 2)
+            {
+                ok = true;
+            }
+        } while (ok == false);
+        return move;
+    }
     private string FromMove()
     {
-        Console.Write("From: ");
-        string fromMove = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(fromMove) || fromMove.Length != 2)
-        {
-            fromMove = string.Empty;
-        }
-        return fromMove;
+        return MoveAnswer("From");
     }
     private string ToMove()
     {
-        Console.Write("To: ");
-        string toMove = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(toMove) || toMove.Length != 2)
-        {
-            toMove = string.Empty;
-        }
-        return toMove;
+        return MoveAnswer("To");
     }
+
+
+
     public (Move, bool) EnterMove(Board board, Player player)
     {
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
@@ -77,8 +83,8 @@ public class Move : Player
             MoveFrom = valueFrom,
             MoveTo = valueTo,
             PieceColor = this.PieceColor,
+            GetSpecialMove = specialMove.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString())
         };
-        move.GetSpecialMove = specialMove.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString());  
         return (move, true);
     }
     public bool ConfirmMove(Move move)

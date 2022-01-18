@@ -119,23 +119,17 @@ public class Pawn : Pieces
             if (moveFrom.Number + 1 == moveTo.Number || moveFrom.Number - 1 == moveTo.Number)
             {
                 // DIAGONAL MOVEMENT TO CAPTURE
-                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty))
+                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty) ||
+                    board.Matrix[moveTo.Letter, moveTo.Number].Contains("." + color.ToString()))
                 {
-                    // Move To is not allowed 
+                    // Move To is the Same Color  
                     game.ResultPlayedBoard = false;
                 }
                 else
                 {
-                    if (!board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()))
-                    {
-                        // Move To is not the Same Color 
-                        game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
-                        PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
-                    }
-                    else
-                    {
-                        game.ResultPlayedBoard = false;
-                    }
+                    // Move To is not the Same Color 
+                    game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
+                    PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
                 }
             }
             else

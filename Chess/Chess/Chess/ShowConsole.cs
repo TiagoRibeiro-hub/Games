@@ -69,40 +69,62 @@ public class ShowConsole
         }
         if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
         {
-            ShowPossiblesMovesEnPassant(move);
-            Console.Write("\n\nChoose a option (1 or 2):");
-            string option = Console.ReadLine();
+            int count = ShowPossiblesMovesEnPassant(move);
+            Console.Write("\n\nDo you want to play the special move? (y/n):");
+            string res = Console.ReadLine();
             bool resOpt = false;
             do
             {
-                if (string.IsNullOrEmpty(option) || option.Length != 1)
+                if (!string.IsNullOrEmpty(res) && res.Length == 1)
                 {
-                    Console.WriteLine("\n** Answer (1) or (2) **");
+                    if (res.ToLower() == "y")
+                    {
+                        resOpt = true;
+                        string nrCount;
+                        if (count == 1)
+                        {
+                            nrCount = "(1)";
+                        }
+                        else
+                        {
+                            nrCount = "(1 or 2)";
+                        }
+                        Console.Write("\n\nChoose a option:");
+                        string option = Console.ReadLine();
+                        if (option.Contains("1"))
+                        {
+                            ShowPossiblesMovesEnPassant(move, 1);
+                            resOpt = true;
+                        }
+                        else if (option.Contains("2"))
+                        {
+                            ShowPossiblesMovesEnPassant(move, 2);
+                            resOpt = true;
+                        }
+                    }
+                    if (res.ToLower() == "n")
+                    {
+                        return false;
+                    }
                 }
-                if (option.Contains("1"))
+                if (resOpt == false)
                 {
-                    ShowPossiblesMovesEnPassant(move, 1);
-                    resOpt = true;
-                }
-                else if (option.Contains("2"))
-                {
-                    ShowPossiblesMovesEnPassant(move, 2);
-                    resOpt = true;
+                    Console.WriteLine("\n** Answer (Y) or (N) **");
                 }
             } while (resOpt == false);
         }
 
-        bool res = false;
+        bool result = false;
         bool isOk = false;
         do
         {
-            (res, isOk) = Answer(res, isOk);
-        } while (res == false);
+            (result, isOk) = Answer(result, isOk);
+        } while (result == false);
 
         return isOk;
     }
 
-    private static void ShowPossiblesMovesEnPassant(Move move, int option = 0)
+    private static int ShowPossiblesMovesEnPassant(Move move, int option = 0)
     {
         int count = 0;
         foreach (var item in move.GetSpecialMove.PossibleMovesEnPassant)
@@ -145,13 +167,14 @@ public class ShowConsole
                 ShowOptions(opt, goesTo, empty);
                 flag = true;
             }
-            if(flag)
+            if (flag)
             {
                 move.GetSpecialMove.SpecialMovementFirstPieceTo = goesTo;
                 move.GetSpecialMove.SpecialMovementSecondPieceTo = empty;
                 break;
             }
         }
+        return count;
     }
 
     private static void ShowOptions(string opt, string goesTo, string empty)
@@ -163,23 +186,25 @@ public class ShowConsole
 
     public (bool, bool) Answer(bool res, bool isOk)
     {
-        Console.Write("\n\nDo you want to do? y/n: ");
+        Console.Write("\n\nConfirm the move? y/n: ");
         string result = Console.ReadLine();
-        if (string.IsNullOrEmpty(result) || result.Length != 1)
+        if (!string.IsNullOrEmpty(result) && result.Length == 1)
+        {
+            if (result.ToLower().Contains("y"))
+            {
+                isOk = true;
+                res = true;
+            }
+            else if (result.ToLower().Contains("n"))
+            {
+                isOk = false;
+                res = true;
+            }
+        }
+        if(res == false)
         {
             Console.WriteLine("\n** Answer (Y) or (N) **");
-            return (res, isOk);
-        }
-        if (result.ToLower().Contains("y"))
-        {
-            isOk = true;
-            res = true;
-        }
-        else if(result.ToLower().Contains("n"))
-        {
-            isOk = false;
-            res = true;
-        }
+        }      
         return (res, isOk);
     }
 }

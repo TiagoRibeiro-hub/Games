@@ -14,7 +14,7 @@ public class Queen : Pieces
         Tower tower = new(); Bishop bishop = new Bishop();
         if (tower.AcceptedTowerMovements(moveFrom, moveTo) || bishop.AcceptedBishopMovements(moveFrom, moveTo))
         {
-            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(color.ToString()))
+            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains("." + color.ToString()))
             {
                 // Move To is the Same Color 
                 game.ResultPlayedBoard = false;
