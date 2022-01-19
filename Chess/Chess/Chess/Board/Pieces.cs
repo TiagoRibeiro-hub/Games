@@ -35,7 +35,7 @@ public partial class Pieces
         {
             // Move From is Tower 
             Tower tower = new();
-            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color, false);
         }
         else if (board.Matrix[i, j].Contains(PiecesForm.Horse + color))
         {
@@ -47,7 +47,7 @@ public partial class Pieces
         {
             // Move From is Bishop 
             Bishop bishop = new Bishop();
-            bishop.BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color);
+            bishop.BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color, false);
         }
         else if (board.Matrix[i, j].Contains(PiecesForm.Queen + color))
         {

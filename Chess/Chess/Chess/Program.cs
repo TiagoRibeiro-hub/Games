@@ -65,7 +65,7 @@ do
             if (isOk)
             {
                 // SpecialMove
-                board.PlaySpecialMove(board.Matrix, move);
+                board.PlaySpecialMove(board, move);
                 break;
             }
         }

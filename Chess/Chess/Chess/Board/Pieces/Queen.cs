@@ -11,14 +11,14 @@ public class Queen : Pieces
     }
     public void QueenPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        Tower tower = new(); Bishop bishop = new Bishop();
+        Tower tower = new(); Bishop bishop = new();
         if (tower.AcceptedTowerMovements(moveFrom, moveTo))
         {
-            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color, "yes");
+            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color, true);
         }
         else if (bishop.AcceptedBishopMovements(moveFrom, moveTo))
         {
-            bishop.BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color, "yes");
+            bishop.BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color, true);
         }
         else
         {

@@ -79,18 +79,18 @@ public class EnPassant
         return sp;
     }
 
-    public void EnPassantMovement(string[,] board, Board moveFromOriginal, Board movePlayerPawn, Board emptyOpponentPawn, string pieceColor, int i, int j)
+    public void EnPassantMovement(Board board, Board moveFromOriginal, Board movePlayerPawn, Board emptyOpponentPawn, string pieceColor, int i, int j)
     {
         if(i == movePlayerPawn.Letter && j == movePlayerPawn.Number)
         {
             // Capture
-            board[i, j] = PiecesForm.Pawn + pieceColor;
-            board[moveFromOriginal.Letter, moveFromOriginal.Number] = PiecesForm.Empty;
+            board.Matrix[i, j] = PiecesForm.Pawn + pieceColor;
+            board.Matrix[moveFromOriginal.Letter, moveFromOriginal.Number] = PiecesForm.Empty;
         }
         if(i == emptyOpponentPawn.Letter && j == emptyOpponentPawn.Number)
         {
             // Captured
-            board[i, j] = PiecesForm.Empty;
+            board.Matrix[i, j] = PiecesForm.Empty;
         }
     }
 }

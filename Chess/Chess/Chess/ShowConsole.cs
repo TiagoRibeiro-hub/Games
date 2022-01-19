@@ -69,7 +69,7 @@ public class ShowConsole
         }
         if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
         {
-            int count = ShowPossiblesMovesEnPassant(move);
+            int count = ShowPossiblesMovesEnPassant(move, true);
             Console.Write("\n\nDo you want to play the special move? (y/n):");
             string res = Console.ReadLine();
             bool resOpt = false;
@@ -80,27 +80,26 @@ public class ShowConsole
                     if (res.ToLower() == "y")
                     {
                         resOpt = true;
-                        string nrCount;
+                        string option = string.Empty;
                         if (count == 1)
                         {
-                            nrCount = "(1)";
+                            ShowPossiblesMovesEnPassant(move, false);
+
                         }
-                        else
+                        if (count == 2)
                         {
-                            nrCount = "(1 or 2)";
-                        }
-                        Console.Write("\n\nChoose a option:");
-                        string option = Console.ReadLine();
-                        if (option.Contains("1"))
-                        {
-                            ShowPossiblesMovesEnPassant(move, 1);
-                            resOpt = true;
-                        }
-                        else if (option.Contains("2"))
-                        {
-                            ShowPossiblesMovesEnPassant(move, 2);
-                            resOpt = true;
-                        }
+                            Console.Write("\n\nChoose a option (1 or 2):");
+                            option = Console.ReadLine();
+                            if (option.Contains("1"))
+                            {
+                                ShowPossiblesMovesEnPassant(move, true);
+                                resOpt = true;
+                            }
+                            if (option.Contains("2"))
+                            {
+                                ShowPossiblesMovesEnPassant(move, true, 2);
+                            }
+                        }         
                     }
                     if (res.ToLower() == "n")
                     {
@@ -118,13 +117,13 @@ public class ShowConsole
         bool isOk = false;
         do
         {
-            (result, isOk) = Answer(result, isOk);
+            (result, isOk) = Answer(result, isOk, move);
         } while (result == false);
 
         return isOk;
     }
 
-    private static int ShowPossiblesMovesEnPassant(Move move, int option = 0)
+    private static int ShowPossiblesMovesEnPassant(Move move, bool showMoves, int option = 0)
     {
         int count = 0;
         foreach (var item in move.GetSpecialMove.PossibleMovesEnPassant)
@@ -145,27 +144,34 @@ public class ShowConsole
                     empty = moves[i];
                 }
             }
-            if (count == 1)
+            if (showMoves == false)
             {
-                opt = "First";
-            }
-            if (count == 2)
-            {
-                opt = "Second";
-            }
-            if (option == 0)
-            {
-                ShowOptions(opt, goesTo, empty);
-            }
-            if (option == 1 && count == 1)
-            {
-                ShowOptions(opt, goesTo, empty);
                 flag = true;
             }
-            if (option == 2 && count == 2)
+            else
             {
-                ShowOptions(opt, goesTo, empty);
-                flag = true;
+                if (count == 1)
+                {
+                    opt = "First";
+                }
+                if (count == 2)
+                {
+                    opt = "Second";
+                }
+                if (option == 0)
+                {
+                    ShowOptions(opt, goesTo, empty);
+                }
+                if (option == 1 && count == 1)
+                {
+                    ShowOptions(opt, goesTo, empty);
+                    flag = true;
+                }
+                if (option == 2 && count == 2)
+                {
+                    ShowOptions(opt, goesTo, empty);
+                    flag = true;
+                }
             }
             if (flag)
             {
@@ -184,9 +190,9 @@ public class ShowConsole
                         $"\nand capture the Pawn from => {empty.ToUpper()}");
     }
 
-    public (bool, bool) Answer(bool res, bool isOk)
+    public (bool, bool) Answer(bool res, bool isOk, Move move)
     {
-        Console.Write("\n\nConfirm the move? y/n: ");
+        Console.Write("\nConfirm? y/n: ");
         string result = Console.ReadLine();
         if (!string.IsNullOrEmpty(result) && result.Length == 1)
         {
@@ -194,17 +200,27 @@ public class ShowConsole
             {
                 isOk = true;
                 res = true;
+                foreach (var item in move.GetSpecialMove.PossibleMovesEnPassant)
+                {
+                    if (item == move.GetSpecialMove.SpecialMovementFirstPieceTo + ";" + move.GetSpecialMove.SpecialMovementSecondPieceTo)
+                    {
+                        move.GetSpecialMove.PossibleMovesEnPassant.Remove(item);
+                        break;
+                    }
+                }
             }
             else if (result.ToLower().Contains("n"))
             {
+                move.GetSpecialMove.SpecialMovementFirstPieceTo = string.Empty;
+                move.GetSpecialMove.SpecialMovementSecondPieceTo = string.Empty;
                 isOk = false;
                 res = true;
             }
         }
-        if(res == false)
+        if (res == false)
         {
             Console.WriteLine("\n** Answer (Y) or (N) **");
-        }      
+        }
         return (res, isOk);
     }
 }

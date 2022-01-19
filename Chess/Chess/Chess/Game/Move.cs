@@ -7,8 +7,8 @@ public class Move : Player
     public SpecialMove GetSpecialMove { get; set; }
 
 
-    private ShowConsole showConsole = new();
-    private SpecialMove specialMove = new();
+    private readonly ShowConsole showConsole = new();
+    private readonly SpecialMove specialMove = new();
     private static List<string> GetMovesList()
     {
         List<string> moves = new();
@@ -77,7 +77,7 @@ public class Move : Player
             this.PieceColor = PiecesColor.Black;
         }
         // see if has special move
-        Move move = new Move()
+        Move move = new()
         {
             Name = player.Name,
             MoveFrom = valueFrom,

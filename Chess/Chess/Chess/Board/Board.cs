@@ -4,6 +4,7 @@
     public int Letter { get; set; }
     public int Number { get; set; }
 
+    public bool IsCheck { get; set; } = false;
     public List<string> AllowedEnPassantListPawn { get; set; } = new();
     public List<string> CapturedWhitePieces { get; set; } = new();
     public List<string> CapturedBlackPieces { get; set; } = new();
@@ -163,7 +164,7 @@
         return game;
     }
 
-    public void PlaySpecialMove(string[,] board, Move move)
+    public void PlaySpecialMove(Board board, Move move)
     {
         Board moveFirstPiece = new();
         (moveFirstPiece.Letter, moveFirstPiece.Number) = Funcs.GetIntegerMove(move.GetSpecialMove.SpecialMovementFirstPieceTo);
@@ -191,13 +192,13 @@
 
 
 
-        for (int i = 0; i < board.GetLength(0); i++)
+        for (int i = 0; i < board.Matrix.GetLength(0); i++)
         {
-            for (int j = 0; j < board.GetLength(1); j++)
+            for (int j = 0; j < board.Matrix.GetLength(1); j++)
             {
                 if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.Castling)
                 {
-                    castling.CastlingMovement(board, moveFirstPiece, moveSecondPiece, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
+                    castling.CastlingMovement(board.Matrix, moveFirstPiece, moveSecondPiece, pieceColor, moveKingEmptyNumber, moveTowerEmptyNumber, moveEmptyLetter, i, j);
                 }
                 if (move.GetSpecialMove.SpecialMoveName == SpecialMovesName.EnPassant)
                 {
