@@ -12,19 +12,13 @@ public class Queen : Pieces
     public void QueenPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         Tower tower = new(); Bishop bishop = new Bishop();
-        if (tower.AcceptedTowerMovements(moveFrom, moveTo) || bishop.AcceptedBishopMovements(moveFrom, moveTo))
+        if (tower.AcceptedTowerMovements(moveFrom, moveTo))
         {
-            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains("." + color.ToString()))
-            {
-                // Move To is the Same Color 
-                game.ResultPlayedBoard = false;
-            }
-            else
-            {
-                // Move To is not the Same Color 
-                game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
-                QuennMovement(board, game, moveTo, i, j, color);
-            }
+            tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color, "yes");
+        }
+        else if (bishop.AcceptedBishopMovements(moveFrom, moveTo))
+        {
+            bishop.BishopPossibleMoves(board, game, moveFrom, moveTo, i, j, color, "yes");
         }
         else
         {

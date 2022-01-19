@@ -75,11 +75,6 @@ do
             {
                 console.MoveNotAllowed();
             }
-            if (board.AllowedEnPassantListPawn.Any())
-            {
-                // show possible enPassant moves
-                
-            }
             if (game.WhoPlays.Contains(player1.Name))
             {
                 (move, game.ResultPlayedBoard) = move.EnterMove(board, player1);

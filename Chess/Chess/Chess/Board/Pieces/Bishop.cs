@@ -2,58 +2,11 @@
 
 public class Bishop : Pieces
 {
-    private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color)
-    {
-        Funcs.CapuredList(board, color, moveTo);
-        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Bishop + color.ToString();
-        board.Matrix[i, j] = PiecesForm.Empty;
-        game.ResultPlayedBoard = true;
-    }
     public bool AcceptedBishopMovements(Board moveFrom, Board moveTo)
     {
         return (moveFrom.Letter > moveTo.Letter || moveFrom.Letter < moveTo.Letter) &&
                     (moveFrom.Number != moveTo.Number &&
                     (moveFrom.Letter + moveFrom.Number == moveTo.Letter + moveTo.Number || moveFrom.Letter - moveFrom.Number == moveTo.Letter - moveTo.Number));
-    }
-    public void BishopPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
-    {
-
-        if (AcceptedBishopMovements(moveFrom, moveTo))
-        {
-            int count = 0;
-            if (moveFrom.Letter > moveTo.Letter)
-            {
-                // DIAGONAL UP
-                if (moveFrom.Number < moveTo.Number)
-                {
-                    // RIGHT SIDE
-                    DiagonalRightSide(board, game, moveFrom, moveTo, i, j, color, count);
-                }
-                if (moveFrom.Number > moveTo.Number)
-                {
-                    // LEFT SIDE
-                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, count);
-                }
-            }
-            if (moveFrom.Letter < moveTo.Letter)
-            {
-                // DIAGONAL DOWN
-                if (moveFrom.Number < moveTo.Number)
-                {
-                    // RIGHT SIDE
-                    DiagonalRightSide(board, game, moveFrom, moveTo, i, j, color, count, "down");
-                }
-                if (moveFrom.Number > moveTo.Number)
-                {
-                    // LEFT SIDE
-                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, count, "down");
-                }
-            }
-        }
-        else
-        {
-            game.ResultPlayedBoard = false;
-        }
     }
     private static bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
     {
@@ -64,7 +17,21 @@ public class Bishop : Pieces
         }
         return false;
     }
-    private static void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber)
+    private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, string queen = "no")
+    {
+        Funcs.CapuredList(board, color, moveTo);
+        if(queen == "no")
+        {
+            board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Bishop + color.ToString();
+        }
+        if (queen == "yes")
+        {
+            board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Queen + color.ToString();
+        }
+        board.Matrix[i, j] = PiecesForm.Empty;
+        game.ResultPlayedBoard = true;
+    }
+    private static void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, string queen = "no")
     {
         if(MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color) == false)
         {
@@ -74,7 +41,7 @@ public class Bishop : Pieces
                 // Move To is the King           
                 game = CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
             }
-            BishopMovement(board, game, moveTo, i, j, color);
+            BishopMovement(board, game, moveTo, i, j, color, queen);
             game.ResultPlayedBoard = true;
         }
         else
@@ -84,17 +51,16 @@ public class Bishop : Pieces
         }
 
     }
-
-    private static bool DiagonalSideMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber)
+    private static bool DiagonalSideMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, string queen = "no")
     {
         bool res = true;
         if (board.Matrix[moveToLetter, moveToNumber] != PiecesForm.Empty)
         {
-            SetMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber);
+            SetMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber, queen);
         }
         else if (moveToLetter == moveTo.Letter && moveToNumber == moveTo.Number)
         {
-            BishopMovement(board, game, moveTo, i, j, color);
+            BishopMovement(board, game, moveTo, i, j, color, queen);
         }
         else
         {
@@ -102,7 +68,7 @@ public class Bishop : Pieces
         }
         return res;
     }
-    private static void DiagonalRightSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, int count, string upOrDown= "up")
+    private static void DiagonalRightSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, int count, string upOrDown, string queen = "no")
     {
         int moveToLetter = moveFrom.Letter;
         for (int b = moveFrom.Number; b <= moveTo.Number; b++)
@@ -120,7 +86,7 @@ public class Bishop : Pieces
             {
                 moveToNumber -= 1;
             }
-            bool res = DiagonalSideMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber);
+            bool res = DiagonalSideMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber, queen);
             if (res)
             {
                 break;
@@ -131,8 +97,7 @@ public class Bishop : Pieces
             }
         }
     }
-
-    private void DiagonaLeftSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, int count, string upOrDown = "up")
+    private void DiagonaLeftSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, int count, string upOrDown, string queen = "no")
     {
         int moveToLetter = moveFrom.Letter;
         for (int b = moveFrom.Number; b >= moveTo.Number; b--)
@@ -150,7 +115,7 @@ public class Bishop : Pieces
             {
                 moveToNumber += 1;
             }
-            bool res = DiagonalSideMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber);
+            bool res = DiagonalSideMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber, queen);
             if (res)
             {
                 break;
@@ -159,6 +124,46 @@ public class Bishop : Pieces
             {
                 continue;
             }
+        }
+    }
+    public void BishopPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, string queen = "no")
+    {
+
+        if (AcceptedBishopMovements(moveFrom, moveTo))
+        {
+            int count = 0;
+            if (moveFrom.Letter > moveTo.Letter)
+            {
+                // DIAGONAL UP
+                if (moveFrom.Number < moveTo.Number)
+                {
+                    // RIGHT SIDE
+                    DiagonalRightSide(board, game, moveFrom, moveTo, i, j, color, count, "up", queen);
+                }
+                if (moveFrom.Number > moveTo.Number)
+                {
+                    // LEFT SIDE
+                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, count, "up", queen);
+                }
+            }
+            if (moveFrom.Letter < moveTo.Letter)
+            {
+                // DIAGONAL DOWN
+                if (moveFrom.Number < moveTo.Number)
+                {
+                    // RIGHT SIDE
+                    DiagonalRightSide(board, game, moveFrom, moveTo, i, j, color, count, "down", queen);
+                }
+                if (moveFrom.Number > moveTo.Number)
+                {
+                    // LEFT SIDE
+                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, count, "down", queen);
+                }
+            }
+        }
+        else
+        {
+            game.ResultPlayedBoard = false;
         }
     }
 
