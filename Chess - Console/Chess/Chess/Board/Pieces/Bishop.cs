@@ -56,21 +56,7 @@ public class Bishop : Pieces
         bool res = true;
         if (king)
         {
-            board.IsCheck.IsCheck = false;
-            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Bishop) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen))
-            {
-                if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color) == false)
-                {
-                    // Move To is not the Same Color - check by tower
-                    board.IsCheck.IsCheck = true;
-                    board.IsCheck.ByPiece = Funcs.IsCheckBy(board, moveTo.Letter, moveToNumber, color, PiecesForm.Bishop);
-                    res = true;
-                }
-            }
-            else
-            {
-                res = false;
-            }
+            res = board.IsCheck.CheckPiece(board, moveToLetter, moveToNumber, PiecesForm.Bishop, color, res);
         }
         else
         {

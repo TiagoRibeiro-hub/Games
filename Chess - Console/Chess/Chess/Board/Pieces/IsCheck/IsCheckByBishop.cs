@@ -2,7 +2,7 @@
 
 public class IsCheckByBishop
 {
-    public void IsCheckByBishopMethod(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, Bishop bishop, Board originalMoveFrom)
+    public void IsCheckByBishopMethod(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, bool bishopPutKingInCheck)
     {
         //if (board.IsCheck == false)
         //{

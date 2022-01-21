@@ -23,11 +23,11 @@ public class Game
         }
         return Coin.Tails;
     }
-    public string ChooseWhoStarts(string resFlipCoin, ShowConsole console, Player player1, Player player2)
+    public string ChooseWhoStarts(string resFlipCoin, Player player1, Player player2)
     {
         if (resFlipCoin.Contains(Coin.Heads) && player1.CoinSide.Contains(Coin.Heads))
         {
-            string res = console.AskToChooseColor(player1.Name);
+            string res = ShowConsole.AskToChooseColor(player1.Name);
             if (res.ToLower().Contains("w"))
             {
                 player1.PieceColor = PiecesColor.White;
@@ -41,7 +41,7 @@ public class Game
         }
         else
         {
-            string res = console.AskToChooseColor(player2.Name);
+            string res = ShowConsole.AskToChooseColor(player2.Name);
             if (res.ToLower().Contains("w"))
             {
                 player2.PieceColor = PiecesColor.White;
@@ -54,7 +54,7 @@ public class Game
             }
         }
         Console.Clear();
-        return console.ShowWhoStarts(player1, player2);
+        return ShowConsole.ShowWhoStarts(player1, player2);
     }
 
     public void ShiftDistribution(Game game, Player player1, Player player2)

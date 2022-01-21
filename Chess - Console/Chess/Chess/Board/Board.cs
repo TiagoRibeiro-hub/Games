@@ -1,4 +1,6 @@
-﻿public class Board : Pieces
+﻿namespace Chess;
+#nullable disable
+public class Board : Pieces
 {
     public string[,] Matrix { get; set; } = new string[9, 9];
     public int Letter { get; set; }

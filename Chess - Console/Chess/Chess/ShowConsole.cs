@@ -1,12 +1,12 @@
 ﻿namespace Chess;
 #nullable disable
-public class ShowConsole
+public static class ShowConsole
 {
-    public void AskPlayerName()
+    public static void AskPlayerName()
     {
         Console.Write("\nPlayer Name: ");
     }
-    public string AskHeadsOrTailsFirstPlayer()
+    public static string AskHeadsOrTailsFirstPlayer()
     {
         Console.Write($"\n{Coin.Heads}(h) Or {Coin.Tails}(t)? ");
         string res = Console.ReadLine();
@@ -22,7 +22,7 @@ public class ShowConsole
         Console.WriteLine("\n**** Choose (H) or (T) ****");
         return AskHeadsOrTailsFirstPlayer();
     }
-    public string AskHeadsOrTailsSecondPlayer(string player)
+    public static string AskHeadsOrTailsSecondPlayer(string player)
     {
         if (player == Coin.Heads)
         {
@@ -30,7 +30,7 @@ public class ShowConsole
         }
         return Coin.Heads;
     }
-    public string AskToChooseColor(string name)
+    public static string AskToChooseColor(string name)
     {
         Console.Write($"\n{name.ToUpper()} choose first: {PiecesColor.White} (w) or {PiecesColor.Black} (b): ");
         string x = Console.ReadLine();
@@ -42,7 +42,7 @@ public class ShowConsole
         Console.WriteLine("\n**** Choose (W) or (B) ****");
         return AskToChooseColor(name);
     }
-    public string ShowWhoStarts(Player player1, Player player2)
+    public static string ShowWhoStarts(Player player1, Player player2)
     {
         if (player1.PieceColor == PiecesColor.White)
         {
@@ -52,12 +52,11 @@ public class ShowConsole
         Console.WriteLine($"\n   {player2.Name.ToUpper()} goes first");
         return player2.Name;
     }
-    public void MoveNotAllowed()
+    public static void MoveNotAllowed()
     {
         Console.WriteLine("\n*** Move Not Allowed ***\n");
     }
-
-    public bool ShowSpecialMove(Board board, Move move)
+    public static bool ShowSpecialMove(Board board, Move move)
     {
         Console.Write($"\n*********************\n*** SPECIAL MOVE ***\n*********************" +
                 $"\n\nIs possible to {move.GetSpecialMove.SpecialMoveName.ToUpper()}:");
@@ -80,7 +79,7 @@ public class ShowConsole
                     if (res.ToLower() == "y")
                     {
                         resOpt = true;
-                        string option = string.Empty;
+                        string option;
                         if (count == 1)
                         {
                             ShowPossiblesMovesEnPassant(move, false);
@@ -122,7 +121,6 @@ public class ShowConsole
 
         return isOk;
     }
-
     private static int ShowPossiblesMovesEnPassant(Move move, bool showMoves, int option = 0)
     {
         int count = 0;
@@ -182,15 +180,13 @@ public class ShowConsole
         }
         return count;
     }
-
     private static void ShowOptions(string opt, string goesTo, string empty)
     {
         Console.Write($"\n\n{opt} option" +
                         $"\nYour Pawn moves to => {goesTo.ToUpper()}" +
                         $"\nand capture the Pawn from => {empty.ToUpper()}");
     }
-
-    public (bool, bool) Answer(bool res, bool isOk, Move move)
+    public static (bool, bool) Answer(bool res, bool isOk, Move move)
     {
         Console.Write("\nConfirm? y/n: ");
         string result = Console.ReadLine();
@@ -222,5 +218,9 @@ public class ShowConsole
             Console.WriteLine("\n** Answer (Y) or (N) **");
         }
         return (res, isOk);
+    }
+    public static void IsCheckBy(Board board)
+    {
+        Console.WriteLine("Is Check by: " + board.IsCheck.ByPiece.ToUpper());
     }
 }

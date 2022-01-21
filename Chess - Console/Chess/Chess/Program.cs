@@ -1,7 +1,5 @@
 ﻿global using Chess;
 
-ShowConsole console = new();
-
 // FIRST PLAYER
 //console.AskPlayerName();
 //Player player1 = new()
@@ -13,7 +11,7 @@ Player player1 = new()
     Name = "Player1"
 };
 
-player1.CoinSide = console.AskHeadsOrTailsFirstPlayer();
+player1.CoinSide = ShowConsole.AskHeadsOrTailsFirstPlayer();
 
 //// SECOND PLAYER
 //console.AskPlayerName();
@@ -25,7 +23,7 @@ Player player2 = new()
 {
     Name = "Player2"
 };
-player2.CoinSide = console.AskHeadsOrTailsSecondPlayer(player1.CoinSide);
+player2.CoinSide = ShowConsole.AskHeadsOrTailsSecondPlayer(player1.CoinSide);
 
 
 //CHOOSE WHITE OR BLACK WHO STARTS 
@@ -33,7 +31,7 @@ Console.Clear();
 Game game = new();
 game.FinishedGame = false;
 string resFlipCoin = game.FlipCoin();
-game.WhoPlays = game.ChooseWhoStarts(resFlipCoin, console, player1, player2);
+game.WhoPlays = game.ChooseWhoStarts(resFlipCoin, player1, player2);
 game.Shift = PiecesColor.White;
 
 // PREPARE THE GAME
@@ -44,6 +42,7 @@ game.ResultPlayedBoard = true;
 Board board = new();
 board.Display();
 board.ShowBoard(board.Matrix);
+board.IsCheck = new();
 
 // START GAME
 Move move = new();
@@ -61,7 +60,7 @@ do
             move.GetSpecialMove.SpecialMoveIsPossible = false;
             game.ResultPlayedBoard = true;
             //Show Special move
-            bool isOk = console.ShowSpecialMove(board, move);
+            bool isOk = ShowConsole.ShowSpecialMove(board, move);
             if (isOk)
             {
                 // SpecialMove
@@ -73,7 +72,7 @@ do
         {
             if (game.ResultPlayedBoard == false)
             {
-                console.MoveNotAllowed();
+                ShowConsole.MoveNotAllowed();
             }
             if (game.WhoPlays.Contains(player1.Name))
             {
@@ -104,7 +103,10 @@ do
 
     Console.Clear();
     board.ShowBoard(board.Matrix);
-
+    if (board.IsCheck.IsCheck)
+    {
+        ShowConsole.IsCheckBy(board);
+    }
     //CHANGE PLAYER
     game.ChangePlayers(game, player1, player2);
     game.ShiftDistribution(game, player1, player2);

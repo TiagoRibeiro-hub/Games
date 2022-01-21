@@ -1,4 +1,5 @@
 ﻿namespace Chess;
+#nullable disable
 public class Move : Player
 {
     public string MoveFrom { get; set; }
@@ -6,8 +7,6 @@ public class Move : Player
     public List<string> MovesList { get; set; } = GetMovesList();
     public SpecialMove GetSpecialMove { get; set; }
 
-
-    private readonly ShowConsole showConsole = new();
     private readonly SpecialMove specialMove = new();
     private static List<string> GetMovesList()
     {
@@ -30,7 +29,7 @@ public class Move : Player
     private static string MoveAnswer(string fromOrTo)
     {
         bool ok = false;
-        string move = string.Empty;
+        string move;
         do
         {
             Console.Write(fromOrTo + ": ");
@@ -39,8 +38,12 @@ public class Move : Player
             {
                 try
                 {
-                    Funcs.GetIntegerMove(move);
-                    ok = true;
+                    int letter; int number;
+                    (letter, number) = Funcs.GetIntegerMove(move);
+                    if((letter >= 1 && letter <= 8) && (number >= 1 && number <= 8))
+                    {
+                        ok = true;
+                    } 
                 }
                 catch (Exception)
                 {

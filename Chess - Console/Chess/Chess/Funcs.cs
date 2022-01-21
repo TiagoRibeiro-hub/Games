@@ -1,5 +1,6 @@
 ﻿
 namespace Chess;
+#nullable disable
 public static class Funcs
 {
     public static (int, int) GetIntegerMove(string move)
@@ -48,18 +49,30 @@ public static class Funcs
     }
     public static string ChangeIntToLetter(int moveInt)
     {
-        switch (moveInt)
+        return moveInt switch
         {
-            case 1: return "a";
-            case 2: return "b";
-            case 3: return "c";
-            case 4: return "d";
-            case 5: return "e";
-            case 6: return "f";
-            case 7: return "g";
-            case 8: return "h";
-            default: return string.Empty;
-        }
+            1 => "a",
+            2 => "b",
+            3 => "c",
+            4 => "d",
+            5 => "e",
+            6 => "f",
+            7 => "g",
+            8 => "h",
+            _ => string.Empty,
+        };
+        //switch (moveInt)
+        //{
+        //    case 1: return "a";
+        //    case 2: return "b";
+        //    case 3: return "c";
+        //    case 4: return "d";
+        //    case 5: return "e";
+        //    case 6: return "f";
+        //    case 7: return "g";
+        //    case 8: return "h";
+        //    default: return string.Empty;
+        //}
     }
     public static string WhichPieceIs(string[,] board, Board moveTo, string colorToBeCaptured)
     {
@@ -170,7 +183,7 @@ public static class Funcs
     }
     private static string AnswerChooseCapturedList(Dictionary<int, string> possibleAnswers)
     {
-        string res = string.Empty;
+        string res;
         bool ok = false;
         do
         {
@@ -198,15 +211,7 @@ public static class Funcs
 
         return res;
     }
-    public static string IsCheckBy(Board board, int moveToLetter, int moveToNumber, PiecesColor color, string pieceForm)
-    {
-        string newColor = NewColor(color);
-        string l = Funcs.ChangeIntToLetter(moveToLetter);
-        // pieceForm => Tower or Bishop 
-        return board.Matrix[moveToLetter, moveToNumber].Contains(pieceForm)
-            ? pieceForm + newColor + " => " + l + moveToNumber
-            : PiecesForm.Queen + newColor + " => " + l + moveToNumber;
-    }
+
 
     public static string NewColor(PiecesColor color)
     {   
