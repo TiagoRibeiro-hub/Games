@@ -1,0 +1,44 @@
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\Chess.exe
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\Chess.deps.json
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\Chess.runtimeconfig.json
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\bin\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.csproj.AssemblyReference.cache
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfoInputs.cache
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfo.cs
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.csproj.CoreCompileInputs.cache
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Jogos\Chess\Chess\Chess\obj\Debug\net6.0\Chess.genruntimeconfig.cache
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.exe
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.deps.json
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.runtimeconfig.json
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\bin\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfoInputs.cache
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfo.cs
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.csproj.CoreCompileInputs.cache
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Games\C#\Chess\Chess\Chess\obj\Debug\net6.0\Chess.genruntimeconfig.cache
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\Chess.exe
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\Chess.deps.json
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\Chess.runtimeconfig.json
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\bin\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfoInputs.cache
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfo.cs
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.csproj.CoreCompileInputs.cache
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\ref\Chess.dll
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.pdb
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.genruntimeconfig.cache
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.csproj.AssemblyReference.cache
