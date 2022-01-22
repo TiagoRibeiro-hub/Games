@@ -40,5 +40,13 @@ public class Check
             ? pieceForm + newColor + " => " + l + moveToNumber
             : PiecesForm.Queen + newColor + " => " + l + moveToNumber;
     }
+
+    public void ResetMoves(Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
+    {
+        moveFromChange.Letter = originalMoveFrom.Letter;
+        moveFromChange.Number = originalMoveFrom.Number;
+        moveToChange.Letter = originalMoveTo.Letter;
+        moveToChange.Number = originalMoveTo.Number;
+    }
 }
 

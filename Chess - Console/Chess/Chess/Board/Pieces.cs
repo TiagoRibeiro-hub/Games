@@ -9,7 +9,7 @@ public partial class Pieces
 #nullable enable
     private static PiecesColor ColorOption(string colorOpt)
     {
-        PiecesColor color = new();
+        PiecesColor color;
         if (colorOpt.Contains(PiecesColor.White.ToString()))
         {
             color = PiecesColor.W;
@@ -68,7 +68,7 @@ public partial class Pieces
         return game;
     }
 
-    public static Game CheckMate(string[,] board, Game game, int moveToLetter, int moveToNumber)
+    public static void CheckMate(string[,] board, Game game, int moveToLetter, int moveToNumber)
     {
         if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
         {
@@ -80,6 +80,5 @@ public partial class Pieces
         {
             game.ResultPlayedBoard = false;
         }
-        return game;
     }
 }

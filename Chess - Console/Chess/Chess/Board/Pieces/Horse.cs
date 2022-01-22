@@ -24,7 +24,7 @@ public class Horse : Pieces
             else
             {
                 // Move To is not the Same Color 
-                game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
+                CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
                 HorseMovement(board, game, moveTo, i, j, color);
             }
         }

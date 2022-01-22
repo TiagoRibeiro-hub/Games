@@ -1,10 +1,12 @@
 ﻿namespace Chess;
-
+#nullable disable
 public class IsCheckByTower
 {
+    private readonly Check check = new();
+    private readonly Tower tower = new();
+
     public void IsCheckByTowerMethod(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        Tower tower = new();
         Board originalMoveFrom = moveFrom; Board moveFromChange = new();
         Board originalMoveTo = moveTo; Board moveToChange = new();
 
@@ -13,13 +15,13 @@ public class IsCheckByTower
             (originalMoveFrom.Number == originalMoveTo.Number && originalMoveFrom.Letter < originalMoveTo.Letter))
         {
             // tower right
-            ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+            check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
             IsCheckTowerRight(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
 
             if (board.IsCheck.IsCheck == false)
             {
                 // tower left
-                ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
                 IsCheckTowerLeft(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
             }
         }
@@ -28,24 +30,16 @@ public class IsCheckByTower
             (originalMoveFrom.Letter == originalMoveTo.Letter && originalMoveFrom.Number < originalMoveTo.Number))
         {
             // tower up
-            ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+            check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
             IsCheckTowerUp(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
 
             if (board.IsCheck.IsCheck == false)
             {
                 // tower down
-                ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
                 IsCheckTowerDown(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
             }
         }
-    }
-
-    private static void ResetMoves(Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
-    {
-        moveFromChange.Letter = originalMoveFrom.Letter;
-        moveFromChange.Number = originalMoveFrom.Number;
-        moveToChange.Letter = originalMoveTo.Letter;
-        moveToChange.Number = originalMoveTo.Number;
     }
 
     private void IsCheckTowerLeft(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Tower tower, Board originalMoveFrom)

@@ -25,17 +25,25 @@ public class King : Pieces
     }
     public bool IsCheck(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        // CHECK BY TOWER
-        IsCheckByTower isCheckByTower = new();
-        isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+
+        // CHECK BY PAWN
+        IsCheckByPawn isCheckByPawn = new();
+        isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, i, j, color);
+
         if (board.IsCheck.IsCheck == false)
         {
-            //IsCheckByBishop isCheckByBishop = new();
-            //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color, false);
-            return false;
+            // CHECK BY TOWER
+            IsCheckByTower isCheckByTower = new();
+            isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+            if (board.IsCheck.IsCheck == false)
+            {
+                // CHECK BY BISHOP
+                //IsCheckByBishop isCheckByBishop = new();
+                //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color, false);
+                return false;
+            }
         }
-
-
+        
         // is check by...
         ShowConsole.IsCheckBy(board);
         game.ResultPlayedBoard = false;

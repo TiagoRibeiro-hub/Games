@@ -16,9 +16,9 @@ public class Tower : Pieces
         }
         return false;
     }
+   
     private static void IsKingInCheck(Board board, Game game, PiecesColor color, int moveToLetter, int moveToNumber)
     {
-        IsCheckByTower isCheckByTower = new();
         //move from => last position
         //move to => +1 -1
         Board moveLastPositionKing = new();
@@ -90,7 +90,6 @@ public class Tower : Pieces
         // SEE IF KING IS IN CHECK
         IsKingInCheck(board, game, color, moveToLetter, moveToNumber);
     }
-
     private static void SetMovement(Board board, int moveToLetter, int moveToNumber, PiecesColor color, Game game, int i, int j, bool queen)
     {
 
@@ -100,7 +99,7 @@ public class Tower : Pieces
             if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
             {
                 // Move To is the King           
-                game = CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
+                CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
             }
             TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color, queen);
             game.ResultPlayedBoard = true;
@@ -111,8 +110,6 @@ public class Tower : Pieces
             game.ResultPlayedBoard = false;
         }
     }
-
-
 
 
     private static bool HorizontalMovement(Board board, Board moveTo, int moveToNumber, PiecesColor color, Game game, int i, int j, bool queen, bool king)
@@ -178,10 +175,6 @@ public class Tower : Pieces
         for (int t = moveFrom.Letter; t > moveToLetterLimit; t--)
         {
             int moveToLetter = t - 1;
-            //if (moveToLetter == 0)
-            //{
-            //    moveToLetter += 1;
-            //}
             bool res = VerticalMovement(board, moveTo, moveToLetter, color, game, i, j, queen, king);
             if (res)
             {
@@ -207,10 +200,6 @@ public class Tower : Pieces
         for (int t = moveFrom.Letter; t < moveToLetterLimit; t++)
         {
             int moveToLetter = t + 1;
-            //if (moveToLetter == 9)
-            //{
-            //    moveToLetter -= 1;
-            //}
             bool res = VerticalMovement(board, moveTo, moveToLetter, color, game, i, j, queen, king);
 
             if (res)
@@ -238,10 +227,6 @@ public class Tower : Pieces
         for (int t = moveFrom.Number; t < moveToNumberLimit; t++)
         {
             int moveToNumber = t + 1;
-            //if (moveToNumber == 9)
-            //{
-            //    moveToNumber -= 1;
-            //}
             bool res = HorizontalMovement(board, moveTo, moveToNumber, color, game, i, j, queen, king);
             if (res)
             {
@@ -267,10 +252,6 @@ public class Tower : Pieces
         for (int t = moveFrom.Number; t > moveToNumberLimit; t--)
         {
             int moveToNumber = t - 1;
-            //if (moveToNumber == 0)
-            //{
-            //    moveToNumber += 1;
-            //}
             bool res = HorizontalMovement(board, moveTo, moveToNumber, color, game, i, j, queen, king);
             if (res)
             {
@@ -282,8 +263,6 @@ public class Tower : Pieces
             }
         }
     }
-
-
 
     public void TowerPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, bool queen)
     {

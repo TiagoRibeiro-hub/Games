@@ -10,42 +10,20 @@ public static class Funcs
         char xn = x[1];// nr
         return (ChangeLetterToInt(xl), int.Parse(xn.ToString()));
     }
-    private static int ChangeLetterToInt(char xl)
+    private static int ChangeLetterToInt(char value)
     {
-        string value = xl.ToString();
-        if (value.Contains("a"))
+        return value switch
         {
-            return 1;
-        }
-        if (value.Contains("b"))
-        {
-            return 2;
-        }
-        if (value.Contains("c"))
-        {
-            return 3;
-        }
-        if (value.Contains("d"))
-        {
-            return 4;
-        }
-        if (value.Contains("e"))
-        {
-            return 5;
-        }
-        if (value.Contains("f"))
-        {
-            return 6;
-        }
-        if (value.Contains("g"))
-        {
-            return 7;
-        }
-        if (value.Contains("h"))
-        {
-            return 8;
-        }
-        return 0;
+            'a' => 1,
+            'b' => 2,
+            'c' => 3,
+            'd' => 4,
+            'e' => 5,
+            'f' => 6,
+            'g' => 7,
+            'h' => 8,
+              _ => 0
+        };
     }
     public static string ChangeIntToLetter(int moveInt)
     {
@@ -61,18 +39,6 @@ public static class Funcs
             8 => "h",
             _ => string.Empty,
         };
-        //switch (moveInt)
-        //{
-        //    case 1: return "a";
-        //    case 2: return "b";
-        //    case 3: return "c";
-        //    case 4: return "d";
-        //    case 5: return "e";
-        //    case 6: return "f";
-        //    case 7: return "g";
-        //    case 8: return "h";
-        //    default: return string.Empty;
-        //}
     }
     public static string WhichPieceIs(string[,] board, Board moveTo, string colorToBeCaptured)
     {

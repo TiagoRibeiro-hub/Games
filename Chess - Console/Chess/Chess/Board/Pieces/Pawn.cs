@@ -118,19 +118,7 @@ public class Pawn : Pieces
         {
             if (moveFrom.Number + 1 == moveTo.Number || moveFrom.Number - 1 == moveTo.Number)
             {
-                // DIAGONAL MOVEMENT TO CAPTURE
-                if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty) ||
-                    board.Matrix[moveTo.Letter, moveTo.Number].Contains("." + color.ToString()))
-                {
-                    // Move To is the Same Color  
-                    game.ResultPlayedBoard = false;
-                }
-                else
-                {
-                    // Move To is not the Same Color 
-                    game = CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
-                    PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
-                }
+                DiagonalCapturedMovement(board, move, game, moveFrom, moveTo, i, j, color, false);
             }
             else
             {
@@ -153,5 +141,28 @@ public class Pawn : Pieces
 
     }
 
-
+    public void DiagonalCapturedMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, bool king)
+    {
+        // DIAGONAL MOVEMENT TO CAPTURE
+        
+        if (king)
+        {
+            _ = board.IsCheck.CheckPiece(board, moveTo.Letter, moveTo.Number, PiecesForm.Pawn, color, false);
+        }
+        else
+        {
+            if (board.Matrix[moveTo.Letter, moveTo.Number].Contains(PiecesForm.Empty) ||
+                board.Matrix[moveTo.Letter, moveTo.Number].Contains("." + color.ToString()))
+            {
+                // Move To is the Same Color  
+                game.ResultPlayedBoard = false;
+            }
+            else
+            {
+                // Move To is not the Same Color 
+                CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
+                PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
+            }
+        }
+    }
 }

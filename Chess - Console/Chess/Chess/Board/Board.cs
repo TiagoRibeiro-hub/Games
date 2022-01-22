@@ -16,7 +16,7 @@ public class Board : Pieces
 
     private const string space = "  ";
     private readonly Player player = new();
-    
+
 
     public void Display()
     {
@@ -106,11 +106,18 @@ public class Board : Pieces
                 {
                     if (i == 2)
                     {
-                        board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.B;
+                        board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.B;                 
                     }
                     else
                     {
-                        board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.W;
+                        if (j == 4 || j == 6)
+                        {
+                            board[i, j] = PiecesForm.Pawn + PiecesColor.W;
+                        }
+                        else
+                        {
+                            board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.W;
+                        }
                     }
                 }
                 else
@@ -226,7 +233,7 @@ public class Board : Pieces
         }
         else
         {
-            pieceColor = PiecesColor.B.ToString();         
+            pieceColor = PiecesColor.B.ToString();
         }
         return pieceColor;
     }
