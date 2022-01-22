@@ -2,8 +2,8 @@
 public class IsCheckByPawn
 {
     private readonly Check check = new();
-    private readonly Pawn pawn = new();
-    public void IsCheckByPawnMethod(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+
+    public void IsCheckByPawnMethod(Board board, Game game, Board moveFrom, Board moveTo, PiecesColor color)
     {
         Board originalMoveFrom = moveFrom; Board moveFromChange = new();
         Board originalMoveTo = moveTo; Board moveToChange = new();
@@ -12,46 +12,56 @@ public class IsCheckByPawn
         if (originalMoveFrom.Letter > originalMoveTo.Letter)
         {
             // RIGHT
-            RightDiagonal(check, pawn, board, game, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            RightDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color, true);
             if (board.IsCheck.IsCheck == false)
             {
                 // LEFT
-                LeftDiagonal(check, pawn, board, game, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+                LeftDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color, true);
             }
         }
         // DIAGONAL DOWN
         if (originalMoveFrom.Letter < originalMoveTo.Letter)
         {
             // RIGHT
-            RightDiagonal(check, pawn, board, game, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            RightDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color, false);
             if (board.IsCheck.IsCheck == false)
             {
                 // LEFT
-                LeftDiagonal(check, pawn, board, game, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+                LeftDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color, false);
             }
         }
     }
-
-    private static void RightDiagonal(Check check, Pawn pawn, Board board, Game game, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+    // COLOR PROBLEM
+    private static void RightDiagonal(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color, bool up)
     {
-        Move move = new();
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
-
-        moveToChange.Letter = originalMoveFrom.Letter - 1;
+        if (up)
+        {
+            moveToChange.Letter = originalMoveTo.Letter - 1;
+        }
+        else
+        {
+            moveToChange.Letter = originalMoveTo.Letter + 1;
+        }
         moveToChange.Number = originalMoveFrom.Number + 1;
-        pawn.DiagonalCapturedMovement(board, move, game, moveFromChange, moveToChange, 0, 0, color, true);
+        _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false);
+
 
     }
 
-    private static void LeftDiagonal(Check check, Pawn pawn, Board board, Game game, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+    private static void LeftDiagonal(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color, bool up)
     {
-        Move move = new();
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
-
-        moveToChange.Letter = originalMoveFrom.Letter - 1;
+        if (up)
+        {
+            moveToChange.Letter = originalMoveTo.Letter - 1;
+        }
+        else
+        {
+            moveToChange.Letter = originalMoveTo.Letter + 1;
+        }
         moveToChange.Number = originalMoveFrom.Number - 1;
-        pawn.DiagonalCapturedMovement(board, move, game, moveFromChange, moveToChange, 0, 0, color, true);
-
+        _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false);
     }
 
 
