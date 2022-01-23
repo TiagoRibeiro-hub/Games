@@ -25,7 +25,7 @@ public class King : Pieces
     }
     public bool IsCheck(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-
+        board.IsCheck.IsCheck = false;
         // CHECK BY PAWN
         IsCheckByPawn isCheckByPawn = new();
         isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
@@ -40,14 +40,16 @@ public class King : Pieces
                 // CHECK BY BISHOP
                 //IsCheckByBishop isCheckByBishop = new();
                 //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color, false);
-                return false;
             }
         }
-        
-        // is check by...
-        ShowConsole.IsCheckBy(board);
-        game.ResultPlayedBoard = false;
-        return true;
+        if (board.IsCheck.IsCheck)
+        {
+            // is check by...
+            ShowConsole.IsCheckBy(board);
+            game.ResultPlayedBoard = false;
+            return true;
+        }
+        return false;
     }
 
     public void KingPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
