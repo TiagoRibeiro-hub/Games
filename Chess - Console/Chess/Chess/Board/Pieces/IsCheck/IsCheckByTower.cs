@@ -40,6 +40,60 @@ public class IsCheckByTower
                 IsCheckTowerDown(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
             }
         }
+        // MOVE DIAGONAL DOWN LEFT OR RIGHT
+        if (originalMoveFrom.Letter == originalMoveTo.Letter + 1 && 
+            ( originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
+        {
+            // tower up
+            check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+            IsCheckTowerUp(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
+
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower down
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerDown(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower right
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerRight(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower left
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerLeft(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
+            }
+        }
+        // MOVE DIAGONAL UP LEFT OR RIGHT
+        if (originalMoveFrom.Letter == originalMoveTo.Letter - 1 &&
+            (originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
+        {
+            // tower up
+            check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+            IsCheckTowerUp(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
+
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower down
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerDown(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveTo);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower right
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerRight(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                // tower left
+                check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+                IsCheckTowerLeft(board, game, moveFromChange, moveToChange, i, j, color, tower, originalMoveFrom);
+            }
+        }
     }
 
     private void IsCheckTowerLeft(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Tower tower, Board originalMoveFrom)

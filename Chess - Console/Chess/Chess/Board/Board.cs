@@ -106,7 +106,14 @@ public class Board : Pieces
                 {
                     if (i == 2)
                     {
-                        board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.B;                 
+                        if (j == 4 || j == 6)
+                        {
+                            board[i, j] = PiecesForm.Pawn + PiecesColor.B;
+                        }
+                        else
+                        {
+                            board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.B;                 
+                        }
                     }
                     else
                     {

@@ -56,7 +56,7 @@ public class Bishop : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveToLetter, moveToNumber, PiecesForm.Bishop, color, res);
+            res = board.IsCheck.CheckPiece(board, moveToLetter, moveToNumber, PiecesForm.Bishop, color, res, false);
         }
         else
         {
