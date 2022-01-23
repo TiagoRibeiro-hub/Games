@@ -45,7 +45,6 @@ public class King : Pieces
         if (board.IsCheck.IsCheck)
         {
             // is check by...
-            ShowConsole.IsCheckBy(board);
             game.ResultPlayedBoard = false;
             return true;
         }

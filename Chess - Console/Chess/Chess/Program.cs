@@ -106,6 +106,7 @@ do
     if (board.IsCheck.IsCheck)
     {
         ShowConsole.IsCheckBy(board);
+        board.IsCheck.IsCheck = false;
     }
     //CHANGE PLAYER
     game.ChangePlayers(game, player1, player2);

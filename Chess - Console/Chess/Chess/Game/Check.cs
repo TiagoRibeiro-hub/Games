@@ -20,7 +20,7 @@ public class Check
         }
         else if (tower && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
         {
-            // pawn cant capture with front movement
+            // pawn cant capture with front movement or lateral movement
             stopSearch = true;
         }
         else if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))
@@ -36,7 +36,7 @@ public class Check
         return stopSearch;
     }
 
-    private static string IsCheckBy(Board board, int moveToLetter, int moveToNumber, string color, string pieceForm)
+    public string IsCheckBy(Board board, int moveToLetter, int moveToNumber, string color, string pieceForm)
     {
         string l = Funcs.ChangeIntToLetter(moveToLetter);
         // pieceForm => Tower or Bishop 
@@ -52,5 +52,6 @@ public class Check
         moveToChange.Letter = originalMoveTo.Letter;
         moveToChange.Number = originalMoveTo.Number;
     }
+
 }
 

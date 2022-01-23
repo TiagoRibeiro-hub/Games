@@ -81,4 +81,19 @@ public partial class Pieces
             game.ResultPlayedBoard = false;
         }
     }
+
+    public void LastPositionKing(Board board, PiecesColor color, out Board moveLastPositionKing, out PiecesColor newColor)
+    {
+        moveLastPositionKing = new();
+        if (color.ToString() == PiecesColor.W.ToString())
+        {
+            (moveLastPositionKing.Letter, moveLastPositionKing.Number) = Funcs.GetIntegerMove(board.IsCheck.LastKingPositionBlack);
+            newColor = PiecesColor.B;
+        }
+        else
+        {
+            (moveLastPositionKing.Letter, moveLastPositionKing.Number) = Funcs.GetIntegerMove(board.IsCheck.LastKingPositionWhite);
+            newColor = PiecesColor.W;
+        }
+    }
 }

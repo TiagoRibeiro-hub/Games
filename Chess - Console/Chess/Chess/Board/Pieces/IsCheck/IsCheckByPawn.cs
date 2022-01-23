@@ -14,23 +14,23 @@ public class IsCheckByPawn
         // KING MOVES VERTICAL
         KingMovesVertical(board, color, originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
     }
-    private static void KingMovesVertical(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
+
+    private void KingMovesVertical(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
     {
         // KING MOVE VERTICAL UP
         if (originalMoveFrom.Letter == originalMoveTo.Letter - 1 &&
             (originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
         {
-
+            UpDownDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
         }
 
         // KING MOVE VERTICAL DOWN
         if (originalMoveFrom.Letter == originalMoveTo.Letter + 1 &&
             (originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
         {
-
+            UpDownDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
         }
-    }
-    
+    }  
     private void KingMovesHorizontal(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
     {
         // KING MOVE HORIZONTAL UP & DOWN
@@ -106,7 +106,6 @@ public class IsCheckByPawn
             check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         }
     }
-
 
     private void UpDownDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {

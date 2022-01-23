@@ -43,7 +43,7 @@ public class Pawn : Pieces
         }
         return res;
     }
-    private static void PawnMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    private void PawnMovement(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         if ((moveTo.Letter == moveFrom.Letter - 2) || (moveTo.Letter == moveFrom.Letter + 2))
         {
@@ -85,9 +85,49 @@ public class Pawn : Pieces
             if (!string.IsNullOrEmpty(recoverPiece))
             {
                 board.Matrix[moveTo.Letter, moveTo.Number] = recoverPiece;
+
+                if (recoverPiece.Contains(PiecesForm.Tower + color.ToString()))
+                {
+                    Tower tower = new();
+                    tower.IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number);
+                }
             }
         }
+        else
+        {
+            IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number, PiecesForm.Pawn);
+        }
+
+
     }
+
+    private void IsKingInCheck(Board board, Game game, PiecesColor color, int moveToLetter, int moveToNumber, string piecesForm)
+    {
+        Board moveLastPositionKing;
+        PiecesColor newColor;
+        LastPositionKing(board, color, out moveLastPositionKing, out newColor);
+
+        Board moveToChange = new();
+        if (moveLastPositionKing.Letter == moveToLetter + 1 && 
+            (moveLastPositionKing.Number == moveToNumber - 1 || moveLastPositionKing.Number == moveToNumber + 1))
+        {
+            // KING IS IN CHECK FROM BLACK PAWN
+            board.IsCheck.IsCheck = true;
+        }
+        if (moveLastPositionKing.Letter == moveToLetter - 1 &&
+            (moveLastPositionKing.Number == moveToNumber - 1 || moveLastPositionKing.Number == moveToNumber + 1))
+        {
+            // KING IS IN CHECK FROM WHITE PAWN
+            board.IsCheck.IsCheck = true;
+        }
+        if (board.IsCheck.IsCheck)
+        {
+            Check check = new();
+            board.IsCheck.ByPiece = check.IsCheckBy(board, moveToLetter, moveToNumber, newColor.ToString(), piecesForm);
+        }
+
+    }
+
     public void PawnPossibleMoves(Board board, Move move, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
         int letterFromOptOne;
