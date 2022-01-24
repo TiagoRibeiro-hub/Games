@@ -3,11 +3,11 @@
 public class IsCheckByBishop
 {
     private readonly Check check = new();
-    public void IsCheckByBishopMethod(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
+    public void IsCheckByBishopMethod(Board board, Game game, Board moveFrom, Board moveTo, PiecesColor color)
     {
         Board originalMoveFrom = moveFrom; Board moveFromChange = new();
         Board originalMoveTo = moveTo; Board moveToChange = new();
-        if (originalMoveFrom.Letter >= 5 && (originalMoveFrom.Number == 4 && originalMoveFrom.Number == 5))
+        if (originalMoveFrom.Letter >= 5 && (originalMoveFrom.Number == 4 || originalMoveFrom.Number == 5))
         {
             // FIRST DOWN THEN UP
             DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
@@ -78,31 +78,26 @@ public class IsCheckByBishop
     }
 
 
-    private static void DownRightDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+    public void DownRightDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL DOWN RIGHT
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number + 1;
-
-        for (int i = 0; i < board.Matrix.GetLength(0); i++)
+        
+        for (int i = 1; i < board.Matrix.GetLength(0); i++)
         {
             if (flag)
             {
                 break;
             }
-            for (int j = 0; j < board.Matrix.GetLength(1); j++)
+            for (int j = 1; j < board.Matrix.GetLength(1); j++)
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
-                    if (board.IsCheck.IsCheck == true)
-                    {
-                        flag = true;
-                        break;
-                    }
-                    if(moveToChange.Number == 8)
+                    bool stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
+                    if (board.IsCheck.IsCheck || stopSearch || moveToChange.Number == 8)
                     {
                         flag = true;
                         break;
@@ -114,31 +109,26 @@ public class IsCheckByBishop
             }
         }
     }
-    private static void DownLeftDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+    public void DownLeftDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL DOWN LEFT
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number - 1;
-
-        for (int i = 0; i < board.Matrix.GetLength(0); i++)
+        
+        for (int i = 1; i < board.Matrix.GetLength(0); i++)
         {
             if (flag)
             {
                 break;
             }
-            for (int j = 0; j < board.Matrix.GetLength(1); j++)
+            for (int j = 8; j > 0; j--)
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
-                    if (board.IsCheck.IsCheck == true)
-                    {
-                        flag = true;
-                        break;
-                    }
-                    if (moveToChange.Number == 1)
+                    bool stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
+                    if (board.IsCheck.IsCheck || stopSearch || moveToChange.Number == 1)
                     {
                         flag = true;
                         break;
@@ -151,31 +141,26 @@ public class IsCheckByBishop
         }
     }
 
-    private static void UpRightDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+    public void UpRightDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL UP RIGHT
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number + 1;
-
-        for (int i = 0; i < board.Matrix.GetLength(0); i++)
+        
+        for (int i = 8; i > 0; i--)
         {
             if (flag)
             {
                 break;
             }
-            for (int j = 0; j < board.Matrix.GetLength(1); j++)
+            for (int j = 1; j < board.Matrix.GetLength(1); j++)
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
-                    if (board.IsCheck.IsCheck == true)
-                    {
-                        flag = true;
-                        break;
-                    }
-                    if (moveToChange.Number == 8)
+                    bool stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
+                    if (board.IsCheck.IsCheck || stopSearch || moveToChange.Number == 8)
                     {
                         flag = true;
                         break;
@@ -187,31 +172,29 @@ public class IsCheckByBishop
             }
         }
     }
-    private static void UpLeftDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
+   
+    
+    
+    public void UpLeftDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL UP LEFT
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number - 1;
-
-        for (int i = 0; i < board.Matrix.GetLength(0); i++)
+        
+        for (int i = 8; i > 0; i--)
         {
             if (flag)
             {
                 break;
             }
-            for (int j = 0; j < board.Matrix.GetLength(1); j++)
+            for (int j = 8; j > 0; j--)
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
-                    if (board.IsCheck.IsCheck == true)
-                    {
-                        flag = true;
-                        break;
-                    }
-                    if (moveToChange.Number == 1)
+                    bool stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Bishop, color, false, false, true);
+                    if (board.IsCheck.IsCheck || stopSearch || moveToChange.Number == 1)
                     {
                         flag = true;
                         break;

@@ -8,7 +8,7 @@ public class Bishop : Pieces
                     (moveFrom.Number != moveTo.Number &&
                     (moveFrom.Letter + moveFrom.Number == moveTo.Letter + moveTo.Number || moveFrom.Letter - moveFrom.Number == moveTo.Letter - moveTo.Number));
     }
-    private static bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
+    private bool MoveNotAllowed(string[,] board, int moveToLetter, int moveToNumber, PiecesColor color)
     {
         if (board[moveToLetter, moveToNumber].Contains("." + color.ToString()))
         {
@@ -17,7 +17,7 @@ public class Bishop : Pieces
         }
         return false;
     }
-    private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, bool queen)
+    private void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, bool queen)
     {
         Funcs.CapuredList(board, color, moveTo);
         if (queen == false)
@@ -29,9 +29,60 @@ public class Bishop : Pieces
             board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Queen + color.ToString();
         }
         board.Matrix[i, j] = PiecesForm.Empty;
+        IsKingInCheck(board, color, moveTo);
+
         game.ResultPlayedBoard = true;
+
     }
-    private static void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen)
+
+    public void IsKingInCheck(Board board, PiecesColor color, Board moveTo)
+    {
+        Board moveLastPositionKing;
+        PiecesColor newColor;
+        LastPositionKing(board, color, out moveLastPositionKing, out newColor);
+        IsCheckByBishop isCheckByBishop = new(); 
+        Check check = new();
+        Board originalMoveFrom = moveLastPositionKing; 
+        Board originalMoveTo = moveLastPositionKing;
+        Board moveFromChange = new(); 
+        Board moveToChange = new();
+
+        if (moveLastPositionKing.Letter < moveTo.Letter && moveLastPositionKing.Number > moveTo.Number)
+        {
+            // KING IS UP RIGHT - BISHOP IS DOWN LEFT
+            // MOVEMENT SIMULATION
+            originalMoveTo.Letter += 1;
+            originalMoveTo.Number -= 1;
+            isCheckByBishop.DownLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, newColor);       
+        }
+        if (moveLastPositionKing.Letter > moveTo.Letter && moveLastPositionKing.Number > moveTo.Number)
+        {
+            // KING IS DOWN RIGHT - BISHOP IS UP LEFT
+            // MOVEMENT SIMULATION
+            originalMoveTo.Letter -= 1;
+            originalMoveTo.Number -= 1;
+            isCheckByBishop.UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, newColor);
+        }
+        if (moveLastPositionKing.Letter < moveTo.Letter && moveLastPositionKing.Number < moveTo.Number)
+        {
+            // KING IS UP LEFT - BISHOP IS DOWN RIGHT
+            // MOVEMENT SIMULATION
+            originalMoveTo.Letter += 1;
+            originalMoveTo.Number += 1;
+            isCheckByBishop.DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, newColor);
+        }
+        if (moveLastPositionKing.Letter > moveTo.Letter && moveLastPositionKing.Number < moveTo.Number)
+        {
+            // KING IS DOWN LEFT - BISHOP IS UP RIGHT
+            // MOVEMENT SIMULATION
+            originalMoveTo.Letter -= 1;
+            originalMoveTo.Number += 1;
+            isCheckByBishop.UpRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, newColor);
+        }
+
+    }
+
+    private void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen)
     {
         if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color) == false)
         {
@@ -51,7 +102,7 @@ public class Bishop : Pieces
         }
 
     }
-    private static bool DiagonalSideMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen, bool king)
+    private bool DiagonalSideMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen, bool king)
     {
         bool res = true;
         if (king)

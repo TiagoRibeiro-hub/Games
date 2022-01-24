@@ -27,27 +27,33 @@ public class King : Pieces
     {
         board.IsCheck.IsCheck = false;
         // CHECK BY PAWN
-        //IsCheckByPawn isCheckByPawn = new();
-        //isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
-        // CHECK BY BISHOP
-        IsCheckByBishop isCheckByBishop = new();
-        isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color);
+        IsCheckByPawn isCheckByPawn = new();
+        isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
+        
         if (board.IsCheck.IsCheck == false)
         {
-            // CHECK BY TOWER
-            IsCheckByTower isCheckByTower = new();
-            isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+            // CHECK BY BISHOP
+            IsCheckByBishop isCheckByBishop = new();
+            isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, color);
             if (board.IsCheck.IsCheck == false)
             {
-                //// CHECK BY BISHOP
-                //IsCheckByBishop isCheckByBishop = new();
-                //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color);
+                // CHECK BY TOWER
+                IsCheckByTower isCheckByTower = new();
+                isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+            }
+            if(board.IsCheck.IsCheck == false)
+            {
+                // CHECK BY HORSE
+                IsCheckByHorse isCheckByHorse = new();
+                isCheckByHorse.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
             }
         }
         if (board.IsCheck.IsCheck)
         {
             // is check by...
+            ShowConsole.IsCheckBy(board);
             game.ResultPlayedBoard = false;
+            board.IsCheck.IsCheck = false;
             return true;
         }
         return false;

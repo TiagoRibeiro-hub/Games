@@ -74,8 +74,7 @@ public class Pawn : Pieces
         Funcs.CapuredList(board, color, moveTo);
         board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
-        game.ResultPlayedBoard = true;
-
+        
         // pawn promotion -> pawn that reaches the 8 rank can be replaced by the
         // player's choice of a bishop, knight, rook, or queen of the same color
         string recoverPiece = string.Empty;
@@ -91,6 +90,25 @@ public class Pawn : Pieces
                     Tower tower = new();
                     tower.IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number);
                 }
+                if (recoverPiece.Contains(PiecesForm.Bishop + color.ToString()))
+                {
+                    Bishop bishop = new();
+                    bishop.IsKingInCheck(board, color, moveTo);
+                }
+                if (recoverPiece.Contains(PiecesForm.Queen + color.ToString()))
+                {
+                    Tower tower = new();
+                    tower.IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number);
+                    if(board.IsCheck.IsCheck == false)
+                    {
+                        Bishop bishop = new();
+                        bishop.IsKingInCheck(board, color, moveTo);
+                    }
+                }
+                if (recoverPiece.Contains(PiecesForm.Horse + color.ToString()))
+                {
+
+                }
             }
         }
         else
@@ -98,7 +116,7 @@ public class Pawn : Pieces
             IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number, PiecesForm.Pawn);
         }
 
-
+        game.ResultPlayedBoard = true;
     }
 
     private void IsKingInCheck(Board board, Game game, PiecesColor color, int moveToLetter, int moveToNumber, string piecesForm)
