@@ -7,25 +7,9 @@ public class IsCheckByBishop
     {
         Board originalMoveFrom = moveFrom; Board moveFromChange = new();
         Board originalMoveTo = moveTo; Board moveToChange = new();
-        if (originalMoveFrom.Letter == 1)
+        if (originalMoveFrom.Letter >= 5 && (originalMoveFrom.Number == 4 && originalMoveFrom.Number == 5))
         {
-            // DIAGONAL DOWN RIGHT & LEFT
-            UpRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
-            if(board.IsCheck.IsCheck == false)
-            {
-                UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
-            }
-            if(board.IsCheck.IsCheck == false)
-            {
-                DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
-            }
-            if (board.IsCheck.IsCheck == false)
-            {
-                DownLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
-            }
-        }
-        else if (originalMoveFrom.Letter == 8)
-        {
+            // FIRST DOWN THEN UP
             DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
             if (board.IsCheck.IsCheck == false)
             {
@@ -38,18 +22,58 @@ public class IsCheckByBishop
             if (board.IsCheck.IsCheck == false)
             {
                 UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }         
+        }
+        else if (originalMoveFrom.Letter <= 4 && (originalMoveFrom.Number == 4 || originalMoveFrom.Number == 5))
+        {
+            // FIRST UO THEN DOWN
+            UpRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            if (board.IsCheck.IsCheck == false)
+            {
+                UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
             }
         }
-        else if (originalMoveFrom.Number == 1)
+        else if (originalMoveFrom.Number <= 3 && (originalMoveFrom.Letter == 4 || originalMoveFrom.Letter == 5))
         {
+            // FIRST UP & DOWN LEFT THEN RIGHT
+            UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                UpRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
         }
-        else if (originalMoveFrom.Number == 8)
+        else if (originalMoveFrom.Number >= 6 && (originalMoveFrom.Letter == 4 || originalMoveFrom.Letter == 5))
         {
-        }
-        else
-        {
-            // ALL 4 SIDES 
-            UpDownDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            // FIRST UP & DOWN RIGHT THEN LEFT
+            UpRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownRightDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                UpLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
+            if (board.IsCheck.IsCheck == false)
+            {
+                DownLeftDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+            }
         }
     }
 
@@ -127,7 +151,6 @@ public class IsCheckByBishop
         }
     }
 
-
     private static void UpRightDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         bool flag = false;
@@ -200,8 +223,6 @@ public class IsCheckByBishop
             }
         }
     }
-
-
 
 
 }
