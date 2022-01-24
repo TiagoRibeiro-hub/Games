@@ -9,7 +9,7 @@ public class Check
     public string LastKingPositionBlack { get; set; } = "a5";
 
 
-    public bool CheckPiece(Board board, int moveToLetter, int moveToNumber, string piecesForm, PiecesColor color, bool stopSearch, bool tower)
+    public bool CheckPiece(Board board, int moveToLetter, int moveToNumber, string piecesForm, PiecesColor color, bool stopSearch, bool tower, bool bishop)
     {
         board.IsCheck.IsCheck = false;
         string newColor = Funcs.NewColor(color);
@@ -21,6 +21,12 @@ public class Check
         else if (tower && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
         {
             // pawn cant capture with front movement or lateral movement
+            stopSearch = true;
+        }
+        else if (bishop && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
+        {
+            board.IsCheck.IsCheck = true;
+            board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Pawn);
             stopSearch = true;
         }
         else if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))

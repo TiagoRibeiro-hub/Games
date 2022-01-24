@@ -17,7 +17,7 @@ public class Bishop : Pieces
         }
         return false;
     }
-    private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, bool queen, bool king)
+    private static void BishopMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, bool queen)
     {
         Funcs.CapuredList(board, color, moveTo);
         if (queen == false)
@@ -31,7 +31,7 @@ public class Bishop : Pieces
         board.Matrix[i, j] = PiecesForm.Empty;
         game.ResultPlayedBoard = true;
     }
-    private static void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen, bool king)
+    private static void SetMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color, int moveToLetter, int moveToNumber, bool queen)
     {
         if (MoveNotAllowed(board.Matrix, moveToLetter, moveToNumber, color) == false)
         {
@@ -41,7 +41,7 @@ public class Bishop : Pieces
                 // Move To is the King           
                 CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
             }
-            BishopMovement(board, game, moveTo, i, j, color, queen, king);
+            BishopMovement(board, game, moveTo, i, j, color, queen);
             game.ResultPlayedBoard = true;
         }
         else
@@ -56,17 +56,17 @@ public class Bishop : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveToLetter, moveToNumber, PiecesForm.Bishop, color, res, false);
+            res = board.IsCheck.CheckPiece(board, moveToLetter, moveToNumber, PiecesForm.Bishop, color, res, false, false);
         }
         else
         {
             if (board.Matrix[moveToLetter, moveToNumber] != PiecesForm.Empty)
             {
-                SetMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber, queen, king);
+                SetMovement(board, game, moveTo, i, j, color, moveToLetter, moveToNumber, queen);
             }
             else if (moveToLetter == moveTo.Letter && moveToNumber == moveTo.Number)
             {
-                BishopMovement(board, game, moveTo, i, j, color, queen, king);
+                BishopMovement(board, game, moveTo, i, j, color, queen);
             }
             else
             {
@@ -108,7 +108,7 @@ public class Bishop : Pieces
             }
         }
     }
-    public void DiagonaLeftSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, string upOrDown, bool queen, bool king)
+    public void DiagonalLeftSide(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color, string upOrDown, bool queen, bool king)
     {
         if (king)
         {
@@ -158,7 +158,7 @@ public class Bishop : Pieces
                 if (moveFrom.Number > moveTo.Number)
                 {
                     // LEFT SIDE
-                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, "up", queen, false);
+                    DiagonalLeftSide(board, game, moveFrom, moveTo, i, j, color, "up", queen, false);
                 }
             }
             if (moveFrom.Letter < moveTo.Letter)
@@ -172,7 +172,7 @@ public class Bishop : Pieces
                 if (moveFrom.Number > moveTo.Number)
                 {
                     // LEFT SIDE
-                    DiagonaLeftSide(board, game, moveFrom, moveTo, i, j, color, "down", queen, false);
+                    DiagonalLeftSide(board, game, moveFrom, moveTo, i, j, color, "down", queen, false);
                 }
             }
         }

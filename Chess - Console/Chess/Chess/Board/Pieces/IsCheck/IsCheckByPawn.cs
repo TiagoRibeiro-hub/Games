@@ -74,7 +74,7 @@ public class IsCheckByPawn
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveFrom.Number - 1;
             }
-            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false);
+            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false);
             if (board.IsCheck.IsCheck == true)
             {
                 break;
@@ -98,7 +98,7 @@ public class IsCheckByPawn
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveFrom.Number - 1;
             }
-            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false);
+            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false);
             if (board.IsCheck.IsCheck == true)
             {
                 break;
@@ -107,9 +107,10 @@ public class IsCheckByPawn
         }
     }
 
+
+    // Bishop
     private void UpDownDiagonalCheck(Check check, Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
-        check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         UpDiagonalCheck(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
         if (board.IsCheck.IsCheck == false)
         {
@@ -132,7 +133,7 @@ public class IsCheckByPawn
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveTo.Number - 1;
             }
-            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false);
+            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false);
             if (board.IsCheck.IsCheck == true)
             {
                 break;
@@ -156,7 +157,7 @@ public class IsCheckByPawn
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveTo.Number - 1;
             }
-            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false);
+            _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false);
             if (board.IsCheck.IsCheck == true)
             {
                 break;

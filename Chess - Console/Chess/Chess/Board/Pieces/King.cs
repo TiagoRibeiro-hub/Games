@@ -27,9 +27,11 @@ public class King : Pieces
     {
         board.IsCheck.IsCheck = false;
         // CHECK BY PAWN
-        IsCheckByPawn isCheckByPawn = new();
-        isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
-
+        //IsCheckByPawn isCheckByPawn = new();
+        //isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
+        // CHECK BY BISHOP
+        IsCheckByBishop isCheckByBishop = new();
+        isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color);
         if (board.IsCheck.IsCheck == false)
         {
             // CHECK BY TOWER
@@ -37,9 +39,9 @@ public class King : Pieces
             isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
             if (board.IsCheck.IsCheck == false)
             {
-                // CHECK BY BISHOP
+                //// CHECK BY BISHOP
                 //IsCheckByBishop isCheckByBishop = new();
-                //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color, false);
+                //isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, i, j, color);
             }
         }
         if (board.IsCheck.IsCheck)
