@@ -45,7 +45,7 @@ public class King : Pieces
             {
                 // CHECK BY HORSE
                 IsCheckByHorse isCheckByHorse = new();
-                isCheckByHorse.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+                isCheckByHorse.IsCheckByHorseMethod(board, moveFrom, moveTo, color);
             }
         }
         if (board.IsCheck.IsCheck)

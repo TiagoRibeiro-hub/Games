@@ -107,7 +107,8 @@ public class Pawn : Pieces
                 }
                 if (recoverPiece.Contains(PiecesForm.Horse + color.ToString()))
                 {
-
+                    Horse horse = new();
+                    horse.IsKingInCheck(board, color, moveTo); 
                 }
             }
         }

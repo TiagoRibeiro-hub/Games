@@ -2,12 +2,49 @@
 #nullable disable
 public class Horse : Pieces
 {
-    private static void HorseMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color)
+    private void HorseMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color)
     {
         Funcs.CapuredList(board, color, moveTo);
         board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Horse + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
+
+        IsKingInCheck(board, color, moveTo);
+
         game.ResultPlayedBoard = true;
+    }
+
+    public void IsKingInCheck(Board board, PiecesColor color, Board moveTo)
+    {
+        Board moveLastPositionKing;
+        PiecesColor newColor;
+        LastPositionKing(board, color, out moveLastPositionKing, out newColor);
+        
+        Board originalMoveFrom = moveLastPositionKing;
+        Board originalMoveTo = moveLastPositionKing;
+        Board moveFromChange = new();
+        Board moveToChange = new();
+        IsCheckByHorse isCheckByHorse = new();
+
+        if(moveLastPositionKing.Letter < moveTo.Letter && moveLastPositionKing.Number < moveTo.Number)
+        {
+            // KING IS UP LEFT - HORSE IS DOWN RIGHT
+            isCheckByHorse.DownRight(board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+        }
+        if (moveLastPositionKing.Letter < moveTo.Letter && moveLastPositionKing.Number > moveTo.Number)
+        {
+            // KING IS UP RIGHT - HORSE IS DOWN LEFT
+            isCheckByHorse.DownLeft(board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+        }
+        if (moveLastPositionKing.Letter > moveTo.Letter && moveLastPositionKing.Number > moveTo.Number)
+        {
+            // KING IS DOWN RIGHT - HORSE IS UP LEFT
+            isCheckByHorse.UpLeft(board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+        }
+        if (moveLastPositionKing.Letter > moveTo.Letter && moveLastPositionKing.Number < moveTo.Number)
+        {
+            // KING IS DOWN LEFT - HORSE IS UP RIGHT
+            isCheckByHorse.UpRight(board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
+        }
     }
     public void HorsePossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {

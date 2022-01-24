@@ -29,6 +29,12 @@ public class Check
             board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Pawn);
             stopSearch = true;
         }
+        else if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Horse + newColor))
+        {
+            board.IsCheck.IsCheck = true;
+            board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Horse);
+            stopSearch = true;
+        }
         else if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))
         {
             board.IsCheck.IsCheck = true;
