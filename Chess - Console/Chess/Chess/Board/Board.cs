@@ -112,7 +112,7 @@ public class Board : Pieces
                         }
                         else
                         {
-                            board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.B;                 
+                            board[i, j] = PiecesForm.Pawn + PiecesColor.B;                 
                         }
                     }
                     else
@@ -123,7 +123,7 @@ public class Board : Pieces
                         }
                         else
                         {
-                            board[i, j] = PiecesForm.Empty; //PiecesForm.Pawn + PiecesColor.W;
+                            board[i, j] = PiecesForm.Pawn + PiecesColor.W;
                         }
                     }
                 }
@@ -248,10 +248,6 @@ public class Board : Pieces
     {
         // King
         moveKingEmptyNumber = 5;
-        // Tower
-        moveTowerEmptyNumber = 0;
-        // letter W or B
-        moveEmptyLetter = 0;
 
         // Tower
         if (move.GetSpecialMove.CastlingType.ToString() == CastlingType.threeZeros.ToString())

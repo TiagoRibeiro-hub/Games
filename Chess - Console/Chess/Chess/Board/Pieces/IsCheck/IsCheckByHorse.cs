@@ -47,7 +47,7 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false, false, true);
                 }
                 if (board.IsCheck.IsCheck)
                 {
@@ -83,7 +83,7 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false, false, true);
                 }
                 if (board.IsCheck.IsCheck)
                 {
@@ -123,7 +123,7 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false, false, true);
                 }
                 if (board.IsCheck.IsCheck)
                 {
@@ -159,7 +159,7 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false, false, true);
                 }
                 if (board.IsCheck.IsCheck)
                 {

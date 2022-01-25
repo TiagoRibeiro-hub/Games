@@ -28,7 +28,7 @@ public class King : Pieces
         board.IsCheck.IsCheck = false;
         // CHECK BY PAWN
         IsCheckByPawn isCheckByPawn = new();
-        isCheckByPawn.IsCheckByPawnMethod(board, game, moveFrom, moveTo, color);
+        isCheckByPawn.IsCheckByPawnMethod(board, moveFrom, moveTo, color);
         
         if (board.IsCheck.IsCheck == false)
         {

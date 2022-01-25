@@ -77,7 +77,7 @@ public class Pawn : Pieces
         
         // pawn promotion -> pawn that reaches the 8 rank can be replaced by the
         // player's choice of a bishop, knight, rook, or queen of the same color
-        string recoverPiece = string.Empty;
+        string recoverPiece;
         if (moveTo.Letter == 1 || moveTo.Letter == 8)
         {
             recoverPiece = Funcs.ChooseFromCapturedList(board, color);
@@ -114,19 +114,18 @@ public class Pawn : Pieces
         }
         else
         {
-            IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number, PiecesForm.Pawn);
+            IsKingInCheck(board, color, moveTo.Letter, moveTo.Number, PiecesForm.Pawn);
         }
 
         game.ResultPlayedBoard = true;
     }
 
-    private void IsKingInCheck(Board board, Game game, PiecesColor color, int moveToLetter, int moveToNumber, string piecesForm)
+    private void IsKingInCheck(Board board, PiecesColor color, int moveToLetter, int moveToNumber, string piecesForm)
     {
         Board moveLastPositionKing;
         PiecesColor newColor;
         LastPositionKing(board, color, out moveLastPositionKing, out newColor);
 
-        Board moveToChange = new();
         if (moveLastPositionKing.Letter == moveToLetter + 1 && 
             (moveLastPositionKing.Number == moveToNumber - 1 || moveLastPositionKing.Number == moveToNumber + 1))
         {
@@ -142,7 +141,7 @@ public class Pawn : Pieces
         if (board.IsCheck.IsCheck)
         {
             Check check = new();
-            board.IsCheck.ByPiece = check.IsCheckBy(board, moveToLetter, moveToNumber, newColor.ToString(), piecesForm);
+            board.IsCheck.ByPiece = check.IsCheckBy(board, moveToLetter, moveToNumber, color.ToString(), piecesForm);
         }
 
     }

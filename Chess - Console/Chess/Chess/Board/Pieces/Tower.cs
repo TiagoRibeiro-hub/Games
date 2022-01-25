@@ -108,7 +108,7 @@ public class Tower : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveTo.Letter, moveToNumber, PiecesForm.Tower, color, res, true, false);
+            res = board.IsCheck.CheckPiece(board, moveTo.Letter, moveToNumber, PiecesForm.Tower, color, res, true, false, false, false);
         }
         else
         {
@@ -132,7 +132,7 @@ public class Tower : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveToLetter, moveTo.Number, PiecesForm.Tower, color, res, true, false);
+            res = board.IsCheck.CheckPiece(board, moveToLetter, moveTo.Number, PiecesForm.Tower, color, res, true, false, false, false);
         }
         else
         {

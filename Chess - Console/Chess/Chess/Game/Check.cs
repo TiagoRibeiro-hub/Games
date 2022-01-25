@@ -5,11 +5,11 @@ public class Check
     public bool IsCheck { get; set; } = false;
     public string ByPiece { get; set; }
 
-    public string LastKingPositionWhite { get; set; } = "h5";
+    public string LastKingPositionWhite { get; set; } = "h5"; 
     public string LastKingPositionBlack { get; set; } = "a5";
 
 
-    public bool CheckPiece(Board board, int moveToLetter, int moveToNumber, string piecesForm, PiecesColor color, bool stopSearch, bool tower, bool bishop)
+    public bool CheckPiece(Board board, int moveToLetter, int moveToNumber, string piecesForm, PiecesColor color, bool stopSearch, bool tower, bool bishop, bool pawn, bool horse)
     {
         board.IsCheck.IsCheck = false;
         string newColor = Funcs.NewColor(color);
@@ -18,28 +18,55 @@ public class Check
             // same color is protected
             stopSearch = true;
         }
-        else if (tower && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
+        else if (tower)
         {
-            // pawn cant capture with front movement or lateral movement
-            stopSearch = true;
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor) ||
+            bishop && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Horse + newColor)
+            || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Bishop + newColor))
+            {
+                // pawn & horse & bishop cant capture with front movement or lateral movement PROTECTING FROM TOWER
+                stopSearch = true;
+            }
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))
+            {
+                board.IsCheck.IsCheck = true;
+                board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, piecesForm);
+                stopSearch = true;
+            }
         }
-        else if (bishop && board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
+        else if (bishop)
         {
-            board.IsCheck.IsCheck = true;
-            board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Pawn);
-            stopSearch = true;
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Horse + newColor) ||
+            board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor) ||
+            board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Tower + newColor))
+            {
+                // pawn & horse & tower cant capture with diagonal movement PROTECTING FROM BISHOP
+                stopSearch = true;
+            }
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))
+            {
+                board.IsCheck.IsCheck = true;
+                board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, piecesForm);
+                stopSearch = true;
+            }
         }
-        else if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Horse + newColor))
+        else if (pawn)
         {
-            board.IsCheck.IsCheck = true;
-            board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Horse);
-            stopSearch = true;
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Pawn + newColor))
+            {
+                board.IsCheck.IsCheck = true;
+                board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Pawn);
+                stopSearch = true;
+            }
         }
-        else if (board.Matrix[moveToLetter, moveToNumber].Contains(piecesForm + newColor) || board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Queen + newColor))
+        else if (horse)
         {
-            board.IsCheck.IsCheck = true;
-            board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, piecesForm);
-            stopSearch = true;
+            if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.Horse + newColor))
+            {
+                board.IsCheck.IsCheck = true;
+                board.IsCheck.ByPiece = IsCheckBy(board, moveToLetter, moveToNumber, newColor, PiecesForm.Horse);
+                stopSearch = true;
+            }
         }
         else
         {
