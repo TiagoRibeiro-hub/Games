@@ -43,7 +43,7 @@ public class King : Pieces
 
         // IS CHECKMATE
         Check checkMate = new();
-        checkMate.IsCheckMateMethod(board);
+        checkMate.IsCheckMateMethod(board, moveTo);
 
         if (board.IsCheck.SideCheckedConfirmationDict.Any())
         {

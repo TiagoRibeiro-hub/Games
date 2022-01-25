@@ -7,7 +7,7 @@ public class Check
     public string SideToCheck { get; set; }
 
     public bool IsCheckMate { get; set; } = false;
-    public string LastKingPositionWhite { get; set; } = "h5"; 
+    public string LastKingPositionWhite { get; set; } = "h5";
     public string LastKingPositionBlack { get; set; } = "a5";
 
 
@@ -106,10 +106,279 @@ public class Check
         moveToChange.Number = originalMoveTo.Number;
     }
 
-    public bool IsCheckMateMethod(Board board)
+    public void IsCheckMateMethod(Board board, Board moveTo)
     {
+        if (moveTo.Number == 1 && (moveTo.Letter >= 2 && moveTo.Letter <= 7))
+        {
+            //UP , DOWN , RIGHT , DIAGONAL UP RIGHT , DIAGONAL DOWN RIGHT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+            }
+            if(count == 5)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Number == 8 && (moveTo.Letter >= 2 && moveTo.Letter <= 7))
+        {
+            //UP , DOWN , LEFT , DIAGONAL UP LEFT , DIAGONAL DOWN LEFT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpLeft)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownLeft)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 5)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Letter == 1 && (moveTo.Number >= 2 && moveTo.Number <= 7))
+        {
+            //DOWN , RIGHT , LEFT , DIAGONAL DOWN RIGHT , DIAGONAL DOWN LEFT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownLeft)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 5)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Letter == 8 && (moveTo.Number >= 2 && moveTo.Number <= 7))
+        {
+            //UP , RIGHT , LEFT , DIAGONAL UP LEFT , DIAGONAL UP RIGHT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpLeft)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 5)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if ((moveTo.Letter >= 2 && moveTo.Letter <= 7) && (moveTo.Number >= 2 && moveTo.Number <= 7))
+        {
+            // UP , DOWN , RIGHT , LEFT
+            // DIAGONAL DOWN RIGHT , DIAGONAL DOWN LEFT
+            // DIAGONAL UP LEFT , DIAGONAL UP RIGHT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownLeft)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpRight)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpLeft)
+                {
+                    count += 1;
+                }
 
-        return false;
+            }
+            if (count == 8)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Number == 1 && moveTo.Letter == 1)
+        {
+            // DOWN , RIGHT ,  DIAGONAL UP RIGHT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpRight)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 3)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Number == 8 && moveTo.Letter == 1)
+        {
+            // DOWN , LEFT , DIAGONAL DOWN LEFT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Down)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalDownLeft)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 3)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Number == 1 && moveTo.Letter == 8)
+        {
+            // UP , RIGHT , DIAGONAL UP RIGHT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Right)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpRight)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 3)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
+        if (moveTo.Number == 8 && moveTo.Letter == 8)
+        {
+            // UP , LEFT , DIAGONAL UP LEFT
+            int count = 0;
+            foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
+            {
+                if (item.Key == SideToCheckOpt.Up)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.Left)
+                {
+                    count += 1;
+                }
+                if (item.Key == SideToCheckOpt.DiagonalUpLeft)
+                {
+                    count += 1;
+                }
+            }
+            if (count == 3)
+            {
+                board.IsCheck.IsCheckMate = true;
+            }
+        }
     }
 
 }
