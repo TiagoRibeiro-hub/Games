@@ -31,7 +31,7 @@ public class IsCheckByHorse
 
     public void UpRight(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
-        bool flag = false;
+        bool flag = false; bool stopSearch = true;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // letter -1 number +2
         moveToChange.Letter = originalMoveTo.Letter - 1;
@@ -47,17 +47,19 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, true);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
                 }
                 if (board.IsCheck.IsCheck)
                 {
                     flag = true;
                     break;
                 }
-                else
+                if (stopSearch == false)
                 {
                     // letter -2 number +1
+                    moveToChange.Letter = originalMoveTo.Letter - 2;
                     moveToChange.Number = originalMoveTo.Number + 1;
+                    stopSearch = true;
                     break;
                 }
             }
@@ -65,7 +67,7 @@ public class IsCheckByHorse
     }
     public void UpLeft(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
-        bool flag = false;
+        bool flag = false; bool stopSearch = true;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // letter -1 number -2
         moveToChange.Letter = originalMoveTo.Letter - 1;
@@ -81,17 +83,19 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, true);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
                 }
                 if (board.IsCheck.IsCheck)
                 {
                     flag = true;
                     break;
                 }
-                else
+                if (stopSearch == false)
                 {
                     // letter -2 number -1
+                    moveToChange.Letter = originalMoveTo.Letter - 2;
                     moveToChange.Number = originalMoveTo.Number - 1;
+                    stopSearch = true;
                     break;
                 }
             }
@@ -103,7 +107,7 @@ public class IsCheckByHorse
     {
 
 
-        bool flag = false;
+        bool flag = false; bool stopSearch = true;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // letter + 1 number + 2
         moveToChange.Letter = originalMoveTo.Letter + 1;
@@ -119,17 +123,19 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, true);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
                 }
                 if (board.IsCheck.IsCheck)
                 {
                     flag = true;
                     break;
                 }
-                else
+                if (stopSearch == false)
                 {
                     // letter + 2 number + 1
+                    moveToChange.Letter = originalMoveTo.Letter + 2;
                     moveToChange.Number = originalMoveTo.Number + 1;
+                    stopSearch = true;
                     break;
                 }
             }
@@ -137,7 +143,7 @@ public class IsCheckByHorse
     }
     public void DownLeft(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
-        bool flag = false;
+        bool flag = false; bool stopSearch = true;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // letter + 1 number -2
         moveToChange.Letter = originalMoveTo.Letter + 1;
@@ -153,17 +159,19 @@ public class IsCheckByHorse
             {
                 if (i == moveToChange.Letter && j == moveToChange.Number)
                 {
-                    _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, true);
+                    stopSearch = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Tower, color, false, false, false);
                 }
                 if (board.IsCheck.IsCheck)
                 {
                     flag = true;
                     break;
                 }
-                else
+                if(stopSearch == false)
                 {
                     // letter + 2 number -1
+                    moveToChange.Letter = originalMoveTo.Letter + 2;
                     moveToChange.Number = originalMoveTo.Number - 1;
+                    stopSearch = true;
                     break;
                 }
             }

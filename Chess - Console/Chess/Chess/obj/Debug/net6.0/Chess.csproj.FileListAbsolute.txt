@@ -41,3 +41,4 @@ D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Che
 D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\ref\Chess.dll
 D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.pdb
 D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.genruntimeconfig.cache
+D:\Projectos\Projectos\Games\C#\Chess - Console\Chess\Chess\obj\Debug\net6.0\Chess.csproj.AssemblyReference.cache
