@@ -74,7 +74,7 @@ public class Pawn : Pieces
         Funcs.CapuredList(board, color, moveTo);
         board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Pawn + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
-        
+
         // pawn promotion -> pawn that reaches the 8 rank can be replaced by the
         // player's choice of a bishop, knight, rook, or queen of the same color
         string recoverPiece;
@@ -85,30 +85,20 @@ public class Pawn : Pieces
             {
                 board.Matrix[moveTo.Letter, moveTo.Number] = recoverPiece;
 
-                if (recoverPiece.Contains(PiecesForm.Tower + color.ToString()))
+                if (recoverPiece.Contains(PiecesForm.Rook + color.ToString()) || recoverPiece.Contains(PiecesForm.Queen + color.ToString()))
                 {
-                    Tower tower = new();
+                    Rook tower = new();
                     tower.IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number);
                 }
-                if (recoverPiece.Contains(PiecesForm.Bishop + color.ToString()))
+                if (recoverPiece.Contains(PiecesForm.Bishop + color.ToString()) || recoverPiece.Contains(PiecesForm.Queen + color.ToString()))
                 {
                     Bishop bishop = new();
                     bishop.IsKingInCheck(board, color, moveTo);
                 }
-                if (recoverPiece.Contains(PiecesForm.Queen + color.ToString()))
+                if (recoverPiece.Contains(PiecesForm.Knight + color.ToString()))
                 {
-                    Tower tower = new();
-                    tower.IsKingInCheck(board, game, color, moveTo.Letter, moveTo.Number);
-                    if(board.IsCheck.IsCheck == false)
-                    {
-                        Bishop bishop = new();
-                        bishop.IsKingInCheck(board, color, moveTo);
-                    }
-                }
-                if (recoverPiece.Contains(PiecesForm.Horse + color.ToString()))
-                {
-                    Horse horse = new();
-                    horse.IsKingInCheck(board, color, moveTo); 
+                    Knight horse = new();
+                    horse.IsKingInCheck(board, color, moveTo);
                 }
             }
         }
@@ -125,23 +115,27 @@ public class Pawn : Pieces
         Board moveLastPositionKing;
         PiecesColor newColor;
         LastPositionKing(board, color, out moveLastPositionKing, out newColor);
+        Check check = new();
 
-        if (moveLastPositionKing.Letter == moveToLetter + 1 && 
-            (moveLastPositionKing.Number == moveToNumber - 1 || moveLastPositionKing.Number == moveToNumber + 1))
+        if (moveLastPositionKing.Letter == moveToLetter + 1 && moveLastPositionKing.Number == moveToNumber - 1)
         {
-            // KING IS IN CHECK FROM BLACK PAWN
-            board.IsCheck.IsCheck = true;
+            // KING IS IN CHECK FROM BLACK PAWN LEFT
+            check.Checked(board, moveToLetter, moveToNumber, piecesForm, color.ToString());
         }
-        if (moveLastPositionKing.Letter == moveToLetter - 1 &&
-            (moveLastPositionKing.Number == moveToNumber - 1 || moveLastPositionKing.Number == moveToNumber + 1))
+        if (moveLastPositionKing.Letter == moveToLetter + 1 && moveLastPositionKing.Number == moveToNumber + 1)
+        {
+            // KING IS IN CHECK FROM BLACK PAWN RIGHT
+            check.Checked(board, moveToLetter, moveToNumber, piecesForm, color.ToString());
+        }
+        if (moveLastPositionKing.Letter == moveToLetter - 1 && moveLastPositionKing.Number == moveToNumber - 1 )
         {
             // KING IS IN CHECK FROM WHITE PAWN
-            board.IsCheck.IsCheck = true;
+            check.Checked(board, moveToLetter, moveToNumber, piecesForm, color.ToString());
         }
-        if (board.IsCheck.IsCheck)
+        if (moveLastPositionKing.Letter == moveToLetter - 1 && moveLastPositionKing.Number == moveToNumber + 1)
         {
-            Check check = new();
-            board.IsCheck.ByPiece = check.IsCheckBy(board, moveToLetter, moveToNumber, color.ToString(), piecesForm);
+            // KING IS IN CHECK FROM WHITE PAWN
+            check.Checked(board, moveToLetter, moveToNumber, piecesForm, color.ToString());
         }
 
     }

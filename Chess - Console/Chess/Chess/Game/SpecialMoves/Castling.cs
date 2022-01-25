@@ -77,7 +77,7 @@ public class Castling
         else if (i == moveTower.Letter && j == moveTower.Number)
         {
             // TOWER
-            board[i, j] = PiecesForm.Tower + pieceColor;
+            board[i, j] = PiecesForm.Rook + pieceColor;
             board[moveEmptyLetter, moveTowerEmptyNumber] = PiecesForm.Empty;
         }
     }

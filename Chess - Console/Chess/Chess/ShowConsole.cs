@@ -221,6 +221,9 @@ public static class ShowConsole
     }
     public static void IsCheckBy(Board board)
     {
-        Console.WriteLine("Is Check by: " + board.IsCheck.ByPiece.ToUpper());
+        foreach (var item in board.IsCheck.ListCheckBy)
+        {
+            Console.WriteLine("Is Check by: " + item.ToUpper());
+        }
     }
 }

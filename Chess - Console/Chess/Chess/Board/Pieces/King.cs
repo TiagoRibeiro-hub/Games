@@ -25,35 +25,28 @@ public class King : Pieces
     }
     public bool IsCheck(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        board.IsCheck.IsCheck = false;
         // CHECK BY PAWN
         IsCheckByPawn isCheckByPawn = new();
         isCheckByPawn.IsCheckByPawnMethod(board, moveFrom, moveTo, color);
-        
-        if (board.IsCheck.IsCheck == false)
-        {
-            // CHECK BY BISHOP
-            IsCheckByBishop isCheckByBishop = new();
-            isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, color);
-            if (board.IsCheck.IsCheck == false)
-            {
-                // CHECK BY TOWER
-                IsCheckByTower isCheckByTower = new();
-                isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
-            }
-            if(board.IsCheck.IsCheck == false)
-            {
-                // CHECK BY HORSE
-                IsCheckByHorse isCheckByHorse = new();
-                isCheckByHorse.IsCheckByHorseMethod(board, moveFrom, moveTo, color);
-            }
-        }
-        if (board.IsCheck.IsCheck)
+
+        // CHECK BY BISHOP
+        IsCheckByBishop isCheckByBishop = new();
+        isCheckByBishop.IsCheckByBishopMethod(board, game, moveFrom, moveTo, color);
+
+        // CHECK BY TOWER
+        IsCheckByRook isCheckByTower = new();
+        isCheckByTower.IsCheckByTowerMethod(board, game, moveFrom, moveTo, i, j, color);
+
+        // CHECK BY HORSE
+        IsCheckByKnight isCheckByHorse = new();
+        isCheckByHorse.IsCheckByHorseMethod(board, moveFrom, moveTo, color);
+
+        if (board.IsCheck.ListCheckBy.Any())
         {
             // is check by...
             ShowConsole.IsCheckBy(board);
             game.ResultPlayedBoard = false;
-            board.IsCheck.IsCheck = false;
+            board.IsCheck.ListCheckBy.Clear();
             return true;
         }
         return false;
@@ -61,7 +54,7 @@ public class King : Pieces
 
     public void KingPossibleMoves(Board board, Game game, Board moveFrom, Board moveTo, int i, int j, PiecesColor color)
     {
-        Tower tower = new(); Bishop bishop = new();
+        Rook tower = new(); Bishop bishop = new();
         if (tower.AcceptedTowerMovements(moveFrom, moveTo) || bishop.AcceptedBishopMovements(moveFrom, moveTo))
         {
             bool res = IsCheck(board, game, moveFrom, moveTo, i, j, color);

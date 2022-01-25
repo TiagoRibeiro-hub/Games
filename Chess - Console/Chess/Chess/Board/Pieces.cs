@@ -31,16 +31,16 @@ public partial class Pieces
             Pawn pawn = new();
             pawn.PawnPossibleMoves(board, move, game, moveFrom, moveTo, i, j, color);
         }
-        else if (board.Matrix[i, j].Contains(PiecesForm.Tower + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Rook + color))
         {
             // Move From is Tower 
-            Tower tower = new();
+            Rook tower = new();
             tower.TowerPossibleMoves(board, game, moveFrom, moveTo, i, j, color, false);
         }
-        else if (board.Matrix[i, j].Contains(PiecesForm.Horse + color))
+        else if (board.Matrix[i, j].Contains(PiecesForm.Knight + color))
         {
             // Move From is Horse 
-            Horse horse = new();
+            Knight horse = new();
             horse.HorsePossibleMoves(board, game, moveFrom, moveTo, i, j, color);
         }
         else if (board.Matrix[i, j].Contains(PiecesForm.Bishop + color))

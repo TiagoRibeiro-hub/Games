@@ -1,6 +1,6 @@
 ﻿namespace Chess;
 #nullable disable
-public class Tower : Pieces
+public class Rook : Pieces
 {
     public bool AcceptedTowerMovements(Board moveFrom, Board moveTo)
     {
@@ -70,7 +70,7 @@ public class Tower : Pieces
         Funcs.CapuredList(board, color, moveTo);
         if (queen == false)
         {
-            board.Matrix[moveToLetter, moveToNumber] = PiecesForm.Tower + color.ToString();
+            board.Matrix[moveToLetter, moveToNumber] = PiecesForm.Rook + color.ToString();
         }
         if (queen)
         {
@@ -108,7 +108,7 @@ public class Tower : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveTo.Letter, moveToNumber, PiecesForm.Tower, color, res, true, false, false, false);
+            res = board.IsCheck.CheckPiece(board, moveTo.Letter, moveToNumber, PiecesForm.Rook, color, res, true, false, false, false);
         }
         else
         {
@@ -132,7 +132,7 @@ public class Tower : Pieces
         bool res = true;
         if (king)
         {
-            res = board.IsCheck.CheckPiece(board, moveToLetter, moveTo.Number, PiecesForm.Tower, color, res, true, false, false, false);
+            res = board.IsCheck.CheckPiece(board, moveToLetter, moveTo.Number, PiecesForm.Rook, color, res, true, false, false, false);
         }
         else
         {

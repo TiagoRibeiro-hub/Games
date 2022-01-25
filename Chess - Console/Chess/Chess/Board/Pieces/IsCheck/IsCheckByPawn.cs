@@ -75,10 +75,6 @@ public class IsCheckByPawn
                 moveToChange.Number = originalMoveFrom.Number - 1;
             }
             _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false, true, false);
-            if (board.IsCheck.IsCheck == true)
-            {
-                break;
-            }
             check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         }
     }
@@ -99,10 +95,6 @@ public class IsCheckByPawn
                 moveToChange.Number = originalMoveFrom.Number - 1;
             }
             _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false, true, false);
-            if (board.IsCheck.IsCheck == true)
-            {
-                break;
-            }
             check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         }
     }

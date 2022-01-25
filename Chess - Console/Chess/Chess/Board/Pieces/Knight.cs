@@ -1,11 +1,11 @@
 ﻿namespace Chess;
 #nullable disable
-public class Horse : Pieces
+public class Knight : Pieces
 {
     private void HorseMovement(Board board, Game game, Board moveTo, int i, int j, PiecesColor color)
     {
         Funcs.CapuredList(board, color, moveTo);
-        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Horse + color.ToString();
+        board.Matrix[moveTo.Letter, moveTo.Number] = PiecesForm.Knight + color.ToString();
         board.Matrix[i, j] = PiecesForm.Empty;
 
         IsKingInCheck(board, color, moveTo);
@@ -23,7 +23,7 @@ public class Horse : Pieces
         Board originalMoveTo = moveLastPositionKing;
         Board moveFromChange = new();
         Board moveToChange = new();
-        IsCheckByHorse isCheckByHorse = new();
+        IsCheckByKnight isCheckByHorse = new();
 
         if(moveLastPositionKing.Letter < moveTo.Letter && moveLastPositionKing.Number < moveTo.Number)
         {

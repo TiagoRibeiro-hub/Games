@@ -53,13 +53,13 @@ public static class Funcs
             {
                 if (moveTo.Letter == i && moveTo.Number == j)
                 {
-                    if (board[i, j] == PiecesForm.Tower + colorToBeCaptured)
+                    if (board[i, j] == PiecesForm.Rook + colorToBeCaptured)
                     {
-                        return PiecesForm.Tower + colorToBeCaptured;
+                        return PiecesForm.Rook + colorToBeCaptured;
                     }
-                    else if (board[i, j] == PiecesForm.Horse + colorToBeCaptured)
+                    else if (board[i, j] == PiecesForm.Knight + colorToBeCaptured)
                     {
-                        return PiecesForm.Horse + colorToBeCaptured;
+                        return PiecesForm.Knight + colorToBeCaptured;
                     }
                     else if (board[i, j] == PiecesForm.Bishop + colorToBeCaptured)
                     {

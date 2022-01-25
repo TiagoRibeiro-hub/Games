@@ -51,22 +51,22 @@ public class Board : Pieces
                 {
                     if ((i == 1 && j == 1) || (i == 1 && j == 8))
                     {
-                        board[i, j] = PiecesForm.Tower + PiecesColor.B;
+                        board[i, j] = PiecesForm.Rook + PiecesColor.B;
                     }
                     else
                     {
-                        board[i, j] = PiecesForm.Tower + PiecesColor.W;
+                        board[i, j] = PiecesForm.Rook + PiecesColor.W;
                     }
                 }
                 else if ((i == 1 || i == 8) && (j == 2 || j == 7))
                 {
                     if ((i == 1 && j == 2) || (i == 1 && j == 7))
                     {
-                        board[i, j] = PiecesForm.Horse + PiecesColor.B;
+                        board[i, j] = PiecesForm.Knight + PiecesColor.B;
                     }
                     else
                     {
-                        board[i, j] = PiecesForm.Horse + PiecesColor.W;
+                        board[i, j] = PiecesForm.Knight + PiecesColor.W;
                     }
                 }
                 else if ((i == 1 || i == 8) && (j == 3 || j == 6))

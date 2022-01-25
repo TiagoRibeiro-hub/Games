@@ -49,7 +49,7 @@ public class SpecialMove
         if (sp.SpecialMoveIsPossible)
         {
             sp.SpecialMoveName = SpecialMovesName.Castling;
-            sp.SpecialMovePieceType = PiecesForm.Tower;
+            sp.SpecialMovePieceType = PiecesForm.Rook;
         }
         return sp;
     }
@@ -94,7 +94,7 @@ public class SpecialMove
                     flag = true;
                     break;
                 }
-                if (board.Matrix[moveFromInt.Letter, moveFromInt.Number].Contains(PiecesForm.Tower))
+                if (board.Matrix[moveFromInt.Letter, moveFromInt.Number].Contains(PiecesForm.Rook))
                 {
                     sp = Castling(board.Matrix, sp, moveFromInt.Letter, moveFromInt.Number, pieceColor);
                     flag = true;

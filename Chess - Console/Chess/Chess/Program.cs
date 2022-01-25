@@ -103,10 +103,11 @@ do
 
     Console.Clear();
     board.ShowBoard(board.Matrix);
-    if (board.IsCheck.IsCheck)
+    if (board.IsCheck.ListCheckBy.Any())
     {
+        // is check by...
         ShowConsole.IsCheckBy(board);
-        board.IsCheck.IsCheck = false;
+        board.IsCheck.ListCheckBy.Clear();
     }
     //CHANGE PLAYER
     game.ChangePlayers(game, player1, player2);
