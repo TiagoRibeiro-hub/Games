@@ -23,6 +23,7 @@ public class IsCheckByKnight
     public void UpRight(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpRight;
         // letter -1 number +2
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number + 2;
@@ -46,6 +47,7 @@ public class IsCheckByKnight
     public void UpLeft(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpLeft;
         // letter -1 number -2
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number - 2;
@@ -71,6 +73,7 @@ public class IsCheckByKnight
     public void DownRight(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownRight;
         // letter + 1 number + 2
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number + 2;
@@ -94,6 +97,7 @@ public class IsCheckByKnight
     public void DownLeft(Board board, Board originalMoveFrom, Board originalMoveTo, Board moveFromChange, Board moveToChange, PiecesColor color)
     {
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownLeft;
         // letter + 1 number -2
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number - 2;

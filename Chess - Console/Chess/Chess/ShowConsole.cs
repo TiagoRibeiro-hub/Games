@@ -221,9 +221,12 @@ public static class ShowConsole
     }
     public static void IsCheckBy(Board board)
     {
-        foreach (var item in board.IsCheck.ListCheckBy)
+        Console.WriteLine("*********************************");
+        foreach (var item in board.IsCheck.SideCheckedConfirmationDict)
         {
-            Console.WriteLine("Is Check by: " + item.ToUpper());
+            Console.WriteLine(item.Key + ":\n");
+            Console.WriteLine("Is Check by: " + item.Value.ToUpper() +"\n");
         }
+        Console.WriteLine("*********************************");
     }
 }

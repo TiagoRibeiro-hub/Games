@@ -80,21 +80,25 @@ public class IsCheckByRook
     private void IsCheckTowerLeft(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Rook tower, Board originalMoveFrom)
     {
         moveToChange.Number = originalMoveFrom.Number - 1;
+        board.IsCheck.SideToCheck = SideToCheckOpt.Left;
         tower.LeftDirection(board, game, moveFrom, moveToChange, i, j, color, false, true);
     }
     private void IsCheckTowerRight(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Rook tower, Board originalMoveFrom)
     {
         moveToChange.Number = originalMoveFrom.Number + 1;
+        board.IsCheck.SideToCheck = SideToCheckOpt.Right;
         tower.RightDirection(board, game, moveFrom, moveToChange, i, j, color, false, true);
     }
     private void IsCheckTowerUp(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Rook tower, Board originalMoveFrom)
     {
         moveToChange.Letter = originalMoveFrom.Letter - 1;// one up
+        board.IsCheck.SideToCheck = SideToCheckOpt.Up;
         tower.UpDirection(board, game, moveFrom, moveToChange, i, j, color, false, true);
     }
     private void IsCheckTowerDown(Board board, Game game, Board moveFrom, Board moveToChange, int i, int j, PiecesColor color, Rook tower, Board originalMoveFrom)
     {
         moveToChange.Letter = originalMoveFrom.Letter + 1;// one down
+        board.IsCheck.SideToCheck = SideToCheckOpt.Down;
         tower.DownDirection(board, game, moveFrom, moveToChange, i, j, color, false, true);
     }
 

@@ -43,6 +43,8 @@ Board board = new();
 board.Display();
 board.ShowBoard(board.Matrix);
 board.IsCheck = new();
+//board.IsCheck.ListCheckByToPrint = new();
+board.IsCheck.SideCheckedConfirmationDict = new();
 
 // START GAME
 Move move = new();
@@ -99,22 +101,31 @@ do
         }
 
 
-    } while (game.ResultPlayedBoard == false);
+    } while (game.ResultPlayedBoard == false || board.IsCheck.IsCheckMate == false);
 
     Console.Clear();
-    board.ShowBoard(board.Matrix);
-    if (board.IsCheck.ListCheckBy.Any())
+    if (board.IsCheck.IsCheckMate)
     {
-        // is check by...
-        ShowConsole.IsCheckBy(board);
-        board.IsCheck.ListCheckBy.Clear();
+                                   
+        Console.WriteLine("********************\n**** CHECKMATE *****\n********************");
+        game.FinishedGame = true;
     }
-    //CHANGE PLAYER
-    game.ChangePlayers(game, player1, player2);
-    game.ShiftDistribution(game, player1, player2);
+    else
+    {
+        board.ShowBoard(board.Matrix);
+        if (board.IsCheck.SideCheckedConfirmationDict.Any())
+        {
+            // is check by...
+            ShowConsole.IsCheckBy(board);
+            board.IsCheck.SideCheckedConfirmationDict.Clear();
+        }
+        //CHANGE PLAYER
+        game.ChangePlayers(game, player1, player2);
+        game.ShiftDistribution(game, player1, player2);
+    }
 
 } while (game.FinishedGame == false);
 
+Console.WriteLine("*** FINISHED ***\nPlay again? (y/n):");
 
 
-//https://www.instructables.com/Playing-Chess/

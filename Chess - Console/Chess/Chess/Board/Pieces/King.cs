@@ -41,12 +41,16 @@ public class King : Pieces
         IsCheckByKnight isCheckByHorse = new();
         isCheckByHorse.IsCheckByHorseMethod(board, moveFrom, moveTo, color);
 
-        if (board.IsCheck.ListCheckBy.Any())
+        // IS CHECKMATE
+        Check checkMate = new();
+        checkMate.IsCheckMateMethod(board);
+
+        if (board.IsCheck.SideCheckedConfirmationDict.Any())
         {
             // is check by...
             ShowConsole.IsCheckBy(board);
             game.ResultPlayedBoard = false;
-            board.IsCheck.ListCheckBy.Clear();
+            board.IsCheck.SideCheckedConfirmationDict.Clear(); 
             return true;
         }
         return false;

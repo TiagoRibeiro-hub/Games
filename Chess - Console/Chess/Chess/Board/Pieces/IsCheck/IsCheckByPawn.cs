@@ -9,20 +9,20 @@ public class IsCheckByPawn
         Board originalMoveTo = moveTo; Board moveToChange = new();
 
         // KING MOVES HORIZONTAL
-        KingMovesHorizontal(board, color, originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        KingMovesHorizontalAndVertical(board, color, originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
 
         // KING MOVES VERTICAL
-        KingMovesVertical(board, color, originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
+        KingMovesDiagonal(board, color, originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
     }
-    private void KingMovesHorizontal(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
+    private void KingMovesHorizontalAndVertical(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
     {
-        // KING MOVE HORIZONTAL UP & DOWN
+        // KING MOVE VERTICAL UP & DOWN
         if (originalMoveFrom.Number == originalMoveTo.Number &&
             (originalMoveFrom.Letter > originalMoveTo.Letter || originalMoveFrom.Letter < originalMoveTo.Letter))
         {
             MovementCheckDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
         }
-        //// KING MOVE HORIZONTAL RIGHT & LEFT
+        // KING MOVE HORIZONTAL RIGHT & LEFT
         if (originalMoveFrom.Letter == originalMoveTo.Letter &&
            (originalMoveFrom.Number > originalMoveTo.Number || originalMoveFrom.Number < originalMoveTo.Number))
         {
@@ -30,16 +30,16 @@ public class IsCheckByPawn
         }
     }
 
-    private void KingMovesVertical(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
+    private void KingMovesDiagonal(Board board, PiecesColor color, Board originalMoveFrom, Board moveFromChange, Board originalMoveTo, Board moveToChange)
     {
-        // KING MOVE VERTICAL UP
+        // KING MOVE DIAGONAL UP RIGHT & LEFT
         if (originalMoveFrom.Letter == originalMoveTo.Letter - 1 &&
             (originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
         {
             MovementCheckDiagonal(check, board, originalMoveFrom, originalMoveTo, moveFromChange, moveToChange, color);
         }
 
-        // KING MOVE VERTICAL DOWN
+        // KING MOVE DIAGONAL DOWN RIGHT & LEFT
         if (originalMoveFrom.Letter == originalMoveTo.Letter + 1 &&
             (originalMoveFrom.Number == originalMoveTo.Number - 1 || originalMoveFrom.Number == originalMoveTo.Number + 1))
         {
@@ -68,11 +68,13 @@ public class IsCheckByPawn
             {
                 // CHECK DIAGONAL RIGHT
                 moveToChange.Number = originalMoveFrom.Number + 1;
+                board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownRight;
             }
             if (i == 1)
             {
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveFrom.Number - 1;
+                board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownLeft;
             }
             _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false, true, false);
             check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
@@ -88,11 +90,14 @@ public class IsCheckByPawn
             {
                 // CHECK DIAGONAL RIGHT
                 moveToChange.Number = originalMoveFrom.Number + 1;
+                board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpRight;
+
             }
             if (i == 1)
             {
                 // CHECK DIAGONAL LEFT
                 moveToChange.Number = originalMoveFrom.Number - 1;
+                board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpLeft;
             }
             _ = board.IsCheck.CheckPiece(board, moveToChange.Letter, moveToChange.Number, PiecesForm.Pawn, color, false, false, false, true, false);
             check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);

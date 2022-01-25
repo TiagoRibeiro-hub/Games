@@ -49,6 +49,7 @@ public class IsCheckByBishop
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL DOWN RIGHT
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownRight;
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number + 1;
 
@@ -80,6 +81,7 @@ public class IsCheckByBishop
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL DOWN LEFT
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalDownLeft;
         moveToChange.Letter = originalMoveTo.Letter + 1;
         moveToChange.Number = originalMoveTo.Number - 1;
 
@@ -112,6 +114,7 @@ public class IsCheckByBishop
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL UP RIGHT
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpRight;
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number + 1;
 
@@ -143,6 +146,7 @@ public class IsCheckByBishop
         bool flag = false;
         check.ResetMoves(originalMoveFrom, moveFromChange, originalMoveTo, moveToChange);
         // CHECK DIAGONAL UP LEFT
+        board.IsCheck.SideToCheck = SideToCheckOpt.DiagonalUpLeft;
         moveToChange.Letter = originalMoveTo.Letter - 1;
         moveToChange.Number = originalMoveTo.Number - 1;
 
