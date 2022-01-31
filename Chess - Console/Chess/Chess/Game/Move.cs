@@ -8,6 +8,8 @@ public class Move : Player
     public SpecialMove GetSpecialMove { get; set; }
 
     private readonly SpecialMove specialMove = new();
+
+    private const string DropTheKing = "DropTheKing";
     private static List<string> GetMovesList()
     {
         List<string> moves = new();
@@ -34,16 +36,24 @@ public class Move : Player
         {
             Console.Write(fromOrTo + ": ");
             move = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(move) && move.Length == 1)
+            {
+                if (move.ToLower().Contains("k"))
+                {
+                    move = DropTheKing;
+                    break;
+                }     
+            }
             if (!string.IsNullOrWhiteSpace(move) && move.Length == 2)
             {
                 try
                 {
                     int letter; int number;
                     (letter, number) = Funcs.GetIntegerMove(move);
-                    if((letter >= 1 && letter <= 8) && (number >= 1 && number <= 8))
+                    if ((letter >= 1 && letter <= 8) && (number >= 1 && number <= 8))
                     {
                         ok = true;
-                    } 
+                    }
                 }
                 catch (Exception)
                 {
@@ -66,6 +76,9 @@ public class Move : Player
 
     public (Move, bool) EnterMove(Board board, Player player)
     {
+
+        Console.WriteLine("** To Drop the King: (K) **\n");
+        bool drop = false;
         Console.WriteLine($"\n{player.Name.ToUpper()} color ({player.PieceColor}) enter your move:");
 
         string valueFrom;
@@ -74,29 +87,46 @@ public class Move : Player
         {
             return (new Move(), false);
         }
-        string valueTo = ToMove();
-        if (string.IsNullOrWhiteSpace(valueTo))
+        if (valueFrom == DropTheKing)
         {
-            return (new Move(), false);
+            drop = true;
+            board.IsCheck.IsCheckMate = true;
         }
-        if (player.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
+        if (drop == false)
         {
-            this.PieceColor = PiecesColor.White;
+            string valueTo = ToMove();
+            if (string.IsNullOrWhiteSpace(valueTo))
+            {
+                return (new Move(), false);
+            }
+            if (valueTo == DropTheKing)
+            {
+                drop = true;
+                board.IsCheck.IsCheckMate = true;
+            }
+            if (drop == false)
+            {
+                if (player.PieceColor.ToString().Contains(PiecesColor.White.ToString()))
+                {
+                    this.PieceColor = PiecesColor.White;
+                }
+                else
+                {
+                    this.PieceColor = PiecesColor.Black;
+                }
+                // see if has special move
+                Move move = new()
+                {
+                    Name = player.Name,
+                    MoveFrom = valueFrom,
+                    MoveTo = valueTo,
+                    PieceColor = this.PieceColor,
+                    GetSpecialMove = specialMove.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString())
+                };
+                return (move, true);
+            }
         }
-        else
-        {
-            this.PieceColor = PiecesColor.Black;
-        }
-        // see if has special move
-        Move move = new()
-        {
-            Name = player.Name,
-            MoveFrom = valueFrom,
-            MoveTo = valueTo,
-            PieceColor = this.PieceColor,
-            GetSpecialMove = specialMove.HasSpecialMoves(board, valueFrom, valueTo, player.PieceColor.ToString())
-        };
-        return (move, true);
+        return (new Move(), false);
     }
     public bool ConfirmMove(Move move)
     {

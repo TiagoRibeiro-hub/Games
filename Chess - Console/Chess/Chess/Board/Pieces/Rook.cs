@@ -90,7 +90,7 @@ public class Rook : Pieces
             if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
             {
                 // Move To is the King           
-                CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
+                CheckMate(board, game, moveToLetter, moveToNumber);
             }
             TowerMovement(board, game, moveToLetter, moveToNumber, i, j, color, queen);
             game.ResultPlayedBoard = true;

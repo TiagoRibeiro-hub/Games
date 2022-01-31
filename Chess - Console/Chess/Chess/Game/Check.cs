@@ -11,20 +11,6 @@ public class Check
     public string LastKingPositionBlack { get; set; } = "a5";
 
 
-    //public Dictionary<string, string> SetDictionaryKey()
-    //{
-    //    Dictionary<string, string> dict = new();
-    //    dict.Add(SideToCheckOpt.Up, string.Empty);
-    //    dict.Add(SideToCheckOpt.DiagonalUpRight, string.Empty);
-    //    dict.Add(SideToCheckOpt.DiagonalUpLeft, string.Empty);
-    //    dict.Add(SideToCheckOpt.Down, string.Empty);
-    //    dict.Add(SideToCheckOpt.DiagonalDownRight, string.Empty);
-    //    dict.Add(SideToCheckOpt.DiagonalDownLeft, string.Empty);
-    //    dict.Add(SideToCheckOpt.Right, string.Empty);
-    //    dict.Add(SideToCheckOpt.Left, string.Empty);
-
-    //    return dict;
-    //}
     public bool CheckPiece(Board board, int moveToLetter, int moveToNumber, string piecesForm, PiecesColor color, bool stopSearch, bool tower, bool bishop, bool pawn, bool horse)
     {
         string newColor = Funcs.NewColor(color);

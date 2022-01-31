@@ -90,7 +90,7 @@ public class Bishop : Pieces
             if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
             {
                 // Move To is the King           
-                CheckMate(board.Matrix, game, moveToLetter, moveToNumber);
+                CheckMate(board, game, moveToLetter, moveToNumber);
             }
             BishopMovement(board, game, moveTo, i, j, color, queen);
             game.ResultPlayedBoard = true;

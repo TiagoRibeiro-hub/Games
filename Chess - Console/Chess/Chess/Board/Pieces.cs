@@ -68,13 +68,14 @@ public partial class Pieces
         return game;
     }
 
-    public static void CheckMate(string[,] board, Game game, int moveToLetter, int moveToNumber)
+    public static void CheckMate(Board board, Game game, int moveToLetter, int moveToNumber)
     {
-        if (board[moveToLetter, moveToNumber].Contains(PiecesForm.King))
+        if (board.Matrix[moveToLetter, moveToNumber].Contains(PiecesForm.King))
         {
             // Move To is the King
             game.Messages = $"\n**** {game.WhoPlays} is the winner ****\n";
             game.ResultPlayedBoard = true;
+            board.IsCheck.IsCheckMate = true;
         }
         else
         {

@@ -180,7 +180,7 @@ public class Pawn : Pieces
                 else
                 {
                     // Move To is not the Same Color 
-                    CheckMate(board.Matrix, game, moveTo.Letter, moveTo.Number);
+                    CheckMate(board, game, moveTo.Letter, moveTo.Number);
                     PawnMovement(board, move, game, moveFrom, moveTo, i, j, color);
                 }
             }
