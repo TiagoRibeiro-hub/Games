@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projectos\\Projectos\\Jogos\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj": {}
+    "D:\\Projectos\\Projectos\\Games\\C#\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj": {}
   },
   "projects": {
-    "D:\\Projectos\\Projectos\\Jogos\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj": {
+    "D:\\Projectos\\Projectos\\Games\\C#\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projectos\\Projectos\\Jogos\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj",
+        "projectUniqueName": "D:\\Projectos\\Projectos\\Games\\C#\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj",
         "projectName": "JogoDoGalo",
-        "projectPath": "D:\\Projectos\\Projectos\\Jogos\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj",
+        "projectPath": "D:\\Projectos\\Projectos\\Games\\C#\\JogoDoGalo\\JogoDoGalo\\JogoDoGalo.csproj",
         "packagesPath": "C:\\Users\\tiago\\.nuget\\packages\\",
-        "outputPath": "D:\\Projectos\\Projectos\\Jogos\\JogoDoGalo\\JogoDoGalo\\obj\\",
+        "outputPath": "D:\\Projectos\\Projectos\\Games\\C#\\JogoDoGalo\\JogoDoGalo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
